@@ -1,4 +1,4 @@
-namespace KeyShare;
+namespace KeyShare_Backend;
 
 
 public class Program
@@ -24,7 +24,7 @@ public class Program
 
         app.UseHttpsRedirection();
 
-	KeyShare.ApiEndpoints.EndpointSetup.Initialize(app);
+	KeyShare_Backend.ApiEndpoints.EndpointSetup.Initialize(app);
 
 
 
