@@ -24,7 +24,7 @@ public class Program
 
         app.UseHttpsRedirection();
 
-	KeyShare_Backend.ApiEndpoints.EndpointSetup.Initialize(app);
+        KeyShare_Backend.ApiEndpoints.EndpointSetup.Initialize(app);
 
 
 
