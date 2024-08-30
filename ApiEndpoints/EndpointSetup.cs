@@ -1,4 +1,4 @@
-namespace KeyShare_Backend.ApiEndpoints;
+namespace AnonKey_Backend.ApiEndpoints;
 
 public class EndpointSetup
 {

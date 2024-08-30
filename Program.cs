@@ -1,4 +1,4 @@
-namespace KeyShare_Backend;
+namespace AnonKey_Backend;
 
 
 public class Program
@@ -24,7 +24,7 @@ public class Program
 
         app.UseHttpsRedirection();
 
-        KeyShare_Backend.ApiEndpoints.EndpointSetup.Initialize(app);
+        AnonKey_Backend.ApiEndpoints.EndpointSetup.Initialize(app);
 
 
 
