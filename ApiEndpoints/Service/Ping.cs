@@ -1,4 +1,4 @@
-namespace KeyShare_Backend.ApiEndpoints.Service;
+namespace AnonKey_Backend.ApiEndpoints.Service;
 public static class Ping
 {
     public static string GetPing()
