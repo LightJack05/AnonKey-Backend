@@ -1,2 +1,2 @@
-namespace KeyShare_Backend.ApiEndpoints.Credentials;
+namespace AnonKey_Backend.ApiEndpoints.Credentials;
 

@@ -1,1 +1,1 @@
-namespace KeyShare_Backend.ApiEndpoints.Authentication;
+namespace AnonKey_Backend.ApiEndpoints.Authentication;

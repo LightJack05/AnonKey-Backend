@@ -1,2 +1,2 @@
-namespace KeyShare_Backend.ApiEndpoints.Folders;
+namespace AnonKey_Backend.ApiEndpoints.Folders;
 

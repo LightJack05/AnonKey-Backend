@@ -1,4 +1,4 @@
-namespace KeyShare_Backend.ApiEndpoints.Folders;
+namespace AnonKey_Backend.ApiEndpoints.Folders;
 
 public static class EndpointSetup 
 {
