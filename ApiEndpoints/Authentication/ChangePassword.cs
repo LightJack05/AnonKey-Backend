@@ -1,0 +1,1 @@
+namespace KeyShare_Backend.ApiEndpoints.Authentication;
