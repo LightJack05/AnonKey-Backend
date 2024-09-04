@@ -1,6 +1,6 @@
 namespace AnonKey_Backend.ApiEndpoints.Service;
 
-public static class ServiceEndpoints
+public static class EndpointSetup 
 {
     public static void MapEndpoints(WebApplication app)
     {
