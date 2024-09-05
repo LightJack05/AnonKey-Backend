@@ -5,8 +5,8 @@ public static class EndpointSetup
     public static void MapEndpoints(WebApplication app)
     {
         app.MapPost("/user/create", null);
-        app.MapPost("/user/get", null);
-        app.MapPost("/user/update", null);
-        app.MapPost("/user/delete", null);
+        app.MapGet("/user/get", null);
+        app.MapPut("/user/update", null);
+        app.MapDelete("/user/delete", null);
     }
 }

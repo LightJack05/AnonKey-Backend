@@ -5,9 +5,9 @@ public static class EndpointSetup
     public static void MapEndpoints(WebApplication app)
     {
         app.MapPost("/folders/create", null);
-        app.MapPost("/folders/get", null);
-        app.MapPost("/folders/getAll", null);
-        app.MapPost("/folders/update", null);
-        app.MapPost("/folders/delete", null);
+        app.MapGet("/folders/get", null);
+        app.MapGet("/folders/getAll", null);
+        app.MapPut("/folders/update", null);
+        app.MapDelete("/folders/delete", null);
     }
 }
