@@ -1,4 +1,4 @@
-namespace AnonKey_Backend.ApiDatastructures.Folder.GetAll;
+namespace AnonKey_Backend.ApiDatastructures.Folder.Update;
 
 public class Folder
 {

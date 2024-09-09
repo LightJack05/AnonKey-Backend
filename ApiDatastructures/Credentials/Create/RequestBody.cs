@@ -2,5 +2,5 @@ namespace AnonKey_Backend.ApiDatastructures.Credentials.Create;
 
 public class RequestBody
 {
-  public Credential Credential;
+  public Credential Credential { get; set; }
 }
