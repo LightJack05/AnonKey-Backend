@@ -1,6 +1,6 @@
-namespace AnonKey_Backend.ApiDatastructures.Users.Request;
+namespace AnonKey_Backend.ApiDatastructures.Users.UserCreate;
 
-public class UserCreateRequestBody
+public class RequestBody
 {
   public string UserName { get; set; }
   public string UserDisplayName { get; set; }
