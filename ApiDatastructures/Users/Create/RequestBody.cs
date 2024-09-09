@@ -1,4 +1,4 @@
-namespace AnonKey_Backend.ApiDatastructures.Users.UserCreate;
+namespace AnonKey_Backend.ApiDatastructures.Users.Create;
 
 public class RequestBody
 {

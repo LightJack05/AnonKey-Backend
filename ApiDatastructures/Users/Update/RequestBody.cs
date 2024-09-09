@@ -1,4 +1,4 @@
-namespace AnonKey_Backend.ApiDatastructures.Users.UserGet;
+namespace AnonKey_Backend.ApiDatastructures.Users.Update;
 
 public class RequestBody
 {

@@ -1,4 +1,5 @@
-namespace AnonKey_Backend.ApiDatastructures.Users.UserUpdate;
+namespace AnonKey_Backend.ApiDatastructures.Users.Update;
+
 
 public class User
 {
