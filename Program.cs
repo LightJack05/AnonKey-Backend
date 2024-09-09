@@ -24,6 +24,7 @@ public class Program
 
         app.UseHttpsRedirection();
 
+        // Initialize the endpoints with the proper mappings
         AnonKey_Backend.ApiEndpoints.EndpointSetup.Initialize(app);
 
 
