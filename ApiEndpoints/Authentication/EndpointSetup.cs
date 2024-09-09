@@ -4,8 +4,8 @@ public static class EndpointSetup
 {
     public static void MapEndpoints(WebApplication app)
     {
-        app.MapPost("/authentication/login", null);
-        app.MapDelete("/authentication/logout", null);
-        app.MapPut("/authentication/changePassword", null);
+        app.MapPost("/authentication/login", Login.PostLogin);
+        app.MapDelete("/authentication/logout", Logout.DeleteLogout);
+        app.MapPut("/authentication/changePassword", Logout.DeleteLogout);
     }
 }
