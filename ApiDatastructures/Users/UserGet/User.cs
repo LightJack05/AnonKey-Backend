@@ -1,6 +1,7 @@
 namespace AnonKey_Backend.ApiDatastructures.Users.UserGet;
 
-public class ResponseBody
+public class User
 {
-  public User User;
+  public string DisplayName { set; get; }
 }
+
