@@ -8,10 +8,10 @@ public static class EndpointSetup
     /// <param name="app">The web app instance to initialize with the mapping</param>
     public static void MapEndpoints(WebApplication app)
     {
-        app.MapPost("/folders/create", Create.PostCreate);
-        app.MapGet("/folders/get", Get.GetGet);
-        app.MapGet("/folders/getAll", GetAll.GetAllGet);
-        app.MapPut("/folders/update", Update.PutUpdate);
-        app.MapDelete("/folders/delete", Delete.DeleteDelete);
+        app.MapPost("/folders/create", Create.PostCreate).WithTags("Folders").WithOpenApi();
+        app.MapGet("/folders/get", Get.GetGet).WithTags("Folders").WithOpenApi();
+        app.MapGet("/folders/getAll", GetAll.GetAllGet).WithTags("Folders").WithOpenApi();
+        app.MapPut("/folders/update", Update.PutUpdate).WithTags("Folders").WithOpenApi();
+        app.MapDelete("/folders/delete", Delete.DeleteDelete).WithTags("Folders").WithOpenApi();
     }
 }
