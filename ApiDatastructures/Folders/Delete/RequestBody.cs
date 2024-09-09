@@ -1,4 +1,4 @@
-namespace AnonKey_Backend.ApiDatastructures.Credentials.Delete;
+namespace AnonKey_Backend.ApiDatastructures.Folders.Delete;
 
 public class RequestBody
 {
