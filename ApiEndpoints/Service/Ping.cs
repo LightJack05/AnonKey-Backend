@@ -1,8 +1,8 @@
 namespace AnonKey_Backend.ApiEndpoints.Service;
 public static class Ping
 {
-    public static string GetPing()
+    public static void GetPing()
     {
-        return "pong";
+        
     }
 }
