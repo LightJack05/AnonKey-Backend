@@ -8,8 +8,8 @@ public static class EndpointSetup
     /// <param name="app">The web app instance to initialize with the mapping</param>
     public static void MapEndpoints(WebApplication app)
     {
-        app.MapPost("/authentication/login", Login.PostLogin);
-        app.MapDelete("/authentication/logout", Logout.DeleteLogout);
-        app.MapPut("/authentication/changePassword", Logout.DeleteLogout);
+        app.MapPost("/authentication/login", Login.PostLogin).WithTags("Authentication").WithOpenApi();
+        app.MapDelete("/authentication/logout", Logout.DeleteLogout).WithTags("Authentication").WithOpenApi();
+        app.MapPut("/authentication/changePassword", Logout.DeleteLogout).WithTags("Authentication").WithOpenApi();
     }
 }
