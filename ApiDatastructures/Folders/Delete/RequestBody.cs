@@ -2,5 +2,5 @@ namespace AnonKey_Backend.ApiDatastructures.Folders.Delete;
 
 public class RequestBody
 {
-  public string CredentialUuid;
+  public string CredentialUuid { set; get; }
 }
