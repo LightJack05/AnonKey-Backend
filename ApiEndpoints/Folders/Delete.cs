@@ -6,7 +6,7 @@ public static class Delete
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
-            DeleteDelete(ApiDatastructures.Folders.Delete.RequestBody requestBody)
+            DeleteDelete(string folderUuid)
     {
         throw new NotImplementedException();
     }
