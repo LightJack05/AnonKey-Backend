@@ -2,8 +2,11 @@ namespace AnonKey_Backend.ApiEndpoints.Users;
 
 public static class Create
 {
-    public static void PostCreate()
+    public static Microsoft.AspNetCore.Http.HttpResults.Results<
+        Ok,
+        BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
+           PostCreate(ApiDatastructures.Users.Create.RequestBody requestBody)
     {
-        
+        throw new NotImplementedException();
     }
 }
