@@ -4,9 +4,9 @@ public static class Create
 {
 
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
-        Ok<ApiDatastructures.Folder.Create.ResponseBody>,
+        Ok<ApiDatastructures.Folders.Create.FoldersCreateResponseBody>,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
-            PostCreate(ApiDatastructures.Folder.Create.RequestBody requestBody)
+            PostCreate(ApiDatastructures.Folders.Create.FoldersCreateRequestBody requestBody)
     {
         throw new NotImplementedException();
     }

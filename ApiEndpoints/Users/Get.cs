@@ -3,7 +3,7 @@ namespace AnonKey_Backend.ApiEndpoints.Users;
 public static class Get
 {
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
-        Ok<ApiDatastructures.Users.Get.ResponseBody>,
+        Ok<ApiDatastructures.Users.Get.UsersGetResponseBody>,
         NotFound<ApiDatastructures.Error.ErrorResponseBody>>
             GetGet()
     {

@@ -4,9 +4,9 @@ public static class Login
 {
     
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
-        Ok<string>,
+        Ok<ApiDatastructures.Authentication.Login.AuthenticationLoginResponseBody>,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
-            PostLogin(ApiDatastructures.Authentication.Login.RequestBody requestBody)
+            PostLogin(ApiDatastructures.Authentication.Login.AuthenticationLoginRequestBody requestBody)
     {
         throw new NotImplementedException(); 
     }

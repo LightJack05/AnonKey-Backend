@@ -4,7 +4,8 @@ public static class Get
 {
     
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
-        Ok<ApiDatastructures.Folder.Get.ResponseBody>,
+        Ok<ApiDatastructures.Folders.Get.FoldersGetResponseBody>,
+        NotFound<ApiDatastructures.Error.ErrorResponseBody>,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
             GetGet(string folderUuid)
     {
