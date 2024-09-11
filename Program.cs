@@ -1,5 +1,10 @@
+using System.IO;
+using System.Reflection;
+
+
 namespace AnonKey_Backend;
 
+#pragma warning disable
 
 public class Program
 {
@@ -11,7 +16,10 @@ public class Program
         // Add services to the container.
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+        builder.Services.AddSwaggerGen(c =>
+        {
+            c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
+        });
 
         var app = builder.Build();
 
@@ -26,9 +34,6 @@ public class Program
 
         // Initialize the endpoints with the proper mappings
         AnonKey_Backend.ApiEndpoints.EndpointSetup.Initialize(app);
-
-
-
 
         app.Run();
 
