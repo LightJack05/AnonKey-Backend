@@ -3,7 +3,7 @@ namespace AnonKey_Backend.ApiEndpoints.Credentials;
 public static class Delete
 {
     /// <summary>
-    /// API endpoint method that deletes an existing credential object.
+    /// Deletes an existing credential object.
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok,

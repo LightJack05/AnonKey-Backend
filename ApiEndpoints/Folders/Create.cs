@@ -4,7 +4,7 @@ public static class Create
 {
 
     /// <summary>
-    /// API endpoint method that creates a new folder.
+    /// Creates a new folder.
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok<ApiDatastructures.Folders.Create.FoldersCreateResponseBody>,

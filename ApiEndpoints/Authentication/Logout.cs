@@ -4,7 +4,7 @@ public static class Logout
 {
 
     /// <summary>
-    /// API endpoint method that invalidates an access token for user logout. 
+    /// Invalidates an access token for user logout. 
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok,

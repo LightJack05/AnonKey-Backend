@@ -4,7 +4,7 @@ public static class Delete
 {
 
     /// <summary>
-    /// API endpoint method that deletes an existing folder.
+    /// Deletes an existing folder.
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok,

@@ -4,7 +4,7 @@ public static class Login
 {
     
     /// <summary>
-    /// API endpoint method that authenticates the user and returns an access token. 
+    /// Authenticates the user and returns an access token. 
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok<ApiDatastructures.Authentication.Login.AuthenticationLoginResponseBody>,

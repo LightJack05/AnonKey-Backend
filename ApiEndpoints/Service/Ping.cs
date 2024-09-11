@@ -2,8 +2,9 @@ namespace AnonKey_Backend.ApiEndpoints.Service;
 public static class Ping
 {
     /// <summary>
-    /// API endpoint method that checks the connection to the server.
+    /// Checks the connection to the server.
     /// </summary>
+    /// <returns>pong if the server is reachable.</returns>
     public static string GetPing()
     {
         return "pong";

@@ -4,7 +4,7 @@ public static class Create
 {
 
     /// <summary>
-    /// API endpoint method that creates a new credential object.
+    /// Creates a new credential object.
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok<ApiDatastructures.Credentials.Create.CredentialsCreateResponseBody>,

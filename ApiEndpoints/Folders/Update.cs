@@ -3,7 +3,7 @@ namespace AnonKey_Backend.ApiEndpoints.Folders;
 public static class Update
 {
     /// <summary>
-    /// API endpoint method that updates an existing folder object.
+    /// Updates an existing folder object.
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok<ApiDatastructures.Folders.Update.FoldersUpdateResponseBody>,

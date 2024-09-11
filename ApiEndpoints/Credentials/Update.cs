@@ -4,7 +4,7 @@ public static class Update
 {
     
     /// <summary>
-    /// API endpoint method that updates a credential object.
+    /// Updates a credential object.
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok<ApiDatastructures.Credentials.Update.CredentialsUpdateResponseBody>,

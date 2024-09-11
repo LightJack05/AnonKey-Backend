@@ -4,7 +4,7 @@ public static class GetAll
 {
     
     /// <summary>
-    /// API endpoint method that gets all available credential objects for this user.
+    /// Gets all available credential objects for this user.
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok<ApiDatastructures.Credentials.GetAll.CredentialsGetAllResponseBody>,

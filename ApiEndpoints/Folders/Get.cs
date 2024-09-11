@@ -4,7 +4,7 @@ public static class Get
 {
     
     /// <summary>
-    /// API endpoint method that gets information on an existing folder.
+    /// Gets information on an existing folder.
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok<ApiDatastructures.Folders.Get.FoldersGetResponseBody>,
