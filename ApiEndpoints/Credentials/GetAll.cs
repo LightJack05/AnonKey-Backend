@@ -7,7 +7,7 @@ public static class GetAll
         Ok<ApiDatastructures.Credentials.GetAll.CredentialsGetAllResponseBody>,
         NotFound<ApiDatastructures.Error.ErrorResponseBody>,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
-            GetAllGet()
+            GetGetAll()
     {
         throw new NotImplementedException();    
     }
