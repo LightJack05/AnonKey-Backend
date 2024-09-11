@@ -8,5 +8,5 @@ public class UsersUpdateRequestBody
     /// <summary>
     /// User to be updated.
     /// </summary>
-    public UsersUpdateUser User { set; get; }
+    public UsersUpdateUser? User { set; get; }
 }

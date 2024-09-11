@@ -8,10 +8,10 @@ public class AuthenticationLoginRequestBody
     /// <summary>
     /// The name of the user to log in.
     /// </summary>
-    public string UserName { get; set; }
+    public string? UserName { get; set; }
     /// <summary>
     /// The result of the KDF function of the user's password.
     /// </summary>
-    public string KdfPasswordResult { get; set; }
+    public string? KdfPasswordResult { get; set; }
 }
 
