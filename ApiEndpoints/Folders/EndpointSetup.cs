@@ -10,7 +10,7 @@ public static class EndpointSetup
     {
         app.MapPost("/folders/create", Create.PostCreate).WithTags("Folders").WithOpenApi();
         app.MapGet("/folders/get", Get.GetGet).WithTags("Folders").WithOpenApi();
-        app.MapGet("/folders/getAll", GetAll.GetAllGet).WithTags("Folders").WithOpenApi();
+        app.MapGet("/folders/getAll", GetAll.GetGetAll).WithTags("Folders").WithOpenApi();
         app.MapPut("/folders/update", Update.PutUpdate).WithTags("Folders").WithOpenApi();
         app.MapDelete("/folders/delete", Delete.DeleteDelete).WithTags("Folders").WithOpenApi();
     }

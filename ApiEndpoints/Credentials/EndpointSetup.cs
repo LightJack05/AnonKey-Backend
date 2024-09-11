@@ -10,7 +10,7 @@ public static class EndpointSetup
     {
         app.MapPost("/credentials/create", Create.PostCreate).WithTags("Credentials").WithOpenApi();
         app.MapGet("/credentials/get", Get.GetGet).WithTags("Credentials").WithOpenApi();
-        app.MapGet("/credentials/getAll", GetAll.GetAllGet).WithTags("Credentials").WithOpenApi();
+        app.MapGet("/credentials/getAll", GetAll.GetGetAll).WithTags("Credentials").WithOpenApi();
         app.MapPut("/credentials/update", Update.PutUpdate).WithTags("Credentials").WithOpenApi();
         app.MapDelete("/credentials/delete", Delete.DeleteDelete).WithTags("Credentials").WithOpenApi();
     }

@@ -2,8 +2,12 @@ namespace AnonKey_Backend.ApiEndpoints.Authentication;
 
 public static class Logout
 {
-    public static void DeleteLogout()
+
+    public static Microsoft.AspNetCore.Http.HttpResults.Results<
+        Ok,
+        BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
+            DeleteLogout()
     {
-        
+        throw new NotImplementedException(); 
     }
 }
