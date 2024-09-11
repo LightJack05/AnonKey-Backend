@@ -1,8 +1,20 @@
 namespace AnonKey_Backend.ApiDatastructures.Folders.GetAll;
 
+/// <summary>
+/// Folder in a response to a get all folders request.
+/// </summary>
 public class FoldersGetAllFolder
 {
-  public string Uuid { get; set; }
-  public string Name { get; set; }
-  public int Icon { get; set; }
+    /// <summary>
+    /// UUID of the folder.
+    /// </summary>
+    public string? Uuid { get; set; }
+    /// <summary>
+    /// Name of the folder.
+    /// </summary>
+    public string? Name { get; set; }
+    /// <summary>
+    /// Icon of the folder.
+    /// </summary>
+    public int Icon { get; set; }
 }

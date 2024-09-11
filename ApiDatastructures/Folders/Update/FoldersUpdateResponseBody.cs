@@ -1,6 +1,12 @@
 namespace AnonKey_Backend.ApiDatastructures.Folders.Update;
 
+/// <summary>
+/// Body of a response to a folder update request.
+/// </summary>
 public class FoldersUpdateResponseBody
 {
-  public string FolderUuid { get; set; }
+    /// <summary>
+    /// UUID of the updated folder.
+    /// </summary>
+    public string? FolderUuid { get; set; }
 }

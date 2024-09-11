@@ -1,6 +1,12 @@
 namespace AnonKey_Backend.ApiDatastructures.Credentials.Get;
 
+/// <summary>
+/// The body of a response to a credential get request.
+/// </summary>
 public class CredentialsGetResponseBody
 {
-  public CredentialsGetCredential Credential { get; set; }
+    /// <summary>
+    /// The credential requested.
+    /// </summary>
+    public CredentialsGetCredential? Credential { get; set; }
 }
