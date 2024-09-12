@@ -3,6 +3,9 @@ namespace AnonKey_Backend.ApiEndpoints.Credentials;
 public static class Update
 {
     
+    /// <summary>
+    /// Updates a credential object.
+    /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok<ApiDatastructures.Credentials.Update.CredentialsUpdateResponseBody>,
         NotFound<ApiDatastructures.Error.ErrorResponseBody>,

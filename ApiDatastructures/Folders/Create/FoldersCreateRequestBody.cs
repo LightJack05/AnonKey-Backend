@@ -1,6 +1,12 @@
 namespace AnonKey_Backend.ApiDatastructures.Folders.Create;
 
+/// <summary>
+/// Body of a folder create request.
+/// </summary>
 public class FoldersCreateRequestBody
 {
-  public FoldersCreateFolder Folder { get; set; }
+    /// <summary>
+    /// Folder to create.
+    /// </summary>
+    public FoldersCreateFolder? Folder { get; set; }
 }
