@@ -3,7 +3,7 @@ namespace AnonKey_Backend.ApiEndpoints.Uuid;
 public static class EndpointSetup 
 {
     /// <summary>
-    /// Maps the endpoint paths to the appropriate methods for the Users endpoint  
+    /// Maps the endpoint paths to the appropriate methods for the UUID endpoint  
     /// </summary>
     /// <param name="app">The web app instance to initialize with the mapping</param>
     public static void MapEndpoints(WebApplication app)
