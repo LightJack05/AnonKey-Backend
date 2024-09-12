@@ -6,6 +6,11 @@ namespace AnonKey_Backend.ApiDatastructures.Credentials.Create;
 public class CredentialsCreateCredential
 {
     /// <summary>
+    /// The UUID of the credential.
+    /// </summary>
+    /// <note>Should be obtained from the UUID endpoint.</note>
+    public string? Uuid { get; set; }
+    /// <summary>
     /// The encrypted password to store.
     /// </summary>
     public string? Password { get; set; }

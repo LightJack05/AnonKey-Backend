@@ -13,5 +13,6 @@ public class EndpointSetup
         Folders.EndpointSetup.MapEndpoints(app);
         Service.EndpointSetup.MapEndpoints(app);
         Users.EndpointSetup.MapEndpoints(app);
+        Uuid.EndpointSetup.MapEndpoints(app);
     }
 }
