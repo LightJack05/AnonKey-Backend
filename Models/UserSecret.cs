@@ -9,16 +9,14 @@ public class UserSecret
     /// Initialize a new user object with the given parameters.
     /// </summary>
     /// <param name="uuid">The uuid of the created user.</param>
-    /// <param name="usernameHash">The result of the hash function given the username, salt and pepper.</param>
+    /// <param name="username">The username of the user.</param>
     /// <param name="passwordHash">The result of the hash function given the password, salt and pepper.</param>
-    /// <param name="usernameSalt">The salt used for the username.</param>
     /// <param name="passwordSalt">The salt used for the password.</param>
-    public UserSecret(string uuid, string usernameHash, string passwordHash, string usernameSalt, string passwordSalt)
+    public UserSecret(string uuid, string username, string passwordHash, string passwordSalt)
     {
         Uuid = uuid;
-        UsernameHash = usernameHash;
+        Username = username;
         PasswordHash = passwordHash;
-        UsernameSalt = usernameSalt;
         PasswordSalt = passwordSalt;
     }
 
@@ -27,17 +25,13 @@ public class UserSecret
     /// </summary>
     public string Uuid { get; set; }
     /// <summary>
-    /// Hash, including Salt and Pepper, of the user's username.
+    /// The username of the user.
     /// </summary>
-    public string UsernameHash { get; set; }
+    public string Username { get; set; }
     /// <summary>
     /// Hash, including Salt and Pepper, of the user's password.
     /// </summary>
     public string PasswordHash { get; set; }
-    /// <summary>
-    /// The salt applied to the users's username.
-    /// </summary>
-    public string UsernameSalt { get; set; }
     /// <summary>
     /// The salt applied to the users's password.
     /// </summary>
