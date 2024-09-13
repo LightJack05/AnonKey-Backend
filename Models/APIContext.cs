@@ -7,23 +7,10 @@ using System.IO;
 public class APIContext : DbContext
 {
   /// <summary>
-  /// A Path to the database
-  /// </summary>
-  public string DbPath { get; }
-
-  /// <summary>
   /// Set the DBPath to the ./Database/database.db
   /// </summary>
-  public APIContext()
+  public APIContext(DbContextOptions<APIContext> Options) : base(Options)
   {
-    var path = Directory.GetCurrentDirectory();
-    DbPath = System.IO.Path.Join(path, "Database", "database.db");
   }
-
-  /// <summary>
-  /// Creates a SQlite database at DBPath
-  /// </summary>
-  protected override void OnConfiguring(DbContextOptionsBuilder options)
-      => options.UseSqlite($"Data Source={DbPath}");
 }
 
