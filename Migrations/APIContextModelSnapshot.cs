@@ -7,122 +7,122 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AnonKey_Backend.Migrations
 {
-    [DbContext(typeof(APIContext))]
-    partial class APIContextModelSnapshot : ModelSnapshot
+  [DbContext(typeof(AnonKey_Backend.Models.APIContext))]
+  partial class APIContextModelSnapshot : ModelSnapshot
+  {
+    protected override void BuildModel(ModelBuilder modelBuilder)
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
-        {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
+      modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
 
-            modelBuilder.Entity("AnonKey_Backend.Models.UserSecret", b =>
-                {
-                    b.Property<string>("Uuid")
-                        .HasColumnType("TEXT");
+      modelBuilder.Entity("AnonKey_Backend.Models.UserSecret", b =>
+          {
+            b.Property<string>("Uuid")
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+            b.Property<string>("PasswordHash")
+                      .IsRequired()
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("PasswordSalt")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+            b.Property<string>("PasswordSalt")
+                      .IsRequired()
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+            b.Property<string>("Username")
+                      .IsRequired()
+                      .HasColumnType("TEXT");
 
-                    b.HasKey("Uuid");
+            b.HasKey("Uuid");
 
-                    b.ToTable("UserSecrets");
-                });
+            b.ToTable("UserSecrets");
+          });
 
-            modelBuilder.Entity("Credential", b =>
-                {
-                    b.Property<string>("UserUuid")
-                        .HasColumnType("TEXT");
+      modelBuilder.Entity("Credential", b =>
+          {
+            b.Property<string>("UserUuid")
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("ChangedTimestamp")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+            b.Property<string>("ChangedTimestamp")
+                      .IsRequired()
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("CreatedTimestamp")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+            b.Property<string>("CreatedTimestamp")
+                      .IsRequired()
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("DeletedTimestamp")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+            b.Property<string>("DeletedTimestamp")
+                      .IsRequired()
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("DisplayName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+            b.Property<string>("DisplayName")
+                      .IsRequired()
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("FolderUuid")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+            b.Property<string>("FolderUuid")
+                      .IsRequired()
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("Note")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+            b.Property<string>("Note")
+                      .IsRequired()
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+            b.Property<string>("Password")
+                      .IsRequired()
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("PasswordSalt")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+            b.Property<string>("PasswordSalt")
+                      .IsRequired()
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+            b.Property<string>("Username")
+                      .IsRequired()
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("UsernameSalt")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+            b.Property<string>("UsernameSalt")
+                      .IsRequired()
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("WebsiteUrl")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+            b.Property<string>("WebsiteUrl")
+                      .IsRequired()
+                      .HasColumnType("TEXT");
 
-                    b.HasKey("UserUuid");
+            b.HasKey("UserUuid");
 
-                    b.ToTable("Credentials");
-                });
+            b.ToTable("Credentials");
+          });
 
-            modelBuilder.Entity("Folder", b =>
-                {
-                    b.Property<string>("Uuid")
-                        .HasColumnType("TEXT");
+      modelBuilder.Entity("Folder", b =>
+          {
+            b.Property<string>("Uuid")
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("DisplayName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+            b.Property<string>("DisplayName")
+                      .IsRequired()
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("Icon")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+            b.Property<string>("Icon")
+                      .IsRequired()
+                      .HasColumnType("TEXT");
 
-                    b.HasKey("Uuid");
+            b.HasKey("Uuid");
 
-                    b.ToTable("Folders");
-                });
+            b.ToTable("Folders");
+          });
 
-            modelBuilder.Entity("User", b =>
-                {
-                    b.Property<string>("UserUuid")
-                        .HasColumnType("TEXT");
+      modelBuilder.Entity("User", b =>
+          {
+            b.Property<string>("UserUuid")
+                      .HasColumnType("TEXT");
 
-                    b.Property<string>("DisplayName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+            b.Property<string>("DisplayName")
+                      .IsRequired()
+                      .HasColumnType("TEXT");
 
-                    b.HasKey("UserUuid");
+            b.HasKey("UserUuid");
 
-                    b.ToTable("Users");
-                });
+            b.ToTable("Users");
+          });
 #pragma warning restore 612, 618
-        }
     }
+  }
 }

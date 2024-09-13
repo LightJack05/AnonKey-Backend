@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using AnonKey_Backend.Models;
+namespace AnonKey_Backend.Models;
 
 /// <summary>
 /// A credetial model to be saved in a database

@@ -1,3 +1,4 @@
+namespace AnonKey_Backend.Models;
 using Microsoft.EntityFrameworkCore;
 
 /// <summary>

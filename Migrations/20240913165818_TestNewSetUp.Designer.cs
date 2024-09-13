@@ -8,16 +8,16 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AnonKey_Backend.Migrations
 {
-    [DbContext(typeof(APIContext))]
-    [Migration("20240913165818_TestNewSetUp")]
-    partial class TestNewSetUp
+  [DbContext(typeof(AnonKey_Backend.Models.APIContext))]
+  [Migration("20240913165818_TestNewSetUp")]
+  partial class TestNewSetUp
+  {
+    /// <inheritdoc />
+    protected override void BuildTargetModel(ModelBuilder modelBuilder)
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
-        {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
+      modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
 #pragma warning restore 612, 618
-        }
     }
+  }
 }
