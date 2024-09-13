@@ -16,6 +16,13 @@ public class APIContext : DbContext
   public DbSet<User> Users { get; set; }
 
   /// <summary>
+  /// A table to save Credentials
+  /// </summary>
+  public DbSet<Credential> Credentials { get; set; }
+
+
+
+  /// <summary>
   /// Set the DBPath to the ./Database/database.db
   /// </summary>
   public APIContext(DbContextOptions<APIContext> Options) : base(Options)
