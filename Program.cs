@@ -10,6 +10,10 @@ public class Program
 {
     public static void Main(String[] args)
     {
+        //NO-PROD: Output the signing key for debugging purposes.
+        byte[] key = Configuration.Settings.JwtIssuerSigningKey;
+        System.Console.WriteLine(Convert.ToBase64String(key));
+        Configuration.Settings.SaveSettings();
 
         var builder = WebApplication.CreateBuilder(args);
 
