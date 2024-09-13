@@ -20,7 +20,10 @@ public class APIContext : DbContext
   /// </summary>
   public DbSet<Credential> Credentials { get; set; }
 
-
+  /// <summary>
+  /// A table to save Folders
+  /// </summary>
+  public DbSet<Folder> Folders { get; set; }
 
   /// <summary>
   /// Set the DBPath to the ./Database/database.db
