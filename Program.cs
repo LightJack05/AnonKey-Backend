@@ -1,5 +1,8 @@
 using System.IO;
 using System.Reflection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 
 namespace AnonKey_Backend;
@@ -10,11 +13,6 @@ public class Program
 {
     public static void Main(String[] args)
     {
-        //NO-PROD: Output the signing key for debugging purposes.
-        byte[] key = Configuration.Settings.JwtIssuerSigningKey;
-        System.Console.WriteLine(Convert.ToBase64String(key));
-        Configuration.Settings.SaveSettings();
-
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
@@ -23,6 +21,30 @@ public class Program
         builder.Services.AddSwaggerGen(c =>
         {
             c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
+        });
+
+        // Authentication
+        builder.Services.AddSingleton<Authentication.TokenService>();
+        builder.Services.AddAuthentication(config =>
+                {
+                    config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                }).AddJwtBearer(config =>
+                {
+                    config.RequireHttpsMetadata = false;
+                    config.SaveToken = true;
+                    config.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Configuration.Settings.JwtIssuerSigningKey),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
+
+        builder.Services.AddAuthorization(options =>
+        {
+            options.AddPolicy("user", policy => policy.RequireRole("user")); ;
         });
 
         var app = builder.Build();
@@ -34,6 +56,8 @@ public class Program
             app.UseSwaggerUI();
         }
 
+        app.UseAuthentication();
+        app.UseAuthorization();
         app.UseHttpsRedirection();
 
         // Initialize the endpoints with the proper mappings
