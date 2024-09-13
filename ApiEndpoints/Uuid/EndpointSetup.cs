@@ -8,6 +8,6 @@ public static class EndpointSetup
     /// <param name="app">The web app instance to initialize with the mapping</param>
     public static void MapEndpoints(WebApplication app)
     {
-        app.MapGet("/uuid/new", NewUuid.GetNewUuid).WithTags("UUID");
+        app.MapGet("/uuid/new", NewUuid.GetNewUuid).WithTags("UUID").RequireAuthorization("user");
     }
 }
