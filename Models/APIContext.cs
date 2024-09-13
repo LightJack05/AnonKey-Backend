@@ -5,11 +5,14 @@ using Microsoft.EntityFrameworkCore;
 /// </summary>
 public class APIContext : DbContext
 {
-  /*/// <summary>*/
-  /*/// A table to save UserSecret*/
-  /*/// </summary>*/
-  /*public DbSet<AnonKey_Backend.Models.UserSecret> UserSecrets { get; set; }*/
+  /// <summary>
+  /// A table to save UserSecrets
+  /// </summary>
+  public DbSet<AnonKey_Backend.Models.UserSecret> UserSecrets { get; set; }
 
+  /// <summary>
+  /// A table to save Users
+  /// </summary>
   public DbSet<User> Users { get; set; }
 
   /// <summary>
@@ -18,10 +21,5 @@ public class APIContext : DbContext
   public APIContext(DbContextOptions<APIContext> Options) : base(Options)
   {
   }
-
-  /*protected override void OnModelCreating(ModelBuilder modelBuilder)*/
-  /*{*/
-  /*  modelBuilder.Entity<AuditEntry>();*/
-  /*}*/
 }
 
