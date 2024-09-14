@@ -12,7 +12,7 @@ public static class Delete
         Ok,
         NotFound<ApiDatastructures.Error.ErrorResponseBody>,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
-            DeleteDelete(string credentialUuid)
+            DeleteDelete(string credentialUuid, ClaimsPrincipal user)
     {
           throw new NotImplementedException();      
     }

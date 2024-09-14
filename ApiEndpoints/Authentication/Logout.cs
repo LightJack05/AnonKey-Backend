@@ -12,7 +12,7 @@ public static class Logout
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
-            DeleteLogout()
+            DeleteLogout(ClaimsPrincipal user)
     {
         throw new NotImplementedException(); 
     }

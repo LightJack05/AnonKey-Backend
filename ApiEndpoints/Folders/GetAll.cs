@@ -12,7 +12,7 @@ public static class GetAll
         Ok<ApiDatastructures.Folders.GetAll.FoldersGetAllResponseBody>,
         NotFound<ApiDatastructures.Error.ErrorResponseBody>,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
-            GetGetAll()
+            GetGetAll(ClaimsPrincipal user)
     {
         throw new NotImplementedException();
         

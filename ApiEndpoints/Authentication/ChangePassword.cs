@@ -11,7 +11,7 @@ public static class ChangePassword
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
-            PutChangePassword(ApiDatastructures.Authentication.ChangePassword.AuthenticationChangePasswordRequestBody requestBody)
+            PutChangePassword(ApiDatastructures.Authentication.ChangePassword.AuthenticationChangePasswordRequestBody requestBody, ClaimsPrincipal user)
     {
         throw new NotImplementedException();
     }

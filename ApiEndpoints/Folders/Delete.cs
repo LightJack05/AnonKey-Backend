@@ -13,7 +13,7 @@ public static class Delete
         Ok,
         NotFound<ApiDatastructures.Error.ErrorResponseBody>,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
-            DeleteDelete(string folderUuid)
+            DeleteDelete(string folderUuid, ClaimsPrincipal user)
     {
         throw new NotImplementedException();
     }

@@ -13,7 +13,7 @@ public static class Update
         Ok<ApiDatastructures.Credentials.Update.CredentialsUpdateResponseBody>,
         NotFound<ApiDatastructures.Error.ErrorResponseBody>,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
-            PutUpdate(ApiDatastructures.Credentials.Update.CredentialsUpdateRequestBody requestBody)
+            PutUpdate(ApiDatastructures.Credentials.Update.CredentialsUpdateRequestBody requestBody, ClaimsPrincipal user)
     {
         throw new NotImplementedException(); 
     }

@@ -12,7 +12,7 @@ public static class Create
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok<ApiDatastructures.Credentials.Create.CredentialsCreateResponseBody>,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
-     PostCreate(ApiDatastructures.Credentials.Create.CredentialsCreateRequestBody requestBody)
+     PostCreate(ApiDatastructures.Credentials.Create.CredentialsCreateRequestBody requestBody, ClaimsPrincipal user)
     {
         throw new NotImplementedException(); 
     }
