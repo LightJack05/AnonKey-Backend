@@ -9,7 +9,7 @@ public static class Delete
         Ok,
         NotFound<ApiDatastructures.Error.ErrorResponseBody>,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
-            DeleteDelete()
+            DeleteDelete(ClaimsPrincipal user)
     {
         throw new NotImplementedException();
     }

@@ -10,7 +10,7 @@ public static class Get
         Ok<ApiDatastructures.Folders.Get.FoldersGetResponseBody>,
         NotFound<ApiDatastructures.Error.ErrorResponseBody>,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
-            GetGet(string folderUuid)
+            GetGet(string folderUuid, ClaimsPrincipal user)
     {
        throw new NotImplementedException(); 
     }

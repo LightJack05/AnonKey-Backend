@@ -7,3 +7,4 @@ global using Microsoft.AspNetCore.Http.HttpResults;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Hosting;
 global using Microsoft.AspNetCore.Mvc;
+global using System.Security.Claims;

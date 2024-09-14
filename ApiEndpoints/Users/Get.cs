@@ -8,7 +8,7 @@ public static class Get
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok<ApiDatastructures.Users.Get.UsersGetResponseBody>,
         NotFound<ApiDatastructures.Error.ErrorResponseBody>>
-            GetGet()
+            GetGet(ClaimsPrincipal user)
     {
         throw new NotImplementedException();
     }

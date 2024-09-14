@@ -9,7 +9,7 @@ public static class Update
         Ok<ApiDatastructures.Folders.Update.FoldersUpdateResponseBody>,
         NotFound<ApiDatastructures.Error.ErrorResponseBody>,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
-            PutUpdate(ApiDatastructures.Folders.Update.FoldersUpdateRequestBody requestBody)
+            PutUpdate(ApiDatastructures.Folders.Update.FoldersUpdateRequestBody requestBody, ClaimsPrincipal user)
     {
         throw new NotImplementedException();
         
