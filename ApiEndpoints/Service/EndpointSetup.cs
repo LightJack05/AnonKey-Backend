@@ -1,5 +1,8 @@
 namespace AnonKey_Backend.ApiEndpoints.Service;
 
+/// <summary>
+/// Handles mapping the service endpoints.
+/// </summary>
 public static class EndpointSetup 
 {
     /// <summary>

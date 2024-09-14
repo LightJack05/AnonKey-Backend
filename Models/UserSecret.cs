@@ -6,7 +6,9 @@ namespace AnonKey_Backend.Models;
 /// </summary>
 public class UserSecret
 {
-    //NO-PROD: Debug list to test authentication. To be replaced by Entity Framework
+    /// <summary>
+    /// NO-PROD: Debug list to test authentication. To be replaced by Entity Framework
+    /// </summary>
     public static List<UserSecret> userSecrets = new() {
         new UserSecret("bc255057-8abe-4098-9f7e-4095b8677a20", "test1", "password1", ""),
         new UserSecret("6324bde4-611f-49b5-a155-6f912a8882ec", "test2", "password2", "")

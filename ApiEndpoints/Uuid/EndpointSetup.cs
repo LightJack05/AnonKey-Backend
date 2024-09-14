@@ -1,5 +1,8 @@
 namespace AnonKey_Backend.ApiEndpoints.Uuid;
 
+/// <summary>
+/// Handles mapping the uuid endpoint.
+/// </summary>
 public static class EndpointSetup 
 {
     /// <summary>

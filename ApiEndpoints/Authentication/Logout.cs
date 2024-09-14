@@ -1,5 +1,8 @@
 namespace AnonKey_Backend.ApiEndpoints.Authentication;
 
+/// <summary>
+/// Handles the authentication logout endpoints.
+/// </summary>
 public static class Logout
 {
 

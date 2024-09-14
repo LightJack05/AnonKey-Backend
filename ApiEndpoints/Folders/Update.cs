@@ -1,5 +1,8 @@
 namespace AnonKey_Backend.ApiEndpoints.Folders;
 
+/// <summary>
+/// Handles the folders update endpoint.
+/// </summary>
 public static class Update
 {
     /// <summary>

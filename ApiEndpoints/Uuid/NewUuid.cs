@@ -1,5 +1,8 @@
 namespace AnonKey_Backend.ApiEndpoints.Uuid;
 
+/// <summary>
+/// Handles the new uuid new endpoint.
+/// </summary>
 public static class NewUuid
 {
 

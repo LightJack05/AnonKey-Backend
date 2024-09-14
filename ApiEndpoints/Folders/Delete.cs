@@ -1,5 +1,8 @@
 namespace AnonKey_Backend.ApiEndpoints.Folders;
 
+/// <summary>
+/// Handles the folders delete endpoint.
+/// </summary>
 public static class Delete
 {
 
