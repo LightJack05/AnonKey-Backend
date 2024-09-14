@@ -400,3 +400,7 @@ FodyWeavers.xsd
 
 # Generated Settings file
 settings.json
+
+# Enity Framework and database
+Migrations/
+database.db

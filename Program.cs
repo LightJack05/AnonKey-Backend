@@ -1,6 +1,8 @@
 using System.IO;
 using System.Reflection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -48,6 +50,9 @@ public class Program
                 }
             });
         });
+
+        // Entity Framework / Database
+        builder.Services.AddEntityFrameworkSqlite().AddDbContext<AnonKey_Backend.Models.APIContext>(opt => opt.UseSqlite(builder.Configuration.GetConnectionString("ApiDatabase"))); 
 
         // Authentication
         builder.Services.AddSingleton<Authentication.TokenService>();

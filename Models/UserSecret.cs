@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 namespace AnonKey_Backend.Models;
 
 /// <summary>
@@ -29,6 +30,7 @@ public class UserSecret
     /// <summary>
     /// UUID of the User.
     /// </summary>
+    [Key]
     public string Uuid { get; set; }
     /// <summary>
     /// The username of the user.
