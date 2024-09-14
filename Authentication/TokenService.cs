@@ -20,6 +20,11 @@ public class TokenService
     /// <param name="user">The user to generate the token for.</param>
     public string GenerateNewToken(Models.UserSecret user)
     {
+        if(user is null || user.Username is null){
+            throw new ArgumentNullException();
+        }
+
+
         JwtSecurityTokenHandler tokenHandler = new();
         byte[] jwtIssuerSigningKey = Configuration.Settings.JwtIssuerSigningKey;
         SecurityTokenDescriptor tokenDescriptor = new()
