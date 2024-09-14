@@ -9,22 +9,22 @@ public class APIContext : DbContext
   /// <summary>
   /// A table to save UserSecrets
   /// </summary>
-  public DbSet<AnonKey_Backend.Models.UserSecret> UserSecrets { get; set; }
+  public DbSet<AnonKey_Backend.Models.UserSecret>? UserSecrets { get; set; }
 
   /// <summary>
   /// A table to save Users
   /// </summary>
-  public DbSet<User> Users { get; set; }
+  public DbSet<User>? Users { get; set; }
 
   /// <summary>
   /// A table to save Credentials
   /// </summary>
-  public DbSet<Credential> Credentials { get; set; }
+  public DbSet<Credential>? Credentials { get; set; }
 
   /// <summary>
   /// A table to save Folders
   /// </summary>
-  public DbSet<Folder> Folders { get; set; }
+  public DbSet<Folder>? Folders { get; set; }
 
   /// <summary>
   /// Set the DBPath to the ./Database/database.db

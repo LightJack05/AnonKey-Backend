@@ -31,17 +31,17 @@ public class UserSecret
     /// UUID of the User.
     /// </summary>
     [Key]
-    public string Uuid { get; set; }
+    public string? Uuid { get; set; }
     /// <summary>
     /// The username of the user.
     /// </summary>
-    public string Username { get; set; }
+    public string? Username { get; set; }
     /// <summary>
     /// Hash, including Salt and Pepper, of the user's password.
     /// </summary>
-    public string PasswordHash { get; set; }
+    public string? PasswordHash { get; set; }
     /// <summary>
     /// The salt applied to the users's password.
     /// </summary>
-    public string PasswordSalt { get; set; }
+    public string? PasswordSalt { get; set; }
 }

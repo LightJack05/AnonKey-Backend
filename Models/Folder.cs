@@ -10,15 +10,15 @@ public class Folder
   /// UUID of the Folder
   /// </summary>
   [Key]
-  public string Uuid { get; set; }
+  public string? Uuid { get; set; }
 
   /// <summary>
   /// The username to be diplayed
   /// </summary>
-  public string DisplayName { get; set; }
+  public string? DisplayName { get; set; }
 
   /// <summary>
   /// The icon of the folder
   /// </summary>
-  public string Icon { get; set; }
+  public string? Icon { get; set; }
 }
