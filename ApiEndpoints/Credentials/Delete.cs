@@ -1,5 +1,8 @@
 namespace AnonKey_Backend.ApiEndpoints.Credentials;
 
+/// <summary>
+/// Handles the credentials delete endpoint.
+/// </summary>
 public static class Delete
 {
     /// <summary>

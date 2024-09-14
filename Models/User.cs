@@ -10,10 +10,10 @@ public class User
   /// UUID of the User.
   /// </summary>
   [Key]
-  public string UserUuid { get; set; }
+  public string? UserUuid { get; set; }
 
   /// <summary>
   /// The username to be diplayed
   /// </summary>
-  public string DisplayName { get; set; }
+  public string? DisplayName { get; set; }
 }

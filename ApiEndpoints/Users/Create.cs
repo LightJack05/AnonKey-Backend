@@ -1,5 +1,8 @@
 namespace AnonKey_Backend.ApiEndpoints.Users;
 
+/// <summary>
+/// Handles the users create endpoint.
+/// </summary>
 public static class Create
 {
     /// <summary>

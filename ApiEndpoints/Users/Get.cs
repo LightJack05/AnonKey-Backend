@@ -1,5 +1,8 @@
 namespace AnonKey_Backend.ApiEndpoints.Users;
 
+/// <summary>
+/// Handles the users get endpoint.
+/// </summary>
 public static class Get
 {
     /// <summary>

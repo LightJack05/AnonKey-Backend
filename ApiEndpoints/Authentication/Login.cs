@@ -1,5 +1,8 @@
 namespace AnonKey_Backend.ApiEndpoints.Authentication;
 
+/// <summary>
+/// Handles the authentication login endpoint.
+/// </summary>
 public static class Login
 {
 

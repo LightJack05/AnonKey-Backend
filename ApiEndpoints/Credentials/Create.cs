@@ -1,5 +1,8 @@
 namespace AnonKey_Backend.ApiEndpoints.Credentials;
 
+/// <summary>
+/// Handles the credentials creation endpoint.
+/// </summary>
 public static class Create
 {
 

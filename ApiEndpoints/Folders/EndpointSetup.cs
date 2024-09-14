@@ -1,5 +1,8 @@
 namespace AnonKey_Backend.ApiEndpoints.Folders;
 
+/// <summary>
+/// Handles mapping the folders endpoints.
+/// </summary>
 public static class EndpointSetup 
 {
     /// <summary>

@@ -1,5 +1,8 @@
 namespace AnonKey_Backend.ApiEndpoints.Credentials;
 
+/// <summary>
+/// Handles the editing of credentials.
+/// </summary>
 public static class Update
 {
     

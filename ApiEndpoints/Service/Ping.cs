@@ -1,4 +1,7 @@
 namespace AnonKey_Backend.ApiEndpoints.Service;
+/// <summary>
+/// Handles the ping service endpoint.
+/// </summary>
 public static class Ping
 {
     /// <summary>

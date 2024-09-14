@@ -1,5 +1,8 @@
 namespace AnonKey_Backend.ApiEndpoints.Authentication;
 
+/// <summary>
+/// Changes a users password.
+/// </summary>
 public static class ChangePassword
 {
     /// <summary>

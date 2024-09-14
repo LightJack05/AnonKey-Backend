@@ -1,5 +1,8 @@
 namespace AnonKey_Backend.ApiEndpoints.Credentials;
 
+/// <summary>
+/// Handles mapping the credentials endpoints.
+/// </summary>
 public static class EndpointSetup 
 {
     /// <summary>
