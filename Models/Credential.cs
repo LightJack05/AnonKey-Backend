@@ -55,15 +55,15 @@ public class Credential
   /// <summary>
   /// The CreatedTimestamp of the credetial
   /// </summary>
-  public string? CreatedTimestamp { get; set; }
+  public long CreatedTimestamp { get; set; }
 
   /// <summary>
   /// The ChangedTimestamp of the credetial
   /// </summary>
-  public string? ChangedTimestamp { get; set; }
+  public long ChangedTimestamp { get; set; }
 
   /// <summary>
   /// The DeletedTimestamp of the credetial
   /// </summary>
-  public string? DeletedTimestamp { get; set; }
+  public long DeletedTimestamp { get; set; }
 }
