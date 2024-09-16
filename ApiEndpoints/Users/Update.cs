@@ -12,7 +12,7 @@ public static class Update
         Ok,
         NotFound<ApiDatastructures.Error.ErrorResponseBody>,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>> 
-            PutUpdate(ApiDatastructures.Users.Update.UsersUpdateRequestBody requestBody, ClaimsPrincipal user)
+            PutUpdate(ApiDatastructures.Users.Update.UsersUpdateRequestBody requestBody, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
         throw new NotImplementedException();
     }

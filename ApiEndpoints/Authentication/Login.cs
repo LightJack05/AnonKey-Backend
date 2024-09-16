@@ -15,7 +15,7 @@ public static class Login
         Ok<ApiDatastructures.Authentication.Login.AuthenticationLoginResponseBody>,
         NotFound<ApiDatastructures.Error.ErrorResponseBody>,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
-            PostLogin(ApiDatastructures.Authentication.Login.AuthenticationLoginRequestBody requestBody, AnonKey_Backend.Authentication.TokenService tokenService)
+            PostLogin(ApiDatastructures.Authentication.Login.AuthenticationLoginRequestBody requestBody, AnonKey_Backend.Authentication.TokenService tokenService, Data.DatabaseHandle databaseHandle)
     {
         //NO-PROD: This is BS and needs to be replaced with proper authentication!
         User? user = User.userSecrets.Where(u =>
