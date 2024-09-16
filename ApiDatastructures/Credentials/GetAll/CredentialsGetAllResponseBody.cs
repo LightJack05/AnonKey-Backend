@@ -8,5 +8,5 @@ public class CredentialsGetAllResponseBody
     /// <summary>
     /// A list of credentials associated with the user.
     /// </summary>
-    public List<CredentialsGetAllCredential>? Credential { get; set; }
+    public List<CredentialsGetAllCredential>? Credentials { get; set; }
 }

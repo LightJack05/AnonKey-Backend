@@ -52,7 +52,7 @@ public class Program
         });
 
         // Entity Framework / Database
-        builder.Services.AddEntityFrameworkSqlite().AddDbContext<AnonKey_Backend.Models.APIContext>(opt => opt.UseSqlite(builder.Configuration.GetConnectionString("ApiDatabase"))); 
+        builder.Services.AddEntityFrameworkSqlite().AddDbContext<AnonKey_Backend.Data.DatabaseHandle>(opt => opt.UseSqlite(builder.Configuration.GetConnectionString("ApiDatabase"))); 
 
         // Authentication
         builder.Services.AddSingleton<Authentication.TokenService>();

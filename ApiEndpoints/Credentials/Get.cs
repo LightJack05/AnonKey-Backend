@@ -13,7 +13,7 @@ public static class Get
         Ok<ApiDatastructures.Credentials.Get.CredentialsGetResponseBody>,
         NotFound<ApiDatastructures.Error.ErrorResponseBody>,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
-            GetGet(string credentialUuid, ClaimsPrincipal user)
+            GetGet(string credentialUuid, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
         throw new NotImplementedException();
     }

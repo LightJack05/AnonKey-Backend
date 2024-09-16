@@ -13,7 +13,7 @@ public static class GetAll
         Ok<ApiDatastructures.Credentials.GetAll.CredentialsGetAllResponseBody>,
         NotFound<ApiDatastructures.Error.ErrorResponseBody>,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
-            GetGetAll(ClaimsPrincipal user)
+            GetGetAll(ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
         throw new NotImplementedException();    
     }

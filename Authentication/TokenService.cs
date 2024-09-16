@@ -1,3 +1,4 @@
+using AnonKey_Backend.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -18,7 +19,7 @@ public class TokenService
     /// Generate a new token for a user.
     /// </summary>
     /// <param name="user">The user to generate the token for.</param>
-    public string GenerateNewToken(Models.UserSecret user)
+    public string GenerateNewToken(User user)
     {
         if(user is null || user.Username is null){
             throw new ArgumentNullException();

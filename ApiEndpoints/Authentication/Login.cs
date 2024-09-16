@@ -1,3 +1,5 @@
+using AnonKey_Backend.Models;
+
 namespace AnonKey_Backend.ApiEndpoints.Authentication;
 
 /// <summary>
@@ -13,10 +15,10 @@ public static class Login
         Ok<ApiDatastructures.Authentication.Login.AuthenticationLoginResponseBody>,
         NotFound<ApiDatastructures.Error.ErrorResponseBody>,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
-            PostLogin(ApiDatastructures.Authentication.Login.AuthenticationLoginRequestBody requestBody, AnonKey_Backend.Authentication.TokenService tokenService)
+            PostLogin(ApiDatastructures.Authentication.Login.AuthenticationLoginRequestBody requestBody, AnonKey_Backend.Authentication.TokenService tokenService, Data.DatabaseHandle databaseHandle)
     {
         //NO-PROD: This is BS and needs to be replaced with proper authentication!
-        Models.UserSecret? user = Models.UserSecret.userSecrets.Where(u =>
+        User? user = User.userSecrets.Where(u =>
         {
             return
                 u.Username == requestBody.UserName && u.PasswordHash == requestBody.KdfPasswordResult;
