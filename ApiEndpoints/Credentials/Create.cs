@@ -10,7 +10,7 @@ public static class Create
     /// Creates a new credential object.
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
-        Ok<ApiDatastructures.Credentials.Create.CredentialsCreateResponseBody>,
+        Ok,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
      PostCreate(ApiDatastructures.Credentials.Create.CredentialsCreateRequestBody requestBody, ClaimsPrincipal user)
     {
