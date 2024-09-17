@@ -52,8 +52,16 @@ public class Settings
     /// <summary>
     /// The set length for the JWT signing key.
     /// </summary>
-    private const int JwtSigingKeyLength = 256;
-    private const int ServerUserPasswordPepperLength = 32;
+    public const int JwtSigingKeyLength = 256;
+    /// <summary>
+    /// The length of the pepper applied to user passwords.
+    /// </summary>
+    public const int ServerUserPasswordPepperLength = 32;
+    /// <summary>
+    /// The length of the salt applied to user passwords.
+    /// </summary>
+    public const int UserPasswordSaltLength = 32;
+    
 
     #endregion
 
