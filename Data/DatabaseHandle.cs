@@ -10,12 +10,12 @@ public class DatabaseHandle : DbContext
     /// <summary>
     /// A table to save UserSecrets
     /// </summary>
-    public DbSet<User>? UserSecrets { get; set; }
+    public DbSet<User>? Users { get; set; }
 
     /// <summary>
     /// A table to save Users
     /// </summary>
-    public DbSet<UserInfo>? Users { get; set; }
+    public DbSet<UserInfo>? UserInfos { get; set; }
 
     /// <summary>
     /// A table to save Credentials
