@@ -12,4 +12,11 @@ public static class Generators{
         byte[] randomBytes = RandomNumberGenerator.GetBytes(length);
         return randomBytes;
     }
+
+    /// <summary>
+    /// Generate a new random hex string with the specified length.
+    /// </summary>
+    public static string NewRandomString(int length){
+        return RandomNumberGenerator.GetHexString(length);
+    }
 }

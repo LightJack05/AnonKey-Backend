@@ -23,9 +23,10 @@ public class Settings
     /// Constructor used for JSON loading, takes all parameters and creates a new settings object.
     /// </summary>
     [JsonConstructor]
-    public Settings(byte[] _jwtIssuerSigingKey)
+    public Settings(byte[] _jwtIssuerSigingKey, string _serverUserPasswordPepper)
     {
         this._jwtIssuerSigingKey = _jwtIssuerSigingKey;
+        this._serverUserPasswordPepper = _serverUserPasswordPepper;
         _instance = this;
     }
 
@@ -34,7 +35,8 @@ public class Settings
     /// </summary>
     public Settings()
     {
-        _jwtIssuerSigingKey = Cryptography.Generators.NewRandomByteArray(256);
+        _jwtIssuerSigingKey = Cryptography.Generators.NewRandomByteArray(JwtSigingKeyLength);
+        _serverUserPasswordPepper = Cryptography.Generators.NewRandomString(ServerUserPasswordPepperLength);
         _instance = this;
     }
 
@@ -50,12 +52,20 @@ public class Settings
     /// <summary>
     /// The set length for the JWT signing key.
     /// </summary>
-    private const int JwtSigingKeyLength = 256;
+    public const int JwtSigingKeyLength = 256;
+    /// <summary>
+    /// The length of the pepper applied to user passwords.
+    /// </summary>
+    public const int ServerUserPasswordPepperLength = 32;
+    /// <summary>
+    /// The length of the salt applied to user passwords.
+    /// </summary>
+    public const int UserPasswordSaltLength = 32;
+    
 
     #endregion
 
     #region settings
-#nullable disable
 
     /// <summary>
     /// The key used for signing json web tokens.
@@ -68,8 +78,18 @@ public class Settings
     /// </summary>
     public byte[] _jwtIssuerSigingKey { get; private set; }
 
+    /// <summary>
+    /// The pepper applied to user passwords universally on this server.
+    /// </summary>
+    public static string ServerUserPasswordPepper { get => _instance._serverUserPasswordPepper; set => _instance._serverUserPasswordPepper = value; }
+    /// <summary>
+    /// The pepper applied to user passwords universally on this server.
+    /// Should not be directly accessed!
+    /// Use <c cref="ServerUserPasswordPepper">Settings.ServerUserPasswordPepper</c> instead!
+    /// </summary>
+    public string _serverUserPasswordPepper { get; private set; }
 
-#nullable restore
+
     #endregion
     #region actions
 
@@ -77,7 +97,8 @@ public class Settings
     /// Read the settings from the settings.json file and place them into the singleton instance variable.
     /// Create a default instance if the file can't be read.
     /// </summary>
-    public static void LoadSettings(){
+    public static void LoadSettings()
+    {
         _instance = ReadSettings();
     }
 
@@ -128,7 +149,9 @@ public class Settings
     {
         return !(
             settings._jwtIssuerSigingKey != null &&
-            settings._jwtIssuerSigingKey.Length == JwtSigingKeyLength
+            settings._jwtIssuerSigingKey.Length == JwtSigingKeyLength &&
+            settings._serverUserPasswordPepper != null &&
+            settings._serverUserPasswordPepper.Length == ServerUserPasswordPepperLength
             );
 
     }
