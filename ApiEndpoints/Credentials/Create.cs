@@ -49,7 +49,7 @@ public static class Create
         AnonKey_Backend.Models.Credential NewCredential = new Models.Credential()
         {
             Uuid = requestBody.Credential.Uuid,
-            UserUuid = databaseHandle.Users.Where(u => u.Username == user.Identity.Name).First().Uuid,
+            UserUuid = databaseHandle.Users.SingleOrDefault(u => u.Username == user.Identity.Name).Uuid,
             FolderUuid = requestBody.Credential.FolderUuid,
             Password = requestBody.Credential.Password,
             PasswordSalt = requestBody.Credential.PasswordSalt,
