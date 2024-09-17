@@ -14,6 +14,7 @@ public static class Delete
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
             DeleteDelete(string credentialUuid, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
+        databaseHandle.Database.EnsureCreated();
         if (credentialUuid is null)
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
