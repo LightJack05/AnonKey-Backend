@@ -17,12 +17,22 @@ public static class Login
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
             PostLogin(ApiDatastructures.Authentication.Login.AuthenticationLoginRequestBody requestBody, AnonKey_Backend.Authentication.TokenService tokenService, Data.DatabaseHandle databaseHandle)
     {
-        //NO-PROD: This is BS and needs to be replaced with proper authentication!
-        User? user = null;
+        databaseHandle.Database.EnsureCreated();
+
+        User? user = databaseHandle.Users.Where(u => u.Username == requestBody.UserName).FirstOrDefault();
 
         // If no user is found matching the redentials, return 404.
         if (user == null)
         {
+            return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody
+            {
+                Message = "Invalid username or password",
+                Detail = "The username and password combination did not match any known combination. Please ensure the password and username are correct.",
+                InternalCode = 0x1
+            });
+        }
+
+        if(!Cryptography.PasswordHashing.isPasswordValid(requestBody.KdfPasswordResult, user)){
             return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody
             {
                 Message = "Invalid username or password",

@@ -1,4 +1,7 @@
 using System.Text.RegularExpressions;
+using AnonKey_Backend.ApiDatastructures.Users.Create;
+using AnonKey_Backend.Authentication;
+using AnonKey_Backend.Data;
 
 namespace AnonKey_Backend.ApiEndpoints.Users;
 
@@ -51,8 +54,19 @@ public static class Create
             });
         }
 
+        string token = CreateNewUser(requestBody, tokenService, databaseHandle);
+
+        return TypedResults.Ok(new ApiDatastructures.Users.Create.UsersCreateResponseBody
+        {
+            Token = token,
+            ExpiresInSeconds = AnonKey_Backend.Authentication.TokenService.TokenExpiryGraceInSeconds
+        });
 
 
+    }
+
+    private static string CreateNewUser(UsersCreateRequestBody requestBody, TokenService tokenService, DatabaseHandle databaseHandle)
+    {
         string passwordSalt = Cryptography.Generators.NewRandomString(Configuration.Settings.UserPasswordSaltLength);
 
         Models.User user = new()
@@ -73,14 +87,7 @@ public static class Create
         databaseHandle.SaveChanges();
 
         string token = tokenService.GenerateNewToken(user);
-
-        return TypedResults.Ok(new ApiDatastructures.Users.Create.UsersCreateResponseBody
-        {
-            Token = token,
-            ExpiresInSeconds = AnonKey_Backend.Authentication.TokenService.TokenExpiryGraceInSeconds
-        });
-
-
+        return token;
     }
 
     static bool isUsernameValidWithRestrictions(string username)

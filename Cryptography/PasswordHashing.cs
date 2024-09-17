@@ -23,8 +23,17 @@ public static class PasswordHashing
         return Convert.ToBase64String(hash);
     }
 
-    public static bool isPasswordValid(string password, string userSalt, string userPasswordHash)
+    /// <summary>
+    /// Validate a password for a user.
+    /// </summary>
+    /// <param name="password">The password to validate.</param>
+    /// <param name="user">The user to validate the password for.</param>
+    public static bool isPasswordValid(string password, Models.User user)
     {
+        if (user.PasswordSalt == null || user.PasswordHash == null) return false;
+
+        string calculatedHash = HashPassword(password, user.PasswordSalt);
+        return calculatedHash == user.PasswordHash;
 
     }
 
