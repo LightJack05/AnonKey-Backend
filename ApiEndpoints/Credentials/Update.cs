@@ -59,9 +59,9 @@ public static class Update
             Note = requestBody.Credential.Note,
             DisplayName = requestBody.Credential.DisplayName,
             // Not sure about the Timestamps, especially DeletedTimestamp
-            CreatedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds,
+            CreatedTimestamp = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid).CreatedTimestamp,
             ChangedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds,
-            DeletedTimestamp = 0,
+            DeletedTimestamp = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid).DeletedTimestamp,
         };
         /*var FetchedCredetial = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid);*/
         /*FetchedCredetial = NewCredential;*/
