@@ -11,6 +11,7 @@ public static class Create
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok,
+        Conflict<ApiDatastructures.Error.ErrorResponseBody>,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
      PostCreate(ApiDatastructures.Credentials.Create.CredentialsCreateRequestBody requestBody, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
@@ -25,11 +26,30 @@ public static class Create
             });
         }
 
+        if (requestBody.Credential.Uuid == "" || requestBody.Credential.Password == "" || requestBody.Credential.PasswordSalt == "" || requestBody.Credential.Username == "" || requestBody.Credential.UsernameSalt == "" || requestBody.Credential.WebsiteUrl == "" || requestBody.Credential.DisplayName == "" || requestBody.Credential.FolderUuid == "")
+        {
+            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "A parameter in the request was an empty stirng",
+                Detail = "One of the following parameters was an empty string: Uuid, Password, PasswordSalt, Username, UsernameSalt, WebsiteUrl, DisplayName, FolderUuid. This is not allowed, please make sure to provide a valid input.",
+                InternalCode = 0x5
+            });
+        }
+
+        if (databaseHandle.Credentials.Any(c => c.Uuid == requestBody.Credential.Uuid))
+        {
+            return TypedResults.Conflict(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "A credential with this uuid already exists.",
+                Detail = "There is already a user object for the given uuid in the database. Please try changing the uuid and resending the request.",
+                InternalCode = 0x2
+            });
+        }
+
         AnonKey_Backend.Models.Credential NewCredential = new Models.Credential()
         {
-            // Not sure about the Uuids, in the comments of RequsetBody it is written, the the Uuid is the Uuid of the Credential, but I supose it should be the Uuid of the user
-            Uuid = Guid.NewGuid().ToString(),
-            UserUuid = requestBody.Credential.Uuid,
+            Uuid = requestBody.Credential.Uuid,
+            UserUuid = databaseHandle.Users.Where(u => u.Username == user.Identity.Name).First().Uuid,
             FolderUuid = requestBody.Credential.FolderUuid,
             Password = requestBody.Credential.Password,
             PasswordSalt = requestBody.Credential.PasswordSalt,
