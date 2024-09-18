@@ -71,5 +71,5 @@ public class Credential
     /// <summary>
     /// The DeletedTimestamp of the credetial
     /// </summary>
-    public long DeletedTimestamp { get; set; }
+    public long? DeletedTimestamp { get; set; }
 }
