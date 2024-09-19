@@ -25,8 +25,9 @@ public static class Delete
             });
         }
 
+        AnonKey_Backend.Models.Credential FetchedCredential = databaseHandle.Credentials.SingleOrDefault(c => c.Uuid == credentialUuid && c.UserUuid == databaseHandle.Users.Single(u => u.Username == user.Identity.Name).Uuid && c.DeletedTimestamp == null);
 
-        if (!databaseHandle.Credentials.Any(c => c.Uuid == credentialUuid))
+        if (FetchedCredential is null)
         {
             return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()
             {
@@ -36,15 +37,6 @@ public static class Delete
             });
         }
 
-        if (databaseHandle.Users.Single(u => u.Username == user.Identity.Name).Uuid != databaseHandle.Credentials.Single(c => c.Uuid == credentialUuid).UserUuid)
-        {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
-            {
-                Message = "This user does not have access to this credential",
-                Detail = "The credential with the provided uuid does not belong to this user. This is not allowed, please make sure to provide a valid input.",
-                InternalCode = 0x7
-            });
-        }
         databaseHandle.Credentials.Single(c => c.Uuid == credentialUuid).DeletedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds;
         databaseHandle.SaveChanges();
         return TypedResults.Ok();
