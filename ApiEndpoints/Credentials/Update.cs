@@ -1,3 +1,7 @@
+using AnonKey_Backend.ApiDatastructures.Credentials.Update;
+using AnonKey_Backend.Data;
+using AnonKey_Backend.Models;
+
 namespace AnonKey_Backend.ApiEndpoints.Credentials;
 
 /// <summary>
@@ -46,23 +50,25 @@ public static class Update
             });
         }
 
-        AnonKey_Backend.Models.Credential FetchedCredential = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid);
-        FetchedCredential.Uuid = requestBody.Credential.Uuid;
-        FetchedCredential.UserUuid = databaseHandle.Users.SingleOrDefault(u => u.Username == user.Identity.Name).Uuid;
-        FetchedCredential.FolderUuid = requestBody.Credential.FolderUuid;
-        FetchedCredential.Password = requestBody.Credential.Password;
-        FetchedCredential.PasswordSalt = requestBody.Credential.PasswordSalt;
-        FetchedCredential.Username = requestBody.Credential.Username;
-        FetchedCredential.UsernameSalt = requestBody.Credential.UsernameSalt;
-        FetchedCredential.WebsiteUrl = requestBody.Credential.WebsiteUrl;
-        FetchedCredential.Note = requestBody.Credential.Note;
-        FetchedCredential.DisplayName = requestBody.Credential.DisplayName;
-        FetchedCredential.CreatedTimestamp = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid).CreatedTimestamp;
-        FetchedCredential.ChangedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds;
-        FetchedCredential.DeletedTimestamp = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid).DeletedTimestamp;
+        if (databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid).DeletedTimestamp is not null)
+        {
+            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "This credential was deleted and can not be edited anymore.",
+                Detail = "This credential was deleted and can not be accessed in order to edit anymore. Please provide a valid uuid in oder to change an existing credetntial.",
+                InternalCode = 0x8
+            });
+        }
+
+        UpdateCredential(requestBody, user, databaseHandle);
         databaseHandle.SaveChanges();
         AnonKey_Backend.Models.Credential NewCredential = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid);
-        return TypedResults.Ok(new AnonKey_Backend.ApiDatastructures.Credentials.Update.CredentialsUpdateResponseBody()
+        return TypedResults.Ok(CronstructResponse(NewCredential));
+    }
+
+    private static CredentialsUpdateResponseBody CronstructResponse(Credential NewCredential)
+    {
+        return new AnonKey_Backend.ApiDatastructures.Credentials.Update.CredentialsUpdateResponseBody()
         {
             Credential = new AnonKey_Backend.ApiDatastructures.Credentials.Update.CredentialsUpdateCredentialResponse()
             {
@@ -79,6 +85,24 @@ public static class Update
                 ChangedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds,
                 DeletedTimestamp = NewCredential.DeletedTimestamp
             }
-        });
+        };
+    }
+
+    private static void UpdateCredential(CredentialsUpdateRequestBody requestBody, ClaimsPrincipal user, DatabaseHandle databaseHandle)
+    {
+        AnonKey_Backend.Models.Credential FetchedCredential = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid);
+        FetchedCredential.Uuid = requestBody.Credential.Uuid;
+        FetchedCredential.UserUuid = databaseHandle.Users.SingleOrDefault(u => u.Username == user.Identity.Name).Uuid;
+        FetchedCredential.FolderUuid = requestBody.Credential.FolderUuid;
+        FetchedCredential.Password = requestBody.Credential.Password;
+        FetchedCredential.PasswordSalt = requestBody.Credential.PasswordSalt;
+        FetchedCredential.Username = requestBody.Credential.Username;
+        FetchedCredential.UsernameSalt = requestBody.Credential.UsernameSalt;
+        FetchedCredential.WebsiteUrl = requestBody.Credential.WebsiteUrl;
+        FetchedCredential.Note = requestBody.Credential.Note;
+        FetchedCredential.DisplayName = requestBody.Credential.DisplayName;
+        FetchedCredential.CreatedTimestamp = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid).CreatedTimestamp;
+        FetchedCredential.ChangedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds;
+        FetchedCredential.DeletedTimestamp = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid).DeletedTimestamp;
     }
 }
