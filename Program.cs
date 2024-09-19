@@ -51,6 +51,7 @@ public class Program
             });
         });
 
+
         // Entity Framework / Database
         builder.Services.AddEntityFrameworkSqlite().AddDbContext<AnonKey_Backend.Data.DatabaseHandle>(opt => opt.UseSqlite(builder.Configuration.GetConnectionString("ApiDatabase"))); 
 
@@ -87,9 +88,10 @@ public class Program
             app.UseSwaggerUI();
         }
 
+        app.Urls.Add("http://*:5000");
+
         app.UseAuthentication();
         app.UseAuthorization();
-        app.UseHttpsRedirection();
 
         // Initialize the endpoints with the proper mappings
         AnonKey_Backend.ApiEndpoints.EndpointSetup.Initialize(app);
