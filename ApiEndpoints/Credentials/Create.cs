@@ -45,7 +45,16 @@ public static class Create
             });
         }
 
-        AnonKey_Backend.Models.Credential NewCredential = new Models.Credential()
+        Models.Credential NewCredential = CreateNewCredential(requestBody, user, databaseHandle);
+
+        databaseHandle.Credentials.Add(NewCredential);
+        databaseHandle.SaveChanges();
+        return TypedResults.Ok();
+    }
+
+    private static Models.Credential CreateNewCredential(ApiDatastructures.Credentials.Create.CredentialsCreateRequestBody requestBody, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
+    {
+        return new Models.Credential()
         {
             Uuid = requestBody.Credential.Uuid,
             UserUuid = databaseHandle.Users.SingleOrDefault(u => u.Username == user.Identity.Name).Uuid,
@@ -61,9 +70,5 @@ public static class Create
             ChangedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds,
             DeletedTimestamp = null,
         };
-
-        databaseHandle.Credentials.Add(NewCredential);
-        databaseHandle.SaveChanges();
-        return TypedResults.Ok();
     }
 }
