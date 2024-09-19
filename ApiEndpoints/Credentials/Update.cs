@@ -50,16 +50,6 @@ public static class Update
             });
         }
 
-        if (databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid).DeletedTimestamp is not null)
-        {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
-            {
-                Message = "This credential was deleted and can not be edited anymore.",
-                Detail = "This credential was deleted and can not be accessed in order to edit anymore. Please provide a valid uuid in oder to change an existing credetntial.",
-                InternalCode = 0x8
-            });
-        }
-
         UpdateCredential(requestBody, user, databaseHandle);
         databaseHandle.SaveChanges();
         AnonKey_Backend.Models.Credential NewCredential = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid);
@@ -103,6 +93,6 @@ public static class Update
         FetchedCredential.DisplayName = requestBody.Credential.DisplayName;
         FetchedCredential.CreatedTimestamp = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid).CreatedTimestamp;
         FetchedCredential.ChangedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds;
-        FetchedCredential.DeletedTimestamp = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid).DeletedTimestamp;
+        FetchedCredential.DeletedTimestamp = requestBody.Credential.DeletedTimestamp;
     }
 }
