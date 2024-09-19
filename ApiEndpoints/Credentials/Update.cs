@@ -42,7 +42,7 @@ public static class Update
 
         if (databaseHandle.Users.Single(u => u.Username == user.Identity.Name).Uuid != databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid).UserUuid)
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "This user does not have access to this credential",
                 Detail = "The credential with the provided uuid does not belong to this user. This is not allowed, please make sure to provide a valid input.",
