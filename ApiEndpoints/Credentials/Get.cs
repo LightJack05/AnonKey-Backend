@@ -16,23 +16,13 @@ public static class Get
             GetGet(string credentialUuid, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
         databaseHandle.Database.EnsureCreated();
-        if (credentialUuid is null)
+        if (String.IsNullOrEmpty(credentialUuid))
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
-                Message = "A credentialUuid parameter in the request was null",
-                Detail = "credentialUuid parameter in the request was null. This is not allowed, please fill in all parameters.",
+                Message = "A credentialUuid in the request was null or an empty string",
+                Detail = "credentialUuid parameter in the request was null or an empty string. This is not allowed, please fill in all parameters.",
                 InternalCode = 0x4
-            });
-        }
-
-        if (credentialUuid == "")
-        {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
-            {
-                Message = "A credentialUuid parameter in the request was an empty stirng",
-                Detail = "One of the following parameters was an empty string: credentialUuid. This is not allowed, please make sure to provide a valid input.",
-                InternalCode = 0x5
             });
         }
 
@@ -43,6 +33,16 @@ public static class Get
                 Message = "No credetial with this Uuid was not found in the database",
                 Detail = "No credetial with the provided credentialUuid was not found. Please make sure the correct credentialUuid is provided.",
                 InternalCode = 0x6
+            });
+        }
+
+        if (databaseHandle.Users.Single(u => u.Username == user.Identity.Name).Uuid != databaseHandle.Credentials.Single(c => c.Uuid == credentialUuid).UserUuid)
+        {
+            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "This user does not have access to this credential",
+                Detail = "The credential with the provided uuid does not belong to this user. This is not allowed, please make sure to provide a valid input.",
+                InternalCode = 0x7
             });
         }
 
