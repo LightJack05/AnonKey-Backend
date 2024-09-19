@@ -25,19 +25,18 @@ public static class GetAll
                 InternalCode = 0x4
             });
         }
+
         if (!databaseHandle.Credentials.Any(c => c.UserUuid == databaseHandle.Users.SingleOrDefault(u => u.Username == user.Identity.Name).Uuid))
         {
-            return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()
-            {
-                Message = "User has no credentials yet",
-                Detail = "There are no data in the credentials table in the databes associated with a given user.",
-                InternalCode = 0x6
-            });
+            AnonKey_Backend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllResponseBody EmptyResult = new AnonKey_Backend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllResponseBody();
+            EmptyResult.Credentials = new List<AnonKey_Backend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllCredential>();
+            return TypedResults.Ok(EmptyResult);
         }
+
         List<AnonKey_Backend.Models.Credential> FetchedCredetials = databaseHandle.Credentials.Where(c => c.UserUuid == databaseHandle.Users.SingleOrDefault(u => u.Username == user.Identity.Name).Uuid).ToList();
         AnonKey_Backend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllResponseBody Result = new AnonKey_Backend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllResponseBody();
         Result.Credentials = new List<AnonKey_Backend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllCredential>();
-        foreach (var FetchedCredential in FetchedCredetials)
+        foreach (AnonKey_Backend.Models.Credential FetchedCredential in FetchedCredetials)
         {
             Result.Credentials.Add(new AnonKey_Backend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllCredential()
             {
