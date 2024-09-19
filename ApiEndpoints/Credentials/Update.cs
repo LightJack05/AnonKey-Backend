@@ -16,23 +16,13 @@ public static class Update
             PutUpdate(ApiDatastructures.Credentials.Update.CredentialsUpdateRequestBody requestBody, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
         databaseHandle.Database.EnsureCreated();
-        if (requestBody.Credential is null || requestBody.Credential.Uuid is null || requestBody.Credential.Password is null || requestBody.Credential.PasswordSalt is null || requestBody.Credential.Username is null || requestBody.Credential.UsernameSalt is null || requestBody.Credential.WebsiteUrl is null || requestBody.Credential.Note is null || requestBody.Credential.DisplayName is null || requestBody.Credential.FolderUuid is null)
+        if (String.IsNullOrEmpty(requestBody.Credential.Uuid) || String.IsNullOrEmpty(requestBody.Credential.Password) || String.IsNullOrEmpty(requestBody.Credential.PasswordSalt) || String.IsNullOrEmpty(requestBody.Credential.Username) || String.IsNullOrEmpty(requestBody.Credential.UsernameSalt) || String.IsNullOrEmpty(requestBody.Credential.WebsiteUrl) || String.IsNullOrEmpty(requestBody.Credential.Note) || String.IsNullOrEmpty(requestBody.Credential.DisplayName) || String.IsNullOrEmpty(requestBody.Credential.FolderUuid))
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
-                Message = "A parameter in the request was null",
-                Detail = "One of the parameters in the request was null. This is not allowed, please fill in all parameters.",
+                Message = "A parameter in the request was null or an empty string",
+                Detail = "One of the parameters in the request was null or an empty string. This is not allowed, please fill in all parameters.",
                 InternalCode = 0x4
-            });
-        }
-
-        if (requestBody.Credential.Uuid == "" || requestBody.Credential.Password == "" || requestBody.Credential.PasswordSalt == "" || requestBody.Credential.Username == "" || requestBody.Credential.UsernameSalt == "" || requestBody.Credential.WebsiteUrl == "" || requestBody.Credential.DisplayName == "" || requestBody.Credential.FolderUuid == "")
-        {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
-            {
-                Message = "A parameter in the request was an empty stirng",
-                Detail = "One of the following parameters was an empty string: Uuid, Password, PasswordSalt, Username, UsernameSalt, WebsiteUrl, DisplayName, FolderUuid. This is not allowed, please make sure to provide a valid input.",
-                InternalCode = 0x5
             });
         }
 
@@ -46,27 +36,32 @@ public static class Update
             });
         }
 
-        AnonKey_Backend.Models.Credential NewCredential = new Models.Credential()
+        if (databaseHandle.Users.Single(u => u.Username == user.Identity.Name).Uuid != databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid).UserUuid)
         {
-            Uuid = requestBody.Credential.Uuid,
-            UserUuid = databaseHandle.Users.SingleOrDefault(u => u.Username == user.Identity.Name).Uuid,
-            FolderUuid = requestBody.Credential.FolderUuid,
-            Password = requestBody.Credential.Password,
-            PasswordSalt = requestBody.Credential.PasswordSalt,
-            Username = requestBody.Credential.Username,
-            UsernameSalt = requestBody.Credential.UsernameSalt,
-            WebsiteUrl = requestBody.Credential.WebsiteUrl,
-            Note = requestBody.Credential.Note,
-            DisplayName = requestBody.Credential.DisplayName,
-            // Not sure about the Timestamps, especially DeletedTimestamp
-            CreatedTimestamp = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid).CreatedTimestamp,
-            ChangedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds,
-            DeletedTimestamp = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid).DeletedTimestamp,
-        };
-        /*var FetchedCredetial = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid);*/
-        /*FetchedCredetial = NewCredential;*/
-        databaseHandle.Credentials.Update(NewCredential);
+            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "This user does not have access to this credential",
+                Detail = "The credential with the provided uuid does not belong to this user. This is not allowed, please make sure to provide a valid input.",
+                InternalCode = 0x7
+            });
+        }
+
+        AnonKey_Backend.Models.Credential FetchedCredential = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid);
+        FetchedCredential.Uuid = requestBody.Credential.Uuid;
+        FetchedCredential.UserUuid = databaseHandle.Users.SingleOrDefault(u => u.Username == user.Identity.Name).Uuid;
+        FetchedCredential.FolderUuid = requestBody.Credential.FolderUuid;
+        FetchedCredential.Password = requestBody.Credential.Password;
+        FetchedCredential.PasswordSalt = requestBody.Credential.PasswordSalt;
+        FetchedCredential.Username = requestBody.Credential.Username;
+        FetchedCredential.UsernameSalt = requestBody.Credential.UsernameSalt;
+        FetchedCredential.WebsiteUrl = requestBody.Credential.WebsiteUrl;
+        FetchedCredential.Note = requestBody.Credential.Note;
+        FetchedCredential.DisplayName = requestBody.Credential.DisplayName;
+        FetchedCredential.CreatedTimestamp = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid).CreatedTimestamp;
+        FetchedCredential.ChangedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds;
+        FetchedCredential.DeletedTimestamp = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid).DeletedTimestamp;
         databaseHandle.SaveChanges();
+        AnonKey_Backend.Models.Credential NewCredential = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid);
         return TypedResults.Ok(new AnonKey_Backend.ApiDatastructures.Credentials.Update.CredentialsUpdateResponseBody()
         {
             Credential = new AnonKey_Backend.ApiDatastructures.Credentials.Update.CredentialsUpdateCredentialResponse()
