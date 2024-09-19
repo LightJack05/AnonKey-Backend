@@ -1,3 +1,6 @@
+using AnonKey_Backend.ApiDatastructures.Credentials.GetAll;
+using AnonKey_Backend.Data;
+
 namespace AnonKey_Backend.ApiEndpoints.Credentials;
 
 /// <summary>
@@ -33,6 +36,12 @@ public static class GetAll
             return TypedResults.Ok(EmptyResult);
         }
 
+        CredentialsGetAllResponseBody Result = GetAllCredetials(user, databaseHandle);
+        return TypedResults.Ok(Result);
+    }
+
+    private static CredentialsGetAllResponseBody GetAllCredetials(ClaimsPrincipal user, DatabaseHandle databaseHandle)
+    {
         List<AnonKey_Backend.Models.Credential> FetchedCredetials = databaseHandle.Credentials.Where(c => c.UserUuid == databaseHandle.Users.SingleOrDefault(u => u.Username == user.Identity.Name).Uuid).ToList();
         AnonKey_Backend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllResponseBody Result = new AnonKey_Backend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllResponseBody();
         Result.Credentials = new List<AnonKey_Backend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllCredential>();
@@ -54,6 +63,7 @@ public static class GetAll
                 DeletedTimestamp = FetchedCredential.DeletedTimestamp
             });
         }
-        return TypedResults.Ok(Result);
+
+        return Result;
     }
 }
