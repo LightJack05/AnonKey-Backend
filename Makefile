@@ -12,14 +12,16 @@ clean:
 	rm -rf $(buildDirectory)
 	rm -rf $(publishDirectory)
 
+wipe: clean
+	rm database.db
+
 run: 
 	$(compiler) run	
 
 publish:
 	$(compiler) publish -o $(publishDirectory)
 
-install: publish
-	rm -rf $(installDirectory)
+install: wipe uninstall publish
 	if [[ ! -d $(installDirectory) ]]; then mkdir $(installDirectory); fi
 	cp -r publish/* $(installDirectory) 
 	cp AnonKey.service /etc/systemd/system/
@@ -27,10 +29,9 @@ install: publish
 	echo "Installed AnonKey to /opt/AnonKey. Start Systemd Unit AnonKey.service to run the application!"
 	echo "The application uses TCP port 5000."
 
-install-debug: publish 
-	rm -rf $(installDirectory)
+install-debug: wipe uninstall publish 
 	if [[ ! -d $(installDirectory) ]]; then mkdir $(installDirectory); fi
-	cp -r $(buildDirectory)/* $(installDirectory) 
+	cp -r publish/* $(installDirectory) 
 	cp AnonKey-Debug.service /etc/systemd/system/
 	systemctl enable AnonKey-Debug.service
 	echo "Installed debug version of AnonKey to /opt/AnonKey. Start Systemd Unit AnonKey.service to run the application!"
