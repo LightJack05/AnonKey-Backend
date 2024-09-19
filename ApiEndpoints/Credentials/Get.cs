@@ -1,3 +1,6 @@
+using AnonKey_Backend.ApiDatastructures.Credentials.Get;
+using AnonKey_Backend.Models;
+
 namespace AnonKey_Backend.ApiEndpoints.Credentials;
 
 /// <summary>
@@ -46,8 +49,12 @@ public static class Get
             });
         }
 
-        AnonKey_Backend.Models.Credential FetchedCredential = databaseHandle.Credentials.SingleOrDefault(c => c.Uuid == credentialUuid);
-        return TypedResults.Ok(new ApiDatastructures.Credentials.Get.CredentialsGetResponseBody()
+        return TypedResults.Ok(ConstructResponse(databaseHandle.Credentials.SingleOrDefault(c => c.Uuid == credentialUuid)));
+    }
+
+    private static CredentialsGetResponseBody ConstructResponse(Credential FetchedCredential)
+    {
+        return new ApiDatastructures.Credentials.Get.CredentialsGetResponseBody()
         {
             Credential = new AnonKey_Backend.ApiDatastructures.Credentials.Get.CredentialsGetCredential()
             {
@@ -64,6 +71,6 @@ public static class Get
                 ChangedTimestamp = FetchedCredential.ChangedTimestamp,
                 DeletedTimestamp = FetchedCredential.DeletedTimestamp
             },
-        });
+        };
     }
 }
