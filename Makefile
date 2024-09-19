@@ -13,7 +13,7 @@ clean:
 	rm -rf $(publishDirectory)
 
 wipe: clean
-	rm database.db
+	if [[ -f database.db ]]; then rm database.db; fi
 
 run: 
 	$(compiler) run	
@@ -38,10 +38,6 @@ install-debug: wipe uninstall publish
 	echo "The application uses TCP port 5000."
 
 uninstall:
-	systemctl stop AnonKey.service
-	systemctl disable AnonKey.service
-	rm /etc/systemd/system/AnonKey.service
-	systemctl stop AnonKey-Debug.service
-	systemctl disable AnonKey-Debug.service
-	rm /etc/systemd/system/AnonKey-Debug.service
+	if [[ -f /etc/systemd/system/AnonKey.service ]]; then systemctl is-active AnonKey.Service && systemctl stop AnonKey.service; systemctl disable AnonKey.service; rm /etc/systemd/system/AnonKey.service; fi
+	if [[ -f /etc/systemd/system/AnonKey-Debug.service ]]; then systemctl is-active AnonKey.Service && systemctl stop AnonKey-Debug.service; systemctl disable AnonKey-Debug.service; rm /etc/systemd/system/AnonKey-Debug.service; fi
 	rm -rf $(installDirectory)
