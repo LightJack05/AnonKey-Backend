@@ -29,13 +29,6 @@ public static class GetAll
             });
         }
 
-        if (!databaseHandle.Credentials.Any(c => c.UserUuid == databaseHandle.Users.SingleOrDefault(u => u.Username == user.Identity.Name).Uuid))
-        {
-            AnonKey_Backend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllResponseBody EmptyResult = new AnonKey_Backend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllResponseBody();
-            EmptyResult.Credentials = new List<AnonKey_Backend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllCredential>();
-            return TypedResults.Ok(EmptyResult);
-        }
-
         CredentialsGetAllResponseBody Result = GetAllCredetials(user, databaseHandle);
         return TypedResults.Ok(Result);
     }
