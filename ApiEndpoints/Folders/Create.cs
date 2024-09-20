@@ -1,6 +1,6 @@
-using System.Text.RegularExpressions;
 using AnonKey_Backend.ApiDatastructures.Folders.Create;
 using AnonKey_Backend.Data;
+using AnonKey_Backend.Models;
 
 
 namespace AnonKey_Backend.ApiEndpoints.Folders;
@@ -16,13 +16,12 @@ public static class Create
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok<ApiDatastructures.Folders.Create.FoldersCreateResponseBody>,
+        Conflict<ApiDatastructures.Error.ErrorResponseBody>,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
             PostCreate(ApiDatastructures.Folders.Create.FoldersCreateRequestBody requestBody, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
-        //throw new NotImplementedException();
-
         databaseHandle.Database.EnsureCreated();
-        if (requestBody.Folder.Name is null)
+        if (requestBody.Folder is null || requestBody.Folder.Name is null)
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
@@ -32,27 +31,44 @@ public static class Create
             });
         }
 
-        string token = CreateNewFolder(requestBody, user, databaseHandle);
+        if (databaseHandle.Folders.Any(f => f.DisplayName == requestBody.Folder.Name))
+        {
+            return TypedResults.Conflict(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "The folder name is already taken",
+                Detail = "The folder name is already taken. Please choose a different name.",
+                InternalCode = 0x5
+            });
+        }
+
+        string folderUuid = CreateNewFolder(requestBody, user, databaseHandle);
 
         return TypedResults.Ok(new ApiDatastructures.Folders.Create.FoldersCreateResponseBody
         {
-            FolderUuid = token
+            FolderUuid = folderUuid
         });
     }
 
     private static string CreateNewFolder(FoldersCreateRequestBody requestBody, ClaimsPrincipal user, DatabaseHandle databaseHandle)
     {
+        User userObject = RetrieveUserFromDatabase(user, databaseHandle);
+
         Models.Folder folder = new()
         {
             Uuid = Guid.NewGuid().ToString(),
-            UserUuid = user.FindFirst(ClaimTypes.NameIdentifier)?.Value, //weiß nicht ob das so richtig ist
+            UserUuid = userObject.Uuid,
             DisplayName = requestBody.Folder.Name,
             Icon = requestBody.Folder.Icon.ToString()
         };
-        
+
         databaseHandle.Folders.Add(folder);
         databaseHandle.SaveChanges();
 
         return folder.Uuid;
+    }
+
+    private static User RetrieveUserFromDatabase(ClaimsPrincipal user, DatabaseHandle databaseHandle)
+    {
+        return databaseHandle.Users.First(u => u.Username == user.Identity.Name);
     }
 }
