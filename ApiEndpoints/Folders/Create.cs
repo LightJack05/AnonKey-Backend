@@ -21,7 +21,7 @@ public static class Create
             PostCreate(ApiDatastructures.Folders.Create.FoldersCreateRequestBody requestBody, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
         databaseHandle.Database.EnsureCreated();
-        if (requestBody.Folder is null || requestBody.Folder.Name is null)
+        if (requestBody.Folder is null || String.IsNullOrEmpty(requestBody.Folder.Name))
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
