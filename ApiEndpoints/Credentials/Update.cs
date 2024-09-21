@@ -30,7 +30,10 @@ public static class Update
             });
         }
 
-        if (!databaseHandle.Credentials.Any(c => c.Uuid == requestBody.Credential.Uuid))
+        AnonKey_Backend.Models.Credential FetchedCredential = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid);
+        string UserUuid = databaseHandle.Users.Single(u => u.Username == user.Identity.Name).Uuid;
+
+        if (FetchedCredential is null)
         {
             return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()
             {
@@ -40,7 +43,7 @@ public static class Update
             });
         }
 
-        if (databaseHandle.Users.Single(u => u.Username == user.Identity.Name).Uuid != databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid).UserUuid)
+        if (UserUuid != FetchedCredential.UserUuid)
         {
             return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()
             {
@@ -50,7 +53,7 @@ public static class Update
             });
         }
 
-        UpdateCredential(requestBody, user, databaseHandle);
+        UpdateCredential(requestBody, user, UserUuid, FetchedCredential);
         databaseHandle.SaveChanges();
         AnonKey_Backend.Models.Credential NewCredential = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid);
         return TypedResults.Ok(CronstructResponse(NewCredential));
@@ -72,17 +75,16 @@ public static class Update
                 Note = NewCredential.Note,
                 DisplayName = NewCredential.DisplayName,
                 CreatedTimestamp = NewCredential.CreatedTimestamp,
-                ChangedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds,
+                ChangedTimestamp = NewCredential.ChangedTimestamp,
                 DeletedTimestamp = NewCredential.DeletedTimestamp
             }
         };
     }
 
-    private static void UpdateCredential(CredentialsUpdateRequestBody requestBody, ClaimsPrincipal user, DatabaseHandle databaseHandle)
+    private static void UpdateCredential(CredentialsUpdateRequestBody requestBody, ClaimsPrincipal user, string UserUuid, AnonKey_Backend.Models.Credential FetchedCredential)
     {
-        AnonKey_Backend.Models.Credential FetchedCredential = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid);
         FetchedCredential.Uuid = requestBody.Credential.Uuid;
-        FetchedCredential.UserUuid = databaseHandle.Users.SingleOrDefault(u => u.Username == user.Identity.Name).Uuid;
+        FetchedCredential.UserUuid = UserUuid;
         FetchedCredential.FolderUuid = requestBody.Credential.FolderUuid;
         FetchedCredential.Password = requestBody.Credential.Password;
         FetchedCredential.PasswordSalt = requestBody.Credential.PasswordSalt;
@@ -91,7 +93,6 @@ public static class Update
         FetchedCredential.WebsiteUrl = requestBody.Credential.WebsiteUrl;
         FetchedCredential.Note = requestBody.Credential.Note;
         FetchedCredential.DisplayName = requestBody.Credential.DisplayName;
-        FetchedCredential.CreatedTimestamp = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid).CreatedTimestamp;
         FetchedCredential.ChangedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds;
         FetchedCredential.DeletedTimestamp = requestBody.Credential.DeletedTimestamp;
     }
