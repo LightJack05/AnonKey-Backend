@@ -58,7 +58,7 @@ public static class Create
             Uuid = Guid.NewGuid().ToString(),
             UserUuid = userObject.Uuid,
             DisplayName = requestBody.Folder.Name,
-            Icon = requestBody.Folder.Icon.ToString()
+            Icon = requestBody.Folder.Icon
         };
 
         databaseHandle.Folders.Add(folder);
