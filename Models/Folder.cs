@@ -25,5 +25,5 @@ public class Folder
     /// <summary>
     /// The icon of the folder
     /// </summary>
-    public string? Icon { get; set; }
+    public int Icon { get; set; }
 }
