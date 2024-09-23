@@ -1,18 +1,18 @@
 namespace AnonKey_Backend.ApiEndpoints.Credentials;
 
 /// <summary>
-/// Handles the credentials delete endpoint.
+/// Handles the credentials soft-delete endpoint.
 /// </summary>
-public static class Delete
+public static class SoftDelete
 {
     /// <summary>
-    /// Deletes an existing credential object.
+    /// SoftDeletes an existing credential object.
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok,
         NotFound<ApiDatastructures.Error.ErrorResponseBody>,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
-            DeleteDelete(string credentialUuid, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
+            DeleteSoftDelete(string credentialUuid, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
         databaseHandle.Database.EnsureCreated();
         if (String.IsNullOrEmpty(credentialUuid))
@@ -25,19 +25,19 @@ public static class Delete
             });
         }
 
-        AnonKey_Backend.Models.Credential FetchedCredential = databaseHandle.Credentials.SingleOrDefault(c => c.Uuid == credentialUuid && c.UserUuid == databaseHandle.Users.Single(u => u.Username == user.Identity.Name).Uuid && c.DeletedTimestamp != null);
+        AnonKey_Backend.Models.Credential FetchedCredential = databaseHandle.Credentials.SingleOrDefault(c => c.Uuid == credentialUuid && c.UserUuid == databaseHandle.Users.Single(u => u.Username == user.Identity.Name).Uuid && c.DeletedTimestamp == null);
 
         if (FetchedCredential is null)
         {
             return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()
             {
-                Message = "No credential with this Uuid was found in the database or the credetial with this Uuid was not previously soft-deleted.",
-                Detail = "No credential with the provided credentialUuid was found or the credetial with this Uuid was not previously soft-deleted. Please make sure the correct credentialUuid is provided.",
+                Message = "No credential with this Uuid was found in the database or the credetial with this Uuid is already soft-deleted.",
+                Detail = "No credential with the provided credentialUuid was not found or the credetial with this Uuid is already soft-deleted. Please make sure the correct credentialUuid is provided.",
                 InternalCode = 0x6
             });
         }
 
-        databaseHandle.Remove(FetchedCredential);
+        databaseHandle.Credentials.Single(c => c.Uuid == credentialUuid).DeletedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds;
         databaseHandle.SaveChanges();
         return TypedResults.Ok();
     }
