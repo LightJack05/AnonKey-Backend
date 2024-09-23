@@ -53,5 +53,5 @@ public class CredentialsGetAllCredential
     /// <summary>
     /// The unix timestamp the credential was deleted at.
     /// </summary>
-    public long DeletedTimestamp { get; set; }
+    public long? DeletedTimestamp { get; set; }
 }
