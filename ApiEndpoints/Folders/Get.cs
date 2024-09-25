@@ -15,6 +15,17 @@ public static class Get
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
             GetGet(string folderUuid, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
-       throw new NotImplementedException(); 
+        databaseHandle.Database.EnsureCreated();
+        if (!databaseHandle.Folders.Any(f => f.Uuid == folderUuid))
+        {
+            return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "The folder does not exist",
+                Detail = "The folder with the given UUID does not exist.",
+                InternalCode = 0x6
+            });
+        }
+
+        
     }
 }
