@@ -10,28 +10,30 @@ public class DatabaseHandle : DbContext
     /// <summary>
     /// A table to save UserSecrets
     /// </summary>
-    public DbSet<User>? Users { get; set; }
+    public DbSet<User> Users { get; set; }
 
     /// <summary>
     /// A table to save Users
     /// </summary>
-    public DbSet<UserInfo>? UserInfos { get; set; }
+    public DbSet<UserInfo> UserInfos { get; set; }
 
     /// <summary>
     /// A table to save Credentials
     /// </summary>
-    public DbSet<Credential>? Credentials { get; set; }
+    public DbSet<Credential> Credentials { get; set; }
 
     /// <summary>
     /// A table to save Folders
     /// </summary>
-    public DbSet<Folder>? Folders { get; set; }
+    public DbSet<Folder> Folders { get; set; }
 
+#nullable disable
     /// <summary>
     /// Set the DBPath to the ./database.db
     /// </summary>
     public DatabaseHandle(DbContextOptions<DatabaseHandle> Options) : base(Options)
     {
     }
+#nullable restore
 }
 
