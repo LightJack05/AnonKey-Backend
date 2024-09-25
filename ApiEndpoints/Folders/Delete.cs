@@ -1,5 +1,6 @@
 using AnonKey_Backend.Data;
 using AnonKey_Backend.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AnonKey_Backend.ApiEndpoints.Folders;
 
@@ -16,7 +17,7 @@ public static class Delete
         Ok,
         NotFound<ApiDatastructures.Error.ErrorResponseBody>,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
-            DeleteDelete(string folderUuid, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
+            DeleteDelete(string folderUuid, bool recursive, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
         databaseHandle.Database.EnsureCreated();
         if (String.IsNullOrEmpty(folderUuid))
@@ -29,7 +30,10 @@ public static class Delete
             });
         }
 
-        if (databaseHandle.Folders.Any(f => f.Uuid == folderUuid))
+        User userObject = databaseHandle.Users.FirstOrDefault(u => u.Username == user.Identity.Name);
+        Folder folder = databaseHandle.Folders.FirstOrDefault(f => f.Uuid == folderUuid);
+
+        if (folder == null || userObject == null || folder.UserUuid != userObject.Uuid)
         {
             return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()
             {
@@ -39,14 +43,39 @@ public static class Delete
             });
         }
 
-        DeleteFolder(folderUuid, user, databaseHandle);
+        if (recursive)
+        {
+            DeleteFolderItems(folder, databaseHandle);
+        }
+        else
+        {
+            ClearFolder(folder, databaseHandle);
+        }
+        databaseHandle.Folders.Remove(folder);
         databaseHandle.SaveChanges();
         return TypedResults.Ok();
     }
 
-    private static void DeleteFolder(string folderUuid, ClaimsPrincipal user, DatabaseHandle databaseHandle)
+    /// <summary>
+    /// Remove all Items from Folder 
+    /// </summary>
+    /// <param name="folder">Folder to remove the Items from</param>
+    /// <param name="databaseHandle">Database to handle</param>
+    private static void ClearFolder(Folder folder, DatabaseHandle databaseHandle)
     {
-        User userObject = databaseHandle.Users.First(u => u.Username == user.Identity.Name);
-        databaseHandle.Folders.RemoveRange(databaseHandle.Folders.Where(f => f.Uuid == folderUuid && f.UserUuid == userObject.Uuid));
+        foreach (Credential credential in databaseHandle.Credentials.Where(c => c.FolderUuid == folder.Uuid))
+        {
+            credential.FolderUuid = null;
+        }
+    }
+
+    /// <summary>
+    /// Delete all Items in Folder
+    /// </summary>
+    /// <param name="folder">Folder to delete the Items from</param>
+    /// <param name="databaseHandle">Database to handle</param>
+    private static void DeleteFolderItems(Folder folder, DatabaseHandle databaseHandle)
+    {
+        databaseHandle.Credentials.RemoveRange(databaseHandle.Credentials.Where(c => c.FolderUuid == folder.Uuid));
     }
 }
