@@ -404,3 +404,8 @@ settings.json
 # Enity Framework and database
 Migrations/
 database.db
+
+
+docs/html/
+docs/latex/
+
