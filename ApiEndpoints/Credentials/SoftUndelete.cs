@@ -12,7 +12,7 @@ public static class SoftUndelete
         Ok,
         NotFound<ApiDatastructures.Error.ErrorResponseBody>,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
-            DeleteSoftUndelete(string credentialUuid, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
+            PutSoftUndelete(string credentialUuid, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
         databaseHandle.Database.EnsureCreated();
         if (String.IsNullOrEmpty(credentialUuid))
