@@ -1,3 +1,5 @@
+using AnonKey_Backend.ApiDatastructures.Folders.GetAll;
+using AnonKey_Backend.Data;
 using AnonKey_Backend.Models;
 
 namespace AnonKey_Backend.ApiEndpoints.Folders;
@@ -16,6 +18,16 @@ public static class GetAll
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
             GetGetAll(ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
+        if (user == null)
+        {
+            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "The user is null",
+                Detail = "The user is null, therefore no data extraction is possible",
+                InternalCode = 0x4
+            });
+        }
+        
         User userObject = databaseHandle.Users.FirstOrDefault(u => u.Username == user.Identity.Name);
         if (userObject == null)
         {
@@ -26,6 +38,25 @@ public static class GetAll
                 InternalCode = 0x6
             });
         }
-        
+        FoldersGetAllResponseBody folders = GetAllFolders(userObject, databaseHandle);
+        return TypedResults.Ok(folders);
+    }
+
+    private static FoldersGetAllResponseBody GetAllFolders(User userObject, DatabaseHandle databaseHandle)
+    {
+        List<AnonKey_Backend.Models.Folder> FetchedFolders = databaseHandle.Folders.Where(f => f.UserUuid == userObject.Uuid).ToList();
+        AnonKey_Backend.ApiDatastructures.Folders.GetAll.FoldersGetAllResponseBody Result = new AnonKey_Backend.ApiDatastructures.Folders.GetAll.FoldersGetAllResponseBody();
+        Result.Folder = new List<FoldersGetAllFolder>();
+        foreach (AnonKey_Backend.Models.Folder FetchedFolder in FetchedFolders)
+        {
+            Result.Folder.Add(new AnonKey_Backend.ApiDatastructures.Folders.GetAll.FoldersGetAllFolder()
+            {
+                Uuid = FetchedFolder.Uuid,
+                Name = FetchedFolder.DisplayName,
+                Icon = FetchedFolder.Icon
+            });
+        }
+
+        return Result;
     }
 }
