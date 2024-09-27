@@ -44,19 +44,19 @@ public static class GetAll
 
     private static FoldersGetAllResponseBody GetAllFolders(User userObject, DatabaseHandle databaseHandle)
     {
-        List<AnonKey_Backend.Models.Folder> FetchedFolders = databaseHandle.Folders.Where(f => f.UserUuid == userObject.Uuid).ToList();
-        AnonKey_Backend.ApiDatastructures.Folders.GetAll.FoldersGetAllResponseBody Result = new AnonKey_Backend.ApiDatastructures.Folders.GetAll.FoldersGetAllResponseBody();
-        Result.Folder = new List<FoldersGetAllFolder>();
-        foreach (AnonKey_Backend.Models.Folder FetchedFolder in FetchedFolders)
+        List<AnonKey_Backend.Models.Folder> fetchedFolders = databaseHandle.Folders.Where(f => f.UserUuid == userObject.Uuid).ToList();
+        AnonKey_Backend.ApiDatastructures.Folders.GetAll.FoldersGetAllResponseBody result = new AnonKey_Backend.ApiDatastructures.Folders.GetAll.FoldersGetAllResponseBody();
+        result.Folder = new List<FoldersGetAllFolder>();
+        foreach (AnonKey_Backend.Models.Folder fetchedFolder in fetchedFolders)
         {
-            Result.Folder.Add(new AnonKey_Backend.ApiDatastructures.Folders.GetAll.FoldersGetAllFolder()
+            result.Folder.Add(new AnonKey_Backend.ApiDatastructures.Folders.GetAll.FoldersGetAllFolder()
             {
-                Uuid = FetchedFolder.Uuid,
-                Name = FetchedFolder.DisplayName,
-                Icon = FetchedFolder.Icon
+                Uuid = fetchedFolder.Uuid,
+                Name = fetchedFolder.DisplayName,
+                Icon = fetchedFolder.Icon
             });
         }
 
-        return Result;
+        return result;
     }
 }
