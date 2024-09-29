@@ -1,3 +1,5 @@
+using AnonKey_Backend.Models;
+
 namespace AnonKey_Backend.ApiEndpoints.Folders;
 
 /// <summary>
@@ -15,6 +17,38 @@ public static class Get
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
             GetGet(string folderUuid, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
-       throw new NotImplementedException(); 
+        databaseHandle.Database.EnsureCreated();
+
+        if (String.IsNullOrEmpty(folderUuid))
+        {
+            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "The folder UUID is missing",
+                Detail = "The folder UUID is missing from the request. Please provide the folder UUID.",
+                InternalCode = 0x4
+            });
+        }
+
+        User userObject = databaseHandle.Users.FirstOrDefault(u => u.Username == user.Identity.Name);
+        Folder folder = databaseHandle.Folders.FirstOrDefault(f => f.Uuid == folderUuid);
+        if (folder == null || userObject == null || folder.UserUuid != userObject.Uuid)
+        {
+            return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "The folder does not exist",
+                Detail = "The folder with the given UUID does not exist.",
+                InternalCode = 0x6
+            });
+        }
+
+        return TypedResults.Ok(new ApiDatastructures.Folders.Get.FoldersGetResponseBody
+        {
+            Folder = new ApiDatastructures.Folders.Get.FoldersGetFolder
+            {
+                Uuid = folder.Uuid,
+                Name = folder.DisplayName,
+                Icon = folder.Icon
+            }
+        });
     }
 }
