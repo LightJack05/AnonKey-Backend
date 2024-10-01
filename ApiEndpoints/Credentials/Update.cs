@@ -72,8 +72,11 @@ public static class Update
                 Username = NewCredential.Username,
                 UsernameSalt = NewCredential.UsernameSalt,
                 WebsiteUrl = NewCredential.WebsiteUrl,
+                WebsiteUrlSalt = NewCredential.WebsiteUrlSalt,
                 Note = NewCredential.Note,
+                NoteSalt = NewCredential.NoteSalt,
                 DisplayName = NewCredential.DisplayName,
+                DisplayNameSalt = NewCredential.DisplayNameSalt,
                 CreatedTimestamp = NewCredential.CreatedTimestamp,
                 ChangedTimestamp = NewCredential.ChangedTimestamp,
                 DeletedTimestamp = NewCredential.DeletedTimestamp
