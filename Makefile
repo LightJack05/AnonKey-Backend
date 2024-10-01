@@ -18,6 +18,9 @@ wipe: clean
 run: 
 	$(compiler) run	
 
+run_alt:
+	ASPNETCORE_HTTP_PORTS=5100 $(compiler) run	
+
 publish:
 	$(compiler) publish -o $(publishDirectory)
 

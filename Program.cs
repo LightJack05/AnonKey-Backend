@@ -88,7 +88,6 @@ public class Program
             app.UseSwaggerUI();
         }
 
-        app.Urls.Add("http://*:5000");
 
         app.UseAuthentication();
         app.UseAuthorization();

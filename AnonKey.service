@@ -4,6 +4,7 @@ Wants=network.target
 After=network-online.target syslog.target
 
 [Service]
+Environment="ASPNETCORE_HTTP_PORTS=5000"
 WorkingDirectory=/opt/AnonKey
 Type=simple
 ExecStart=/opt/AnonKey/AnonKey-Backend
