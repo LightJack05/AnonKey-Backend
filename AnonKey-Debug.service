@@ -10,6 +10,7 @@ ExecStart=/opt/AnonKey/AnonKey-Backend
 Restart=always
 RestartSec=5
 Environment="ASPNETCORE_ENVIRONMENT=Development"
+Environment="ASPNETCORE_HTTP_PORTS=5000"
 
 [Install]
 WantedBy=multi-user.target
