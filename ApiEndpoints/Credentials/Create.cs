@@ -25,7 +25,7 @@ public static class Create
                 InternalCode = 0x4
             });
         }
-        if (String.IsNullOrEmpty(requestBody.Credential.Uuid) || String.IsNullOrEmpty(requestBody.Credential.Password) || String.IsNullOrEmpty(requestBody.Credential.PasswordSalt) || String.IsNullOrEmpty(requestBody.Credential.Username) || String.IsNullOrEmpty(requestBody.Credential.UsernameSalt) || String.IsNullOrEmpty(requestBody.Credential.WebsiteUrl) || String.IsNullOrEmpty(requestBody.Credential.Note) || String.IsNullOrEmpty(requestBody.Credential.DisplayName) || String.IsNullOrEmpty(requestBody.Credential.FolderUuid))
+        if (String.IsNullOrEmpty(requestBody.Credential.Uuid) || String.IsNullOrEmpty(requestBody.Credential.Password) || String.IsNullOrEmpty(requestBody.Credential.PasswordSalt) || String.IsNullOrEmpty(requestBody.Credential.Username) || String.IsNullOrEmpty(requestBody.Credential.UsernameSalt) || String.IsNullOrEmpty(requestBody.Credential.WebsiteUrl) || String.IsNullOrEmpty(requestBody.Credential.Note) || String.IsNullOrEmpty(requestBody.Credential.DisplayName) || String.IsNullOrEmpty(requestBody.Credential.FolderUuid) || String.IsNullOrEmpty(requestBody.Credential.WebsiteUrlSalt) || String.IsNullOrEmpty(requestBody.Credential.NoteSalt) || String.IsNullOrEmpty(requestBody.Credential.DisplayNameSalt))
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
@@ -64,8 +64,11 @@ public static class Create
             Username = requestBody.Credential.Username,
             UsernameSalt = requestBody.Credential.UsernameSalt,
             WebsiteUrl = requestBody.Credential.WebsiteUrl,
+            WebsiteUrlSalt = requestBody.Credential.WebsiteUrlSalt,
             Note = requestBody.Credential.Note,
+            NoteSalt = requestBody.Credential.NoteSalt,
             DisplayName = requestBody.Credential.DisplayName,
+            DisplayNameSalt = requestBody.Credential.DisplayNameSalt,
             CreatedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds,
             ChangedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds,
             DeletedTimestamp = null,
