@@ -20,7 +20,7 @@ public static class Update
             PutUpdate(ApiDatastructures.Credentials.Update.CredentialsUpdateRequestBody requestBody, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
         databaseHandle.Database.EnsureCreated();
-        if (String.IsNullOrEmpty(requestBody.Credential.Uuid) || String.IsNullOrEmpty(requestBody.Credential.Password) || String.IsNullOrEmpty(requestBody.Credential.PasswordSalt) || String.IsNullOrEmpty(requestBody.Credential.Username) || String.IsNullOrEmpty(requestBody.Credential.UsernameSalt) || String.IsNullOrEmpty(requestBody.Credential.WebsiteUrl) || String.IsNullOrEmpty(requestBody.Credential.Note) || String.IsNullOrEmpty(requestBody.Credential.DisplayName) || String.IsNullOrEmpty(requestBody.Credential.FolderUuid))
+        if (String.IsNullOrEmpty(requestBody.Credential.Uuid) || String.IsNullOrEmpty(requestBody.Credential.Password) || String.IsNullOrEmpty(requestBody.Credential.PasswordSalt) || String.IsNullOrEmpty(requestBody.Credential.Username) || String.IsNullOrEmpty(requestBody.Credential.UsernameSalt) || String.IsNullOrEmpty(requestBody.Credential.WebsiteUrl) || String.IsNullOrEmpty(requestBody.Credential.Note) || String.IsNullOrEmpty(requestBody.Credential.DisplayName) || String.IsNullOrEmpty(requestBody.Credential.FolderUuid) || String.IsNullOrEmpty(requestBody.Credential.WebsiteUrlSalt) || String.IsNullOrEmpty(requestBody.Credential.NoteSalt) || String.IsNullOrEmpty(requestBody.Credential.DisplayNameSalt))
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
@@ -91,8 +91,11 @@ public static class Update
         FetchedCredential.Username = requestBody.Credential.Username;
         FetchedCredential.UsernameSalt = requestBody.Credential.UsernameSalt;
         FetchedCredential.WebsiteUrl = requestBody.Credential.WebsiteUrl;
+        FetchedCredential.WebsiteUrlSalt = requestBody.Credential.WebsiteUrlSalt;
         FetchedCredential.Note = requestBody.Credential.Note;
+        FetchedCredential.NoteSalt = requestBody.Credential.NoteSalt;
         FetchedCredential.DisplayName = requestBody.Credential.DisplayName;
+        FetchedCredential.DisplayNameSalt = requestBody.Credential.DisplayNameSalt;
         FetchedCredential.ChangedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds;
         FetchedCredential.DeletedTimestamp = requestBody.Credential.DeletedTimestamp;
     }
