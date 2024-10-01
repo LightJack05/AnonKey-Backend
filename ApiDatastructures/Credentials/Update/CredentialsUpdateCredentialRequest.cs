@@ -30,13 +30,25 @@ public class CredentialsUpdateCredentialRequest
     /// </summary>
     public string? WebsiteUrl { get; set; }
     /// <summary>
+    /// The WebsiteUrlSalt of the credetial
+    /// </summary>
+    public string? WebsiteUrlSalt { get; set; }
+    /// <summary>
     /// A note attached to the credential.
     /// </summary>
     public string? Note { get; set; }
     /// <summary>
+    /// The NoteSalt  of the credetial
+    /// </summary>
+    public string? NoteSalt { get; set; }
+    /// <summary>
     /// The display name of the credential..
     /// </summary>
     public string? DisplayName { get; set; }
+    /// <summary>
+    /// The DisplayNameSalt of the credetial
+    /// </summary>
+    public string? DisplayNameSalt { get; set; }
     /// <summary>
     /// The UUID of the folder the credential is in.
     /// Use NULL for no folder.
