@@ -49,14 +49,29 @@ public class Credential
     public string? WebsiteUrl { get; set; }
 
     /// <summary>
+    /// The WebsiteUrlSalt of the credetial
+    /// </summary>
+    public string? WebsiteUrlSalt { get; set; }
+
+    /// <summary>
     /// The Note of the credetial
     /// </summary>
     public string? Note { get; set; }
 
     /// <summary>
+    /// The NoteSalt  of the credetial
+    /// </summary>
+    public string? NoteSalt { get; set; }
+
+    /// <summary>
     /// The DisplayName of the credetial
     /// </summary>
     public string? DisplayName { get; set; }
+
+    /// <summary>
+    /// The DisplayNameSalt of the credetial
+    /// </summary>
+    public string? DisplayNameSalt { get; set; }
 
     /// <summary>
     /// The CreatedTimestamp of the credetial
