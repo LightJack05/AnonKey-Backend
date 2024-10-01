@@ -53,7 +53,7 @@ public class Program
 
 
         // Entity Framework / Database
-        builder.Services.AddEntityFrameworkSqlite().AddDbContext<AnonKey_Backend.Data.DatabaseHandle>(opt => opt.UseSqlite(builder.Configuration.GetConnectionString("ApiDatabase"))); 
+        builder.Services.AddEntityFrameworkSqlite().AddDbContext<AnonKey_Backend.Data.DatabaseHandle>(opt => opt.UseSqlite(builder.Configuration.GetConnectionString("ApiDatabase")));
 
         // Authentication
         builder.Services.AddSingleton<Authentication.TokenService>();
@@ -87,7 +87,6 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-
 
         app.UseAuthentication();
         app.UseAuthorization();
