@@ -32,6 +32,7 @@ public class DatabaseHandle : DbContext
     /// </summary>
     public DatabaseHandle(DbContextOptions<DatabaseHandle> Options) : base(Options)
     {
+        AnonKey_Backend.Development.SampleData.PopulateDatabase(this);
     }
 }
 
