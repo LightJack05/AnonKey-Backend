@@ -1,64 +1,57 @@
 namespace AnonKey_Backend.Development;
 using AnonKey_Backend.Data;
+using Microsoft.EntityFrameworkCore;
 
 /// <summary>
 /// Creates some sample database entries, when running in the development mode.
 /// </summary>
-public class SampleData
+public static class ModelBuilderExtensions
 {
     /// <summary>
     /// Populates the database with the sample data for testing and development.
     /// </summary>
-    public static void PopulateDatabase(Data.DatabaseHandle databaseHandle)
+    public static void Seed(this ModelBuilder modelBuilder)
     {
-        CreateSampleUser(databaseHandle);
-        CreateSampleFolder(databaseHandle);
-        CreateSampleCredentialWithoutFolder(databaseHandle);
-        CreateSampleCredentialInSampleFolder(databaseHandle);
-
+        CreateSampleUser(modelBuilder);
+        CreateSampleFolder(modelBuilder);
+        CreateSampleCredentialWithoutFolder(modelBuilder);
+        CreateSampleCredentialInSampleFolder(modelBuilder);
     }
 
-    private static void CreateSampleUser(Data.DatabaseHandle databaseHandle)
+    private static void CreateSampleUser(this ModelBuilder modelBuilder)
     {
-        databaseHandle.Database.EnsureCreated();
-        Models.User user = new()
+        string passwordSalt = Cryptography.Generators.NewRandomString(Configuration.Settings.UserPasswordSaltLength);
+        modelBuilder.Entity<AnonKey_Backend.Models.User>().HasData(new AnonKey_Backend.Models.User
         {
             Uuid = "7d9d3e99-064d-41bf-a125-ca5951e8a048",
             Username = "anonkey",
-            PasswordSalt = Cryptography.Generators.NewRandomString(Configuration.Settings.UserPasswordSaltLength),
-            PasswordHash = "I6s1E29KfokPhZ5Y9USNldmJ34f/LFsx3bBOmhkcsrg="
-        };
+            PasswordSalt = passwordSalt,
+            PasswordHash = Cryptography.PasswordHashing.HashPassword("I6s1E29KfokPhZ5Y9USNldmJ34f/LFsx3bBOmhkcsrg=", passwordSalt)
+        }
+        );
 
-        databaseHandle.Users.Add(user);
-        databaseHandle.SaveChanges();
-        databaseHandle.UserInfos.Add(new()
+        modelBuilder.Entity<AnonKey_Backend.Models.UserInfo>().HasData(new AnonKey_Backend.Models.UserInfo
         {
             Uuid = Guid.NewGuid().ToString(),
             UserUuid = "7d9d3e99-064d-41bf-a125-ca5951e8a048",
             DisplayName = "AnonKey"
         });
-        databaseHandle.SaveChanges();
     }
 
-    private static void CreateSampleFolder(Data.DatabaseHandle databaseHandle)
+    private static void CreateSampleFolder(this ModelBuilder modelBuilder)
     {
-        databaseHandle.Database.EnsureCreated();
-        Models.Folder folder = new()
+        modelBuilder.Entity<AnonKey_Backend.Models.Folder>().HasData(new AnonKey_Backend.Models.Folder
         {
             Uuid = "09f770c5-b1c1-41c6-bfd2-818b7b443da9",
             UserUuid = "7d9d3e99-064d-41bf-a125-ca5951e8a048",
             DisplayName = "Sample",
             Icon = 58469
-        };
-
-        databaseHandle.Folders.Add(folder);
-        databaseHandle.SaveChanges();
+        });
     }
 
-    private static void CreateSampleCredentialWithoutFolder(Data.DatabaseHandle databaseHandle)
+    private static void CreateSampleCredentialWithoutFolder(this ModelBuilder modelBuilder)
     {
-        databaseHandle.Database.EnsureCreated();
-        Models.Credential credential = new()
+        modelBuilder.Entity<AnonKey_Backend.Models.Credential>().HasData(new AnonKey_Backend.Models.Credential
         {
             Uuid = "ebd1ef35-cade-4e2a-8117-3ed58bd13143",
             UserUuid = "7d9d3e99-064d-41bf-a125-ca5951e8a048",
@@ -76,16 +69,12 @@ public class SampleData
             CreatedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds,
             ChangedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds,
             DeletedTimestamp = null,
-        };
-
-        databaseHandle.Credentials.Add(credential);
-        databaseHandle.SaveChanges();
+        });
     }
 
-    private static void CreateSampleCredentialInSampleFolder(Data.DatabaseHandle databaseHandle)
+    private static void CreateSampleCredentialInSampleFolder(this ModelBuilder modelBuilder)
     {
-        databaseHandle.Database.EnsureCreated();
-        Models.Credential credential = new()
+        modelBuilder.Entity<AnonKey_Backend.Models.Credential>().HasData(new AnonKey_Backend.Models.Credential
         {
             Uuid = "d59bd8a5-e24b-4b97-94f5-2e3dfb9a297e",
             UserUuid = "7d9d3e99-064d-41bf-a125-ca5951e8a048",
@@ -103,9 +92,6 @@ public class SampleData
             CreatedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds,
             ChangedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds,
             DeletedTimestamp = null,
-        };
-
-        databaseHandle.Credentials.Add(credential);
-        databaseHandle.SaveChanges();
+        });
     }
 }

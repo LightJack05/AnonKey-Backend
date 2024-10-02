@@ -1,6 +1,7 @@
 namespace AnonKey_Backend.Data;
 using Models;
 using Microsoft.EntityFrameworkCore;
+using AnonKey_Backend.Development;
 
 /// <summary>
 /// Create a Context for the API
@@ -32,7 +33,11 @@ public class DatabaseHandle : DbContext
     /// </summary>
     public DatabaseHandle(DbContextOptions<DatabaseHandle> Options) : base(Options)
     {
-        AnonKey_Backend.Development.SampleData.PopulateDatabase(this);
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Seed();
     }
 }
 
