@@ -37,7 +37,10 @@ public class DatabaseHandle : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Seed();
+        if (string.Equals(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"), "development", StringComparison.InvariantCultureIgnoreCase))
+        {
+            modelBuilder.Seed();
+        }
     }
 }
 
