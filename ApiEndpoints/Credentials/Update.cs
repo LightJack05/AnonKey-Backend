@@ -17,8 +17,17 @@ public static class Update
         NotFound<ApiDatastructures.Error.ErrorResponseBody>,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
             PutUpdate(ApiDatastructures.Credentials.Update.CredentialsUpdateRequestBody requestBody, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
-    {
+    { 
         databaseHandle.Database.EnsureCreated();
+        if (user.Identity == null)
+        {
+            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "The user identity is null",
+                Detail = "The user identity is null. Did you provide a valid JWT token?",
+                InternalCode = 0x4
+            });
+        }
         if (requestBody.Credential is null || String.IsNullOrEmpty(requestBody.Credential.Uuid) || String.IsNullOrEmpty(requestBody.Credential.Password) || String.IsNullOrEmpty(requestBody.Credential.PasswordSalt) || String.IsNullOrEmpty(requestBody.Credential.Username) || String.IsNullOrEmpty(requestBody.Credential.UsernameSalt) || String.IsNullOrEmpty(requestBody.Credential.WebsiteUrl) || String.IsNullOrEmpty(requestBody.Credential.Note) || String.IsNullOrEmpty(requestBody.Credential.DisplayName) || String.IsNullOrEmpty(requestBody.Credential.FolderUuid) || String.IsNullOrEmpty(requestBody.Credential.WebsiteUrlSalt) || String.IsNullOrEmpty(requestBody.Credential.NoteSalt) || String.IsNullOrEmpty(requestBody.Credential.DisplayNameSalt))
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()

@@ -19,6 +19,15 @@ public static class Delete
     {
         //NOTE: Maybe change this to a soft delete in the future.
 
+        if (user.Identity == null)
+        {
+            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "The user identity is null",
+                Detail = "The user identity is null. Did you provide a valid JWT token?",
+                InternalCode = 0x4
+            });
+        }
         Models.User? userToDelete = databaseHandle.Users.Where(u => u.Username == user.Identity.Name).FirstOrDefault();
 
         if (userToDelete == null)

@@ -18,12 +18,12 @@ public static class GetAll
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
             GetGetAll(ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
-        if (user == null)
+        if (user.Identity == null)
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
-                Message = "The user is null",
-                Detail = "The user is null, therefore no data extraction is possible",
+                Message = "The user identity is null",
+                Detail = "The user identity is null, therefore no data extraction is possible",
                 InternalCode = 0x4
             });
         }

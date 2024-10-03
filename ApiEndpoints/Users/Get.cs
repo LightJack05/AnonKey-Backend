@@ -12,9 +12,19 @@ public static class Get
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok<ApiDatastructures.Users.Get.UsersGetResponseBody>,
+        BadRequest<ApiDatastructures.Error.ErrorResponseBody>,
         NotFound<ApiDatastructures.Error.ErrorResponseBody>>
             GetGet(ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
+        if (user.Identity == null)
+        {
+            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "The user identity is null",
+                Detail = "The user identity is null. Did you provide a valid JWT token?",
+                InternalCode = 0x4
+            });
+        }
         User? userFromDb = databaseHandle.Users.FirstOrDefault(u => u.Username == user.Identity.Name);
         if (userFromDb is null)
         {

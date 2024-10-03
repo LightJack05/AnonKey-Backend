@@ -18,6 +18,15 @@ public static class Delete
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
             DeleteDelete(string folderUuid, bool recursive, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
+        if (user.Identity == null)
+        {
+            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "The user identity is null",
+                Detail = "The user identity is null. Did you provide a valid JWT token?",
+                InternalCode = 0x4
+            });
+        }
         databaseHandle.Database.EnsureCreated();
         if (String.IsNullOrEmpty(folderUuid))
         {
