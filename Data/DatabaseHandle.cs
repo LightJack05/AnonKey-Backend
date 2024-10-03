@@ -1,6 +1,7 @@
 namespace AnonKey_Backend.Data;
 using Models;
 using Microsoft.EntityFrameworkCore;
+using AnonKey_Backend.Development;
 
 /// <summary>
 /// Create a Context for the API
@@ -32,6 +33,14 @@ public class DatabaseHandle : DbContext
     /// </summary>
     public DatabaseHandle(DbContextOptions<DatabaseHandle> Options) : base(Options)
     {
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        if (string.Equals(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"), "development", StringComparison.InvariantCultureIgnoreCase))
+        {
+            modelBuilder.Seed();
+        }
     }
 }
 
