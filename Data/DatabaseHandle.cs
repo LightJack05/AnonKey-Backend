@@ -37,6 +37,10 @@ public class DatabaseHandle : DbContext
     {
     }
 
+    /// <summary>
+    /// Initialization Method for the Database Handle.
+    /// Initializes the DB with sample data in case the application is running in Dev mode.
+    /// </summary>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         if (string.Equals(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"), "development", StringComparison.InvariantCultureIgnoreCase))
