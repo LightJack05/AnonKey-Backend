@@ -12,7 +12,6 @@ public static class EndpointSetup
     public static void MapEndpoints(WebApplication app)
     {
         app.MapPost("/authentication/login", Login.PostLogin).WithTags("Authentication").WithOpenApi();
-        app.MapDelete("/authentication/logout", Logout.DeleteLogout).WithTags("Authentication").WithOpenApi().RequireAuthorization("user");
         app.MapPut("/authentication/changePassword", ChangePassword.PutChangePassword).WithTags("Authentication").WithOpenApi().RequireAuthorization("user");
     }
 }
