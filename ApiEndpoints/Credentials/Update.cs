@@ -1,5 +1,4 @@
 using AnonKey_Backend.ApiDatastructures.Credentials.Update;
-using AnonKey_Backend.Data;
 using AnonKey_Backend.Models;
 
 namespace AnonKey_Backend.ApiEndpoints.Credentials;

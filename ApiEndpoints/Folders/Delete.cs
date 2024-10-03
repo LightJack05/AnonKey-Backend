@@ -1,6 +1,5 @@
 using AnonKey_Backend.Data;
 using AnonKey_Backend.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace AnonKey_Backend.ApiEndpoints.Folders;
 

@@ -1,5 +1,4 @@
 namespace AnonKey_Backend.Development;
-using AnonKey_Backend.Data;
 using Microsoft.EntityFrameworkCore;
 
 /// <summary>
