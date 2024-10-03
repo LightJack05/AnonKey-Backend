@@ -21,6 +21,16 @@ public static class Login
 
         User? user = databaseHandle.Users.Where(u => u.Username == requestBody.UserName).FirstOrDefault();
 
+        if (String.IsNullOrEmpty(requestBody.KdfPasswordResult))
+        {
+            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "The KDF result was invalid.",
+                Detail = "The KDF result in the request was null or an empty string.",
+                InternalCode = 0x5
+            });
+        }
+
         // If no user is found matching the redentials, return 404.
         if (user == null)
         {
@@ -32,7 +42,8 @@ public static class Login
             });
         }
 
-        if(!Cryptography.PasswordHashing.isPasswordValid(requestBody.KdfPasswordResult, user)){
+        if (!Cryptography.PasswordHashing.isPasswordValid(requestBody.KdfPasswordResult, user))
+        {
             return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody
             {
                 Message = "Invalid username or password",

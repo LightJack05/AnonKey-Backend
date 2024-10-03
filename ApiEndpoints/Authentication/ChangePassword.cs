@@ -26,6 +26,15 @@ public static class ChangePassword
                 InternalCode = 0x4
             });
         }
+        if (String.IsNullOrEmpty(requestBody.KdfResultNewPassword) || String.IsNullOrEmpty(requestBody.KdfResultOldPassword))
+        {
+            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "One of the KDF result values was invalid.",
+                Detail = "One of the KDF results in the request was null or an empty string.",
+                InternalCode = 0x4
+            });
+        }
 
         User? userFromDatabase = databaseHandle.Users.Where(u => u.Username == user.Identity.Name).FirstOrDefault();
 
