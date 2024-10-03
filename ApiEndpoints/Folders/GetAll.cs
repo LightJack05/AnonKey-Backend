@@ -28,7 +28,7 @@ public static class GetAll
             });
         }
         
-        User userObject = databaseHandle.Users.FirstOrDefault(u => u.Username == user.Identity.Name);
+        User? userObject = databaseHandle.Users.FirstOrDefault(u => u.Username == user.Identity.Name);
         if (userObject == null)
         {
             return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()

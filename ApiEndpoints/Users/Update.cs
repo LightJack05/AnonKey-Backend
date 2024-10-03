@@ -16,7 +16,7 @@ public static class Update
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
             PutUpdate(ApiDatastructures.Users.Update.UsersUpdateRequestBody requestBody, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
-        User userFromDb = databaseHandle.Users.FirstOrDefault(u => u.Username == user.Identity.Name);
+        User? userFromDb = databaseHandle.Users.FirstOrDefault(u => u.Username == user.Identity.Name);
 
         if (userFromDb is null)
         {

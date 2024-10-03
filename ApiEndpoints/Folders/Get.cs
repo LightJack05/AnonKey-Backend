@@ -29,8 +29,8 @@ public static class Get
             });
         }
 
-        User userObject = databaseHandle.Users.FirstOrDefault(u => u.Username == user.Identity.Name);
-        Folder folder = databaseHandle.Folders.FirstOrDefault(f => f.Uuid == folderUuid);
+        User? userObject = databaseHandle.Users.FirstOrDefault(u => u.Username == user.Identity.Name);
+        Folder? folder = databaseHandle.Folders.FirstOrDefault(f => f.Uuid == folderUuid);
         if (folder == null || userObject == null || folder.UserUuid != userObject.Uuid)
         {
             return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()

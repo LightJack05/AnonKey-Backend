@@ -19,7 +19,7 @@ public static class Delete
     {
         //NOTE: Maybe change this to a soft delete in the future.
 
-        Models.User userToDelete = databaseHandle.Users.Where(u => u.Username == user.Identity.Name).FirstOrDefault();
+        Models.User? userToDelete = databaseHandle.Users.Where(u => u.Username == user.Identity.Name).FirstOrDefault();
 
         if (userToDelete == null)
         {

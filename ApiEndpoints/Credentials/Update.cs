@@ -31,7 +31,7 @@ public static class Update
         }
 
         AnonKey_Backend.Models.Credential FetchedCredential = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid);
-        string UserUuid = databaseHandle.Users.Single(u => u.Username == user.Identity.Name).Uuid;
+        string? UserUuid = databaseHandle.Users.Single(u => u.Username == user.Identity.Name).Uuid;
 
         if (FetchedCredential is null)
         {
