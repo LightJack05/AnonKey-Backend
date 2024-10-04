@@ -36,42 +36,42 @@ public static class Create
         }
 
         // If some fields are not null, check for the salt to be there
-        if (!(requestBody.Credential.WebsiteUrl is null) && (requestBody.Credential.WebsiteUrlSalt is null))
+        if (!String.IsNullOrEmpty(requestBody.Credential.WebsiteUrl) && String.IsNullOrEmpty(requestBody.Credential.WebsiteUrlSalt))
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "WebsiteUrl was provieded, but the salt for it was not.",
-                Detail = "WebsiteUrlSalt is null, but WebsiteUrl is not null. This is not allowed, please fill in all parameters.",
+                Detail = "WebsiteUrlSalt is null or an empty string, but WebsiteUrl is not null. This is not allowed, please fill in all parameters.",
                 InternalCode = 0x4
             });
         }
 
-        if (!(requestBody.Credential.Username is null) && (requestBody.Credential.UsernameSalt is null))
+        if (!String.IsNullOrEmpty(requestBody.Credential.Username) && String.IsNullOrEmpty(requestBody.Credential.UsernameSalt))
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "Username was provieded, but the salt for it was not.",
-                Detail = "UsernameSalt is null, but Username is not null. This is not allowed, please fill in all parameters.",
+                Detail = "UsernameSalt is null or an empty string, but Username is not null. This is not allowed, please fill in all parameters.",
                 InternalCode = 0x4
             });
         }
 
-        if (!(requestBody.Credential.Password is null) && (requestBody.Credential.PasswordSalt is null))
+        if (!String.IsNullOrEmpty(requestBody.Credential.Password) && String.IsNullOrEmpty(requestBody.Credential.PasswordSalt))
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "Password was provieded, but the salt for it was not.",
-                Detail = "PasswordSalt is null, but Password is not null. This is not allowed, please fill in all parameters.",
+                Detail = "PasswordSalt is null or an empty string, but Password is not null. This is not allowed, please fill in all parameters.",
                 InternalCode = 0x4
             });
         }
 
-        if (!(requestBody.Credential.Note is null) && (requestBody.Credential.NoteSalt is null))
+        if (!String.IsNullOrEmpty(requestBody.Credential.Note) && String.IsNullOrEmpty(requestBody.Credential.NoteSalt))
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "Note was provieded, but the salt for it was not.",
-                Detail = "NoteSalt is null, but Note is not null. This is not allowed, please fill in all parameters.",
+                Detail = "NoteSalt is null or an empty string, but Note is not null. This is not allowed, please fill in all parameters.",
                 InternalCode = 0x4
             });
         }
