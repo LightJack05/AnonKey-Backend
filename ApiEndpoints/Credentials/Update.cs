@@ -35,7 +35,7 @@ public static class Update
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
-                Message = "WebsiteUrl was provieded, but the salt for it was not.",
+                Message = "WebsiteUrl was provided, but the salt for it was not.",
                 Detail = "WebsiteUrlSalt is null or an empty string, but WebsiteUrl is not null. This is not allowed, please fill in all parameters.",
                 InternalCode = 0x4
             });
@@ -45,7 +45,7 @@ public static class Update
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
-                Message = "Username was provieded, but the salt for it was not.",
+                Message = "Username was provided, but the salt for it was not.",
                 Detail = "UsernameSalt is null or an empty string, but Username is not null. This is not allowed, please fill in all parameters.",
                 InternalCode = 0x4
             });
@@ -55,7 +55,7 @@ public static class Update
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
-                Message = "Password was provieded, but the salt for it was not.",
+                Message = "Password was provided, but the salt for it was not.",
                 Detail = "PasswordSalt is null or an empty string, but Password is not null. This is not allowed, please fill in all parameters.",
                 InternalCode = 0x4
             });
@@ -65,7 +65,7 @@ public static class Update
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
-                Message = "Note was provieded, but the salt for it was not.",
+                Message = "Note was provided, but the salt for it was not.",
                 Detail = "NoteSalt is null or an empty string, but Note is not null. This is not allowed, please fill in all parameters.",
                 InternalCode = 0x4
             });
