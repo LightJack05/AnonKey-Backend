@@ -121,7 +121,6 @@ public static class Update
                 DisplayNameSalt = NewCredential.DisplayNameSalt,
                 CreatedTimestamp = NewCredential.CreatedTimestamp,
                 ChangedTimestamp = NewCredential.ChangedTimestamp,
-                DeletedTimestamp = NewCredential.DeletedTimestamp
             }
         };
     }
@@ -142,6 +141,5 @@ public static class Update
         FetchedCredential.DisplayName = requestBody.Credential.DisplayName;
         FetchedCredential.DisplayNameSalt = requestBody.Credential.DisplayNameSalt;
         FetchedCredential.ChangedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds;
-        FetchedCredential.DeletedTimestamp = requestBody.Credential.DeletedTimestamp;
     }
 }

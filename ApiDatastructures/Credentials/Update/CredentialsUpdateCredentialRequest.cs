@@ -54,9 +54,4 @@ public class CredentialsUpdateCredentialRequest
     /// Use NULL for no folder.
     /// </summary>
     public string? FolderUuid { get; set; }
-    /// <summary>
-    /// The DeletedTimestamp of the credential in order to be able to recover a credential.
-    /// Use NULL in oder to recover after deleting.
-    /// </summary>
-    public long? DeletedTimestamp { get; set; }
 }
