@@ -21,7 +21,7 @@ public static class Update
     {
         databaseHandle.Database.EnsureCreated();
 
-        if (String.IsNullOrEmpty(requestBody.Folder.Uuid) || String.IsNullOrEmpty(requestBody.Folder.Name))
+        if (requestBody.Folder == null ||String.IsNullOrEmpty(requestBody.Folder.Uuid) || String.IsNullOrEmpty(requestBody.Folder.Name))
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
@@ -31,7 +31,7 @@ public static class Update
             });
         }
 
-        User userObject = databaseHandle.Users.FirstOrDefault(u => u.Username == user.Identity.Name);
+        User? userObject = databaseHandle.Users.FirstOrDefault(u => u.Username == user.Identity.Name);
         if (userObject == null)
         {
             return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody{
@@ -41,7 +41,7 @@ public static class Update
             });
         }
 
-        Folder folder = databaseHandle.Folders.FirstOrDefault(f => f.Uuid == requestBody.Folder.Uuid);
+        Folder? folder = databaseHandle.Folders.FirstOrDefault(f => f.Uuid == requestBody.Folder.Uuid);
         if (folder == null || folder.UserUuid != userObject.Uuid)
         {
             return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()
