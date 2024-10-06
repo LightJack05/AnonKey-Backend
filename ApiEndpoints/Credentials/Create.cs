@@ -29,17 +29,58 @@ public static class Create
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
-                Message = "The credential provieded in the requestBody is null",
-                Detail = "The credential provieded in the requestBody is null. This is not allowed, please fill in all parameters.",
+                Message = "The credential provided in the requestBody is null",
+                Detail = "The credential provided in the requestBody is null. This is not allowed, please fill in all parameters.",
                 InternalCode = 0x4
             });
         }
-        if (String.IsNullOrEmpty(requestBody.Credential.Uuid) || String.IsNullOrEmpty(requestBody.Credential.Password) || String.IsNullOrEmpty(requestBody.Credential.PasswordSalt) || String.IsNullOrEmpty(requestBody.Credential.Username) || String.IsNullOrEmpty(requestBody.Credential.UsernameSalt) || String.IsNullOrEmpty(requestBody.Credential.WebsiteUrl) || String.IsNullOrEmpty(requestBody.Credential.Note) || String.IsNullOrEmpty(requestBody.Credential.DisplayName) || String.IsNullOrEmpty(requestBody.Credential.FolderUuid) || String.IsNullOrEmpty(requestBody.Credential.WebsiteUrlSalt) || String.IsNullOrEmpty(requestBody.Credential.NoteSalt) || String.IsNullOrEmpty(requestBody.Credential.DisplayNameSalt))
+        if (requestBody.Credential is null || String.IsNullOrEmpty(requestBody.Credential.Uuid) || String.IsNullOrEmpty(requestBody.Credential.DisplayName) || String.IsNullOrEmpty(requestBody.Credential.DisplayNameSalt))
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "A parameter in the request was null or an empty string",
                 Detail = "One of the parameters in the request was null or an empty string. This is not allowed, please fill in all parameters.",
+                InternalCode = 0x4
+            });
+        }
+
+        // If some fields are not null, check for the salt to be there
+        if (!String.IsNullOrEmpty(requestBody.Credential.WebsiteUrl) && String.IsNullOrEmpty(requestBody.Credential.WebsiteUrlSalt))
+        {
+            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "WebsiteUrl was provided, but the salt for it was not.",
+                Detail = "WebsiteUrlSalt is null or an empty string, but WebsiteUrl is not null. This is not allowed, please fill in all parameters.",
+                InternalCode = 0x4
+            });
+        }
+
+        if (!String.IsNullOrEmpty(requestBody.Credential.Username) && String.IsNullOrEmpty(requestBody.Credential.UsernameSalt))
+        {
+            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "Username was provided, but the salt for it was not.",
+                Detail = "UsernameSalt is null or an empty string, but Username is not null. This is not allowed, please fill in all parameters.",
+                InternalCode = 0x4
+            });
+        }
+
+        if (!String.IsNullOrEmpty(requestBody.Credential.Password) && String.IsNullOrEmpty(requestBody.Credential.PasswordSalt))
+        {
+            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "Password was provided, but the salt for it was not.",
+                Detail = "PasswordSalt is null or an empty string, but Password is not null. This is not allowed, please fill in all parameters.",
+                InternalCode = 0x4
+            });
+        }
+
+        if (!String.IsNullOrEmpty(requestBody.Credential.Note) && String.IsNullOrEmpty(requestBody.Credential.NoteSalt))
+        {
+            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "Note was provided, but the salt for it was not.",
+                Detail = "NoteSalt is null or an empty string, but Note is not null. This is not allowed, please fill in all parameters.",
                 InternalCode = 0x4
             });
         }

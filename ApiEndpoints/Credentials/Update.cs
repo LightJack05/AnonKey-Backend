@@ -28,7 +28,8 @@ public static class Update
                 InternalCode = 0x4
             });
         }
-        if (requestBody.Credential is null || String.IsNullOrEmpty(requestBody.Credential.Uuid) || String.IsNullOrEmpty(requestBody.Credential.Password) || String.IsNullOrEmpty(requestBody.Credential.PasswordSalt) || String.IsNullOrEmpty(requestBody.Credential.Username) || String.IsNullOrEmpty(requestBody.Credential.UsernameSalt) || String.IsNullOrEmpty(requestBody.Credential.WebsiteUrl) || String.IsNullOrEmpty(requestBody.Credential.Note) || String.IsNullOrEmpty(requestBody.Credential.DisplayName) || String.IsNullOrEmpty(requestBody.Credential.FolderUuid) || String.IsNullOrEmpty(requestBody.Credential.WebsiteUrlSalt) || String.IsNullOrEmpty(requestBody.Credential.NoteSalt) || String.IsNullOrEmpty(requestBody.Credential.DisplayNameSalt))
+          
+        if (requestBody.Credential is null || String.IsNullOrEmpty(requestBody.Credential.Uuid) || String.IsNullOrEmpty(requestBody.Credential.DisplayName) || String.IsNullOrEmpty(requestBody.Credential.DisplayNameSalt))
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
@@ -37,6 +38,48 @@ public static class Update
                 InternalCode = 0x4
             });
         }
+
+        // If some fields are not null, check for the salt to be there
+        if (!String.IsNullOrEmpty(requestBody.Credential.WebsiteUrl) && String.IsNullOrEmpty(requestBody.Credential.WebsiteUrlSalt))
+        {
+            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "WebsiteUrl was provided, but the salt for it was not.",
+                Detail = "WebsiteUrlSalt is null or an empty string, but WebsiteUrl is not null. This is not allowed, please fill in all parameters.",
+                InternalCode = 0x4
+            });
+        }
+
+        if (!String.IsNullOrEmpty(requestBody.Credential.Username) && String.IsNullOrEmpty(requestBody.Credential.UsernameSalt))
+        {
+            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "Username was provided, but the salt for it was not.",
+                Detail = "UsernameSalt is null or an empty string, but Username is not null. This is not allowed, please fill in all parameters.",
+                InternalCode = 0x4
+            });
+        }
+
+        if (!String.IsNullOrEmpty(requestBody.Credential.Password) && String.IsNullOrEmpty(requestBody.Credential.PasswordSalt))
+        {
+            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "Password was provided, but the salt for it was not.",
+                Detail = "PasswordSalt is null or an empty string, but Password is not null. This is not allowed, please fill in all parameters.",
+                InternalCode = 0x4
+            });
+        }
+
+        if (!String.IsNullOrEmpty(requestBody.Credential.Note) && String.IsNullOrEmpty(requestBody.Credential.NoteSalt))
+        {
+            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "Note was provided, but the salt for it was not.",
+                Detail = "NoteSalt is null or an empty string, but Note is not null. This is not allowed, please fill in all parameters.",
+                InternalCode = 0x4
+            });
+        }
+
 
         AnonKey_Backend.Models.Credential FetchedCredential = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid);
         string? UserUuid = databaseHandle.Users.Single(u => u.Username == user.Identity.Name).Uuid;
@@ -87,7 +130,6 @@ public static class Update
                 DisplayNameSalt = NewCredential.DisplayNameSalt,
                 CreatedTimestamp = NewCredential.CreatedTimestamp,
                 ChangedTimestamp = NewCredential.ChangedTimestamp,
-                DeletedTimestamp = NewCredential.DeletedTimestamp
             }
         };
     }
@@ -108,6 +150,5 @@ public static class Update
         FetchedCredential.DisplayName = requestBody.Credential.DisplayName;
         FetchedCredential.DisplayNameSalt = requestBody.Credential.DisplayNameSalt;
         FetchedCredential.ChangedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds;
-        FetchedCredential.DeletedTimestamp = requestBody.Credential.DeletedTimestamp;
     }
 }
