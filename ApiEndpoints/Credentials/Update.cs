@@ -17,7 +17,7 @@ public static class Update
         NotFound<ApiDatastructures.Error.ErrorResponseBody>,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
             PutUpdate(ApiDatastructures.Credentials.Update.CredentialsUpdateRequestBody requestBody, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
-    { 
+    {
         databaseHandle.Database.EnsureCreated();
         if (user.Identity == null)
         {
@@ -28,7 +28,7 @@ public static class Update
                 InternalCode = 0x4
             });
         }
-          
+
         if (requestBody.Credential is null || String.IsNullOrEmpty(requestBody.Credential.Uuid) || String.IsNullOrEmpty(requestBody.Credential.DisplayName) || String.IsNullOrEmpty(requestBody.Credential.DisplayNameSalt))
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
@@ -81,8 +81,8 @@ public static class Update
         }
 
 
-        AnonKey_Backend.Models.Credential FetchedCredential = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid);
-        string? UserUuid = databaseHandle.Users.Single(u => u.Username == user.Identity.Name).Uuid;
+        AnonKey_Backend.Models.Credential? FetchedCredential = databaseHandle.Credentials.SingleOrDefault(c => c.Uuid == requestBody.Credential.Uuid);
+        AnonKey_Backend.Models.User? FetchedUser = databaseHandle.Users.SingleOrDefault(u => u.Username == user.Identity.Name);
 
         if (FetchedCredential is null)
         {
@@ -93,6 +93,18 @@ public static class Update
                 InternalCode = 0x6
             });
         }
+
+        if (FetchedUser is null)
+        {
+            return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "No user with this Uuid was not found in the database",
+                Detail = "No user with the provided credentialUuid was not found. Please make sure the correct UserUuid is provided.",
+                InternalCode = 0x6
+            });
+        }
+
+        string UserUuid = FetchedUser.Uuid;
 
         if (UserUuid != FetchedCredential.UserUuid)
         {
