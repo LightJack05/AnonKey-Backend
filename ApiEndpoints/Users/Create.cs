@@ -20,7 +20,10 @@ public static class Create
            PostCreate(ApiDatastructures.Users.Create.UsersCreateRequestBody requestBody, AnonKey_Backend.Authentication.TokenService tokenService, Data.DatabaseHandle databaseHandle)
     {
         databaseHandle.Database.EnsureCreated();
-        if (requestBody.UserDisplayName is null || requestBody.KdfPasswordResult is null || requestBody.UserName is null)
+        // if (requestBody.UserDisplayName is null || requestBody.KdfPasswordResult is null || requestBody.UserName is null)
+        if (String.IsNullOrEmpty(requestBody.UserDisplayName) ||
+                String.IsNullOrEmpty(requestBody.UserName) ||
+                String.IsNullOrEmpty(requestBody.KdfPasswordResult))
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
@@ -67,6 +70,8 @@ public static class Create
 
     private static string CreateNewUser(UsersCreateRequestBody requestBody, TokenService tokenService, DatabaseHandle databaseHandle)
     {
+        if (requestBody.KdfPasswordResult is null) throw new ArgumentNullException();
+
         string passwordSalt = Cryptography.Generators.NewRandomString(Configuration.Settings.UserPasswordSaltLength);
 
         Models.User user = new()

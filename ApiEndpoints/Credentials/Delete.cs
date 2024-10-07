@@ -15,6 +15,15 @@ public static class Delete
             DeleteDelete(string credentialUuid, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
         databaseHandle.Database.EnsureCreated();
+        if (user.Identity == null)
+        {
+            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "The user identity is null",
+                Detail = "The user identity is null. Did you provide a valid JWT token?",
+                InternalCode = 0x4
+            });
+        }
         if (String.IsNullOrEmpty(credentialUuid))
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
@@ -25,7 +34,7 @@ public static class Delete
             });
         }
 
-        AnonKey_Backend.Models.Credential FetchedCredential = databaseHandle.Credentials.SingleOrDefault(c => c.Uuid == credentialUuid && c.UserUuid == databaseHandle.Users.Single(u => u.Username == user.Identity.Name).Uuid && c.DeletedTimestamp != null);
+        AnonKey_Backend.Models.Credential? FetchedCredential = databaseHandle.Credentials.SingleOrDefault(c => c.Uuid == credentialUuid && c.UserUuid == databaseHandle.Users.Single(u => u.Username == user.Identity.Name).Uuid && c.DeletedTimestamp != null);
 
         if (FetchedCredential is null)
         {

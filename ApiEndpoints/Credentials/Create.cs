@@ -16,6 +16,15 @@ public static class Create
      PostCreate(ApiDatastructures.Credentials.Create.CredentialsCreateRequestBody requestBody, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
         databaseHandle.Database.EnsureCreated();
+        if (user.Identity == null)
+        {
+            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "The user identity is null",
+                Detail = "The user identity is null. Did you provide a valid JWT token?",
+                InternalCode = 0x4
+            });
+        }
         if (requestBody.Credential is null)
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
@@ -95,6 +104,7 @@ public static class Create
 
     private static Models.Credential CreateNewCredential(ApiDatastructures.Credentials.Create.CredentialsCreateRequestBody requestBody, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
+        if (user.Identity is null) throw new ArgumentNullException();
         return new Models.Credential()
         {
             Uuid = requestBody.Credential.Uuid,

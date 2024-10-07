@@ -16,7 +16,16 @@ public static class Update
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
             PutUpdate(ApiDatastructures.Users.Update.UsersUpdateRequestBody requestBody, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
-        User userFromDb = databaseHandle.Users.FirstOrDefault(u => u.Username == user.Identity.Name);
+        if (user.Identity == null)
+        {
+            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "The user identity is null",
+                Detail = "The user identity is null. Did you provide a valid JWT token?",
+                InternalCode = 0x4
+            });
+        }
+        User? userFromDb = databaseHandle.Users.FirstOrDefault(u => u.Username == user.Identity.Name);
 
         if (userFromDb is null)
         {

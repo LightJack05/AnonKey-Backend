@@ -3,6 +3,8 @@ using Models;
 using Microsoft.EntityFrameworkCore;
 using AnonKey_Backend.Development;
 
+#nullable disable
+
 /// <summary>
 /// Create a Context for the API
 /// </summary>
@@ -11,22 +13,22 @@ public class DatabaseHandle : DbContext
     /// <summary>
     /// A table to save UserSecrets
     /// </summary>
-    public DbSet<User>? Users { get; set; }
+    public DbSet<User> Users { get; set; }
 
     /// <summary>
     /// A table to save Users
     /// </summary>
-    public DbSet<UserInfo>? UserInfos { get; set; }
+    public DbSet<UserInfo> UserInfos { get; set; }
 
     /// <summary>
     /// A table to save Credentials
     /// </summary>
-    public DbSet<Credential>? Credentials { get; set; }
+    public DbSet<Credential> Credentials { get; set; }
 
     /// <summary>
     /// A table to save Folders
     /// </summary>
-    public DbSet<Folder>? Folders { get; set; }
+    public DbSet<Folder> Folders { get; set; }
 
     /// <summary>
     /// Set the DBPath to the ./database.db
@@ -35,6 +37,10 @@ public class DatabaseHandle : DbContext
     {
     }
 
+    /// <summary>
+    /// Initialization Method for the Database Handle.
+    /// Initializes the DB with sample data in case the application is running in Dev mode.
+    /// </summary>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         if (string.Equals(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"), "development", StringComparison.InvariantCultureIgnoreCase))
@@ -44,3 +50,4 @@ public class DatabaseHandle : DbContext
     }
 }
 
+#nullable restore

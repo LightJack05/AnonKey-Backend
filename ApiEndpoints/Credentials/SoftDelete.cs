@@ -14,6 +14,15 @@ public static class SoftDelete
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
             PutSoftDelete(string credentialUuid, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
+        if (user.Identity == null)
+        {
+            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "The user identity is null",
+                Detail = "The user identity is null. Did you provide a valid JWT token?",
+                InternalCode = 0x4
+            });
+        }
         databaseHandle.Database.EnsureCreated();
         if (String.IsNullOrEmpty(credentialUuid))
         {
@@ -25,7 +34,7 @@ public static class SoftDelete
             });
         }
 
-        AnonKey_Backend.Models.Credential FetchedCredential = databaseHandle.Credentials.SingleOrDefault(c => c.Uuid == credentialUuid && c.UserUuid == databaseHandle.Users.Single(u => u.Username == user.Identity.Name).Uuid && c.DeletedTimestamp == null);
+        AnonKey_Backend.Models.Credential? FetchedCredential = databaseHandle.Credentials.SingleOrDefault(c => c.Uuid == credentialUuid && c.UserUuid == databaseHandle.Users.Single(u => u.Username == user.Identity.Name).Uuid && c.DeletedTimestamp == null);
 
         if (FetchedCredential is null)
         {

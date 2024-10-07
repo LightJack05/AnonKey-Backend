@@ -1,5 +1,4 @@
 using AnonKey_Backend.ApiDatastructures.Credentials.Update;
-using AnonKey_Backend.Data;
 using AnonKey_Backend.Models;
 
 namespace AnonKey_Backend.ApiEndpoints.Credentials;
@@ -18,8 +17,18 @@ public static class Update
         NotFound<ApiDatastructures.Error.ErrorResponseBody>,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
             PutUpdate(ApiDatastructures.Credentials.Update.CredentialsUpdateRequestBody requestBody, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
-    {
+    { 
         databaseHandle.Database.EnsureCreated();
+        if (user.Identity == null)
+        {
+            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "The user identity is null",
+                Detail = "The user identity is null. Did you provide a valid JWT token?",
+                InternalCode = 0x4
+            });
+        }
+          
         if (requestBody.Credential is null || String.IsNullOrEmpty(requestBody.Credential.Uuid) || String.IsNullOrEmpty(requestBody.Credential.DisplayName) || String.IsNullOrEmpty(requestBody.Credential.DisplayNameSalt))
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
@@ -73,7 +82,7 @@ public static class Update
 
 
         AnonKey_Backend.Models.Credential FetchedCredential = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid);
-        string UserUuid = databaseHandle.Users.Single(u => u.Username == user.Identity.Name).Uuid;
+        string? UserUuid = databaseHandle.Users.Single(u => u.Username == user.Identity.Name).Uuid;
 
         if (FetchedCredential is null)
         {

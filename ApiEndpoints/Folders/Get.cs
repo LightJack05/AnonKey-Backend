@@ -19,6 +19,15 @@ public static class Get
     {
         databaseHandle.Database.EnsureCreated();
 
+        if (user.Identity == null)
+        {
+            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "The user identity is null",
+                Detail = "The user identity is null. Did you provide a valid JWT token?",
+                InternalCode = 0x4
+            });
+        }
         if (String.IsNullOrEmpty(folderUuid))
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
@@ -29,8 +38,8 @@ public static class Get
             });
         }
 
-        User userObject = databaseHandle.Users.FirstOrDefault(u => u.Username == user.Identity.Name);
-        Folder folder = databaseHandle.Folders.FirstOrDefault(f => f.Uuid == folderUuid);
+        User? userObject = databaseHandle.Users.FirstOrDefault(u => u.Username == user.Identity.Name);
+        Folder? folder = databaseHandle.Folders.FirstOrDefault(f => f.Uuid == folderUuid);
         if (folder == null || userObject == null || folder.UserUuid != userObject.Uuid)
         {
             return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()

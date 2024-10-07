@@ -1,6 +1,5 @@
 using AnonKey_Backend.Data;
 using AnonKey_Backend.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace AnonKey_Backend.ApiEndpoints.Folders;
 
@@ -19,6 +18,15 @@ public static class Delete
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
             DeleteDelete(string folderUuid, bool recursive, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
+        if (user.Identity == null)
+        {
+            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            {
+                Message = "The user identity is null",
+                Detail = "The user identity is null. Did you provide a valid JWT token?",
+                InternalCode = 0x4
+            });
+        }
         databaseHandle.Database.EnsureCreated();
         if (String.IsNullOrEmpty(folderUuid))
         {
@@ -30,8 +38,8 @@ public static class Delete
             });
         }
 
-        User userObject = databaseHandle.Users.FirstOrDefault(u => u.Username == user.Identity.Name);
-        Folder folder = databaseHandle.Folders.FirstOrDefault(f => f.Uuid == folderUuid);
+        User? userObject = databaseHandle.Users.FirstOrDefault(u => u.Username == user.Identity.Name);
+        Folder? folder = databaseHandle.Folders.FirstOrDefault(f => f.Uuid == folderUuid);
 
         if (folder == null || userObject == null || folder.UserUuid != userObject.Uuid)
         {
