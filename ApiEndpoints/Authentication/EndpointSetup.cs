@@ -3,7 +3,7 @@ namespace AnonKey_Backend.ApiEndpoints.Authentication;
 /// <summary>
 /// Maps the endpoint paths to the appropriate methods for the Authentication endpoint  
 /// </summary>
-public static class EndpointSetup 
+public static class EndpointSetup
 {
     /// <summary>
     /// Maps the endpoint paths to the appropriate methods for the Authentication endpoint  

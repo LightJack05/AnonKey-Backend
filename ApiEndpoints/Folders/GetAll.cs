@@ -27,7 +27,7 @@ public static class GetAll
                 InternalCode = 0x4
             });
         }
-        
+
         User? userObject = databaseHandle.Users.FirstOrDefault(u => u.Username == user.Identity.Name);
         if (userObject == null)
         {

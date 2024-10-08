@@ -21,7 +21,7 @@ public static class Update
     {
         databaseHandle.Database.EnsureCreated();
 
-        if (requestBody.Folder == null ||String.IsNullOrEmpty(requestBody.Folder.Uuid) || String.IsNullOrEmpty(requestBody.Folder.Name))
+        if (requestBody.Folder == null || String.IsNullOrEmpty(requestBody.Folder.Uuid) || String.IsNullOrEmpty(requestBody.Folder.Name))
         {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
@@ -34,7 +34,8 @@ public static class Update
         User? userObject = databaseHandle.Users.FirstOrDefault(u => u.Username == user.Identity.Name);
         if (userObject == null)
         {
-            return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody{
+            return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody
+            {
                 Message = "The user does not exist",
                 Detail = "The user does not exist in the database, he might have been deleted.",
                 InternalCode = 0x5
@@ -54,8 +55,9 @@ public static class Update
 
         UpdateFolder(requestBody, folder);
         databaseHandle.SaveChanges();
-        
-        return TypedResults.Ok(new ApiDatastructures.Folders.Update.FoldersUpdateResponseBody{
+
+        return TypedResults.Ok(new ApiDatastructures.Folders.Update.FoldersUpdateResponseBody
+        {
             FolderUuid = folder.Uuid
         });
     }

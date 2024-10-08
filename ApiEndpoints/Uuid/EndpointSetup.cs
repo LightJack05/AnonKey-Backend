@@ -3,7 +3,7 @@ namespace AnonKey_Backend.ApiEndpoints.Uuid;
 /// <summary>
 /// Handles mapping the uuid endpoint.
 /// </summary>
-public static class EndpointSetup 
+public static class EndpointSetup
 {
     /// <summary>
     /// Maps the endpoint paths to the appropriate methods for the UUID endpoint  

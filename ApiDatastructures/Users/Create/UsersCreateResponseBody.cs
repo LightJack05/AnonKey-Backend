@@ -3,7 +3,7 @@ namespace AnonKey_Backend.ApiDatastructures.Users.Create;
 /// <summary>
 /// Body of a response to a user create request.
 /// </summary>
-public class UsersCreateResponseBody 
+public class UsersCreateResponseBody
 {
     /// <summary>
     /// The token that can be used for authentication.

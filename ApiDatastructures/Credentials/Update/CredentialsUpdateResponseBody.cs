@@ -8,5 +8,5 @@ public class CredentialsUpdateResponseBody
     /// <summary>
     /// The update credential.
     /// </summary>
-  public CredentialsUpdateCredentialResponse? Credential { get; set; }
+    public CredentialsUpdateCredentialResponse? Credential { get; set; }
 }
