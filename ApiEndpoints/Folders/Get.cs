@@ -7,7 +7,7 @@ namespace AnonKey_Backend.ApiEndpoints.Folders;
 /// </summary>
 public static class Get
 {
-    
+
     /// <summary>
     /// Gets information on an existing folder.
     /// </summary>

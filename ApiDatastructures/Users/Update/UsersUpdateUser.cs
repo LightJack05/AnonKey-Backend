@@ -8,7 +8,7 @@ public class UsersUpdateUser
     /// <summary>
     /// The username of the user to be updated.
     /// </summary>
-    public string? UserName {get; set;}
+    public string? UserName { get; set; }
     /// <summary>
     /// The new display name of the user.
     /// </summary>

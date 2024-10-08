@@ -61,7 +61,7 @@ public class Settings
     /// The length of the salt applied to user passwords.
     /// </summary>
     public const int UserPasswordSaltLength = 32;
-    
+
 
     #endregion
 

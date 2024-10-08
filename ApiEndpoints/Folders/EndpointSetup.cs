@@ -3,7 +3,7 @@ namespace AnonKey_Backend.ApiEndpoints.Folders;
 /// <summary>
 /// Handles mapping the folders endpoints.
 /// </summary>
-public static class EndpointSetup 
+public static class EndpointSetup
 {
     /// <summary>
     /// Maps the endpoint paths to the appropriate methods for the Folders endpoint  

@@ -3,7 +3,7 @@ namespace AnonKey_Backend.ApiEndpoints.Users;
 /// <summary>
 /// Handles mapping the users endpoint.
 /// </summary>
-public static class EndpointSetup 
+public static class EndpointSetup
 {
     /// <summary>
     /// Maps the endpoint paths to the appropriate methods for the Users endpoint  

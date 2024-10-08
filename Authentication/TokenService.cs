@@ -20,7 +20,8 @@ public class TokenService
     /// <param name="user">The user to generate the token for.</param>
     public string GenerateNewToken(User user)
     {
-        if(user is null || user.Username is null){
+        if (user is null || user.Username is null)
+        {
             throw new ArgumentNullException();
         }
 
