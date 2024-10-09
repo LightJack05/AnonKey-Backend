@@ -24,8 +24,7 @@ public static class GetAll
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "The user identity is null",
-                Detail = "The user identity is null. Did you provide a valid JWT token?",
-                InternalCode = 0x4
+                Detail = "The user identity is null. Did you provide a valid JWT token?"
             });
         }
 

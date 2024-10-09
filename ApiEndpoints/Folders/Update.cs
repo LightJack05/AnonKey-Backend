@@ -26,8 +26,7 @@ public static class Update
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "A parameter in the request was null or an empty string",
-                Detail = "One of the parameters in the request was null or an empty string. This is not allowed, please fill in all parameters.",
-                InternalCode = 0x4
+                Detail = "One of the parameters in the request was null or an empty string. This is not allowed, please fill in all parameters."
             });
         }
 
@@ -37,8 +36,7 @@ public static class Update
             return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody
             {
                 Message = "The user does not exist",
-                Detail = "The user does not exist in the database, he might have been deleted.",
-                InternalCode = 0x5
+                Detail = "The user does not exist in the database, he might have been deleted."
             });
         }
 
@@ -48,8 +46,7 @@ public static class Update
             return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "The folder does not exist",
-                Detail = "The folder with the given UUID does not exist, or does not belong to the user.",
-                InternalCode = 0x6
+                Detail = "The folder with the given UUID does not exist, or does not belong to the user."
             });
         }
 

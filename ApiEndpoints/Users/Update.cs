@@ -21,8 +21,7 @@ public static class Update
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "The user identity is null",
-                Detail = "The user identity is null. Did you provide a valid JWT token?",
-                InternalCode = 0x4
+                Detail = "The user identity is null. Did you provide a valid JWT token?"
             });
         }
         User? userFromDb = databaseHandle.Users.FirstOrDefault(u => u.Username == user.Identity.Name);
@@ -32,8 +31,7 @@ public static class Update
             return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "No user found for the associated JWT token.",
-                Detail = "There was no user found for this account. Has it been deleted?",
-                InternalCode = 0x1
+                Detail = "There was no user found for this account. Has it been deleted?"
             });
         }
 
@@ -45,8 +43,7 @@ public static class Update
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "A value in the request was null or an empty string.",
-                Detail = "Please make sure all values in the request are valid.",
-                InternalCode = 0x1
+                Detail = "Please make sure all values in the request are valid."
             });
         }
 
@@ -56,8 +53,7 @@ public static class Update
             return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "There was no user information found for this user.",
-                Detail = "There was no user information found for this account. This should not happen. Is the database inconsistant? Please recreate the current account.",
-                InternalCode = 0x1
+                Detail = "There was no user information found for this account. This should not happen. Is the database inconsistant? Please recreate the current account."
             });
         }
         userInfo.DisplayName = requestBody.User.DisplayName;

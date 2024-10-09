@@ -24,8 +24,7 @@ public static class Delete
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "The user identity is null",
-                Detail = "The user identity is null. Did you provide a valid JWT token?",
-                InternalCode = 0x4
+                Detail = "The user identity is null. Did you provide a valid JWT token?"
             });
         }
         Models.User? userToDelete = databaseHandle.Users.Where(u => u.Username == user.Identity.Name).FirstOrDefault();
@@ -35,8 +34,7 @@ public static class Delete
             return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "A user with that name does not exist.",
-                Detail = "The user matching the name in the JWT claims could not be found in the database. Is it already deleted?",
-                InternalCode = 0x7
+                Detail = "The user matching the name in the JWT claims could not be found in the database. Is it already deleted?"
             });
         }
 

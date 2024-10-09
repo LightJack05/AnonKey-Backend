@@ -26,8 +26,7 @@ public static class Create
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "The a parameter in the request was null",
-                Detail = "One of the parameters in the request was null. This is not allowed, please fill in all parameters.",
-                InternalCode = 0x4
+                Detail = "One of the parameters in the request was null. This is not allowed, please fill in all parameters."
             });
         }
 
@@ -36,8 +35,7 @@ public static class Create
             return TypedResults.Conflict(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "The folder name is already taken",
-                Detail = "The folder name is already taken. Please choose a different name.",
-                InternalCode = 0x5
+                Detail = "The folder name is already taken. Please choose a different name."
             });
         }
 

@@ -21,8 +21,7 @@ public static class Create
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "The user identity is null",
-                Detail = "The user identity is null. Did you provide a valid JWT token?",
-                InternalCode = 0x4
+                Detail = "The user identity is null. Did you provide a valid JWT token?"
             });
         }
         if (requestBody.Credential is null)
@@ -30,8 +29,7 @@ public static class Create
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "The credential provided in the requestBody is null",
-                Detail = "The credential provided in the requestBody is null. This is not allowed, please fill in all parameters.",
-                InternalCode = 0x4
+                Detail = "The credential provided in the requestBody is null. This is not allowed, please fill in all parameters."
             });
         }
         if (requestBody.Credential is null || String.IsNullOrEmpty(requestBody.Credential.Uuid) || String.IsNullOrEmpty(requestBody.Credential.DisplayName) || String.IsNullOrEmpty(requestBody.Credential.DisplayNameSalt))
@@ -39,8 +37,7 @@ public static class Create
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "A parameter in the request was null or an empty string",
-                Detail = "One of the parameters in the request was null or an empty string. This is not allowed, please fill in all parameters.",
-                InternalCode = 0x4
+                Detail = "One of the parameters in the request was null or an empty string. This is not allowed, please fill in all parameters."
             });
         }
 
@@ -50,8 +47,7 @@ public static class Create
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "WebsiteUrl was provided, but the salt for it was not.",
-                Detail = "WebsiteUrlSalt is null or an empty string, but WebsiteUrl is not null. This is not allowed, please fill in all parameters.",
-                InternalCode = 0x4
+                Detail = "WebsiteUrlSalt is null or an empty string, but WebsiteUrl is not null. This is not allowed, please fill in all parameters."
             });
         }
 
@@ -60,8 +56,7 @@ public static class Create
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "Username was provided, but the salt for it was not.",
-                Detail = "UsernameSalt is null or an empty string, but Username is not null. This is not allowed, please fill in all parameters.",
-                InternalCode = 0x4
+                Detail = "UsernameSalt is null or an empty string, but Username is not null. This is not allowed, please fill in all parameters."
             });
         }
 
@@ -70,8 +65,7 @@ public static class Create
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "Password was provided, but the salt for it was not.",
-                Detail = "PasswordSalt is null or an empty string, but Password is not null. This is not allowed, please fill in all parameters.",
-                InternalCode = 0x4
+                Detail = "PasswordSalt is null or an empty string, but Password is not null. This is not allowed, please fill in all parameters."
             });
         }
 
@@ -80,8 +74,7 @@ public static class Create
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "Note was provided, but the salt for it was not.",
-                Detail = "NoteSalt is null or an empty string, but Note is not null. This is not allowed, please fill in all parameters.",
-                InternalCode = 0x4
+                Detail = "NoteSalt is null or an empty string, but Note is not null. This is not allowed, please fill in all parameters."
             });
         }
 
@@ -90,8 +83,7 @@ public static class Create
             return TypedResults.Conflict(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "A credential with this uuid already exists.",
-                Detail = "There is already a user object for the given uuid in the database. Please try changing the uuid and resending the request.",
-                InternalCode = 0x2
+                Detail = "There is already a user object for the given uuid in the database. Please try changing the uuid and resending the request."
             });
         }
 
