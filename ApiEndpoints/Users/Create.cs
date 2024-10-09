@@ -28,8 +28,7 @@ public static class Create
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "The a parameter in the request was null",
-                Detail = "One of the parameters in the request was null. This is not allowed, please fill in all parameters.",
-                InternalCode = 0x4
+                Detail = "One of the parameters in the request was null. This is not allowed, please fill in all parameters."
             });
         }
 
@@ -38,8 +37,7 @@ public static class Create
             return TypedResults.Conflict(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "A user with this username already exists.",
-                Detail = "There is already a user object for the given username in the database. Please try changing the name and resending the request.",
-                InternalCode = 0x2
+                Detail = "There is already a user object for the given username in the database. Please try changing the name and resending the request."
             });
         }
 
@@ -52,8 +50,7 @@ public static class Create
                                 The username is not a valid username. Ensure these rules are followed:
                                 - The username is between 5 and 128 characters long.
                                 - The username only consists of lowercase and uppercase letters, numbers and underscores (_).
-                    """,
-                InternalCode = 0x3
+                    """
             });
         }
 

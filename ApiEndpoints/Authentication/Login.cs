@@ -26,8 +26,7 @@ public static class Login
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "The KDF result was invalid.",
-                Detail = "The KDF result in the request was null or an empty string.",
-                InternalCode = 0x5
+                Detail = "The KDF result in the request was null or an empty string."
             });
         }
 
@@ -37,8 +36,7 @@ public static class Login
             return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody
             {
                 Message = "Invalid username or password",
-                Detail = "The username and password combination did not match any known combination. Please ensure the password and username are correct.",
-                InternalCode = 0x1
+                Detail = "The username and password combination did not match any known combination. Please ensure the password and username are correct."
             });
         }
 
@@ -47,8 +45,7 @@ public static class Login
             return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody
             {
                 Message = "Invalid username or password",
-                Detail = "The username and password combination did not match any known combination. Please ensure the password and username are correct.",
-                InternalCode = 0x1
+                Detail = "The username and password combination did not match any known combination. Please ensure the password and username are correct."
             });
         }
 

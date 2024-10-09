@@ -23,8 +23,7 @@ public static class Delete
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "The user identity is null",
-                Detail = "The user identity is null. Did you provide a valid JWT token?",
-                InternalCode = 0x4
+                Detail = "The user identity is null. Did you provide a valid JWT token?"
             });
         }
         databaseHandle.Database.EnsureCreated();
@@ -33,8 +32,7 @@ public static class Delete
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "The a parameter in the request was null",
-                Detail = "One of the parameters in the request was null. This is not allowed, please fill in all parameters.",
-                InternalCode = 0x4
+                Detail = "One of the parameters in the request was null. This is not allowed, please fill in all parameters."
             });
         }
 
@@ -46,8 +44,7 @@ public static class Delete
             return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "The folder does not exist",
-                Detail = "The folder does not exist. Please check the folder uuid.",
-                InternalCode = 0x6
+                Detail = "The folder does not exist. Please check the folder uuid."
             });
         }
 

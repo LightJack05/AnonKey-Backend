@@ -24,8 +24,7 @@ public static class Get
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "The user identity is null",
-                Detail = "The user identity is null. Did you provide a valid JWT token?",
-                InternalCode = 0x4
+                Detail = "The user identity is null. Did you provide a valid JWT token?"
             });
         }
         if (String.IsNullOrEmpty(folderUuid))
@@ -33,8 +32,7 @@ public static class Get
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "The folder UUID is missing",
-                Detail = "The folder UUID is missing from the request. Please provide the folder UUID.",
-                InternalCode = 0x4
+                Detail = "The folder UUID is missing from the request. Please provide the folder UUID."
             });
         }
 
@@ -45,8 +43,7 @@ public static class Get
             return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "The folder does not exist",
-                Detail = "The folder with the given UUID does not exist.",
-                InternalCode = 0x6
+                Detail = "The folder with the given UUID does not exist."
             });
         }
 

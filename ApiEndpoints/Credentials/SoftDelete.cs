@@ -19,8 +19,7 @@ public static class SoftDelete
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "The user identity is null",
-                Detail = "The user identity is null. Did you provide a valid JWT token?",
-                InternalCode = 0x4
+                Detail = "The user identity is null. Did you provide a valid JWT token?"
             });
         }
         databaseHandle.Database.EnsureCreated();
@@ -29,8 +28,7 @@ public static class SoftDelete
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "A credentialUuid in the request was null or an empty string",
-                Detail = "credentialUuid parameter in the request was null or an empty string. This is not allowed, please fill in all parameters.",
-                InternalCode = 0x4
+                Detail = "credentialUuid parameter in the request was null or an empty string. This is not allowed, please fill in all parameters."
             });
         }
 
@@ -41,8 +39,7 @@ public static class SoftDelete
             return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "No credential with this Uuid was found in the database or the credetial with this Uuid is already soft-deleted.",
-                Detail = "No credential with the provided credentialUuid was not found or the credetial with this Uuid is already soft-deleted. Please make sure the correct credentialUuid is provided.",
-                InternalCode = 0x6
+                Detail = "No credential with the provided credentialUuid was not found or the credetial with this Uuid is already soft-deleted. Please make sure the correct credentialUuid is provided."
             });
         }
 

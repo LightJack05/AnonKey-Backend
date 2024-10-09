@@ -23,8 +23,7 @@ public static class GetAll
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "The user identity is null",
-                Detail = "The user identity is null, therefore no data extraction is possible",
-                InternalCode = 0x4
+                Detail = "The user identity is null, therefore no data extraction is possible"
             });
         }
 
@@ -34,8 +33,7 @@ public static class GetAll
             return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "The user does not exist",
-                Detail = "The user does not exist in the database.",
-                InternalCode = 0x6
+                Detail = "The user does not exist in the database."
             });
         }
         FoldersGetAllResponseBody folders = GetAllFolders(userObject, databaseHandle);

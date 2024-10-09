@@ -22,8 +22,7 @@ public static class ChangePassword
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "The user identity is null",
-                Detail = "The user identity is null. Did you provide a valid JWT token?",
-                InternalCode = 0x4
+                Detail = "The user identity is null. Did you provide a valid JWT token?"
             });
         }
         if (String.IsNullOrEmpty(requestBody.KdfResultNewPassword) || String.IsNullOrEmpty(requestBody.KdfResultOldPassword))
@@ -31,8 +30,7 @@ public static class ChangePassword
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "One of the KDF result values was invalid.",
-                Detail = "One of the KDF results in the request was null or an empty string.",
-                InternalCode = 0x4
+                Detail = "One of the KDF results in the request was null or an empty string."
             });
         }
 
@@ -44,8 +42,7 @@ public static class ChangePassword
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "User not found.",
-                Detail = "The lookup for the username in the request did not yeild any results. Please make sure there is a user with the specified name.",
-                InternalCode = 0x1
+                Detail = "The lookup for the username in the request did not yeild any results. Please make sure there is a user with the specified name."
             });
         }
 
@@ -54,8 +51,7 @@ public static class ChangePassword
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody
             {
                 Message = "Invalid password",
-                Detail = "The password did not match the password used before. Please ensure the password is correct.",
-                InternalCode = 0x1
+                Detail = "The password did not match the password used before. Please ensure the password is correct."
             });
         }
 
