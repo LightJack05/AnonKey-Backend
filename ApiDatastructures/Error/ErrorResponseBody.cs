@@ -13,8 +13,4 @@ public class ErrorResponseBody
     /// A detailed explanation detailing the error.
     /// </summary>
     public string? Detail { get; set; }
-    /// <summary>
-    /// The error code for error correction purposes.
-    /// </summary>
-    public int InternalCode { get; set; }
 }
