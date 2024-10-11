@@ -81,6 +81,9 @@ public static class Delete
     /// <param name="databaseHandle">Database to handle</param>
     private static void DeleteFolderItems(Folder folder, DatabaseHandle databaseHandle)
     {
-        databaseHandle.Credentials.RemoveRange(databaseHandle.Credentials.Where(c => c.FolderUuid == folder.Uuid));
+        foreach (Credential item in databaseHandle.Credentials.Where(c => c.FolderUuid == folder.Uuid))
+        {
+            item.DeletedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds;
+        }
     }
 }
