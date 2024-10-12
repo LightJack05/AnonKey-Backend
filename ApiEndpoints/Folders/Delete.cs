@@ -84,6 +84,7 @@ public static class Delete
         foreach (Credential item in databaseHandle.Credentials.Where(c => c.FolderUuid == folder.Uuid))
         {
             item.DeletedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds;
+            item.FolderUuid = null;
         }
     }
 }
