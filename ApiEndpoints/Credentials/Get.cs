@@ -57,8 +57,9 @@ public static class Get
         return TypedResults.Ok(ConstructResponse(databaseHandle.Credentials.SingleOrDefault(c => c.Uuid == credentialUuid)));
     }
 
-    private static CredentialsGetResponseBody ConstructResponse(Credential FetchedCredential)
+    private static CredentialsGetResponseBody ConstructResponse(Credential? FetchedCredential)
     {
+        if (FetchedCredential is null) throw new ArgumentNullException();
         return new ApiDatastructures.Credentials.Get.CredentialsGetResponseBody()
         {
             Credential = new AnonKey_Backend.ApiDatastructures.Credentials.Get.CredentialsGetCredential()

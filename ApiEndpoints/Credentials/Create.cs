@@ -96,11 +96,13 @@ public static class Create
 
     private static Models.Credential CreateNewCredential(ApiDatastructures.Credentials.Create.CredentialsCreateRequestBody requestBody, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
-        if (user.Identity is null) throw new ArgumentNullException();
+        if (user.Identity is null || requestBody.Credential is null) throw new ArgumentNullException();
+        AnonKey_Backend.Models.User? FetchedUser = databaseHandle.Users.SingleOrDefault(u => u.Username == user.Identity.Name);
+        if (FetchedUser is null) throw new ArgumentNullException();
         return new Models.Credential()
         {
             Uuid = requestBody.Credential.Uuid,
-            UserUuid = databaseHandle.Users.SingleOrDefault(u => u.Username == user.Identity.Name).Uuid,
+            UserUuid = FetchedUser.Uuid,
             FolderUuid = requestBody.Credential.FolderUuid,
             Password = requestBody.Credential.Password,
             PasswordSalt = requestBody.Credential.PasswordSalt,

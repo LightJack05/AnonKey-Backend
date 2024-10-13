@@ -34,7 +34,10 @@ public static class GetAll
 
     private static CredentialsGetAllResponseBody GetAllCredetials(ClaimsPrincipal user, DatabaseHandle databaseHandle)
     {
-        List<AnonKey_Backend.Models.Credential> FetchedCredetials = databaseHandle.Credentials.Where(c => c.UserUuid == databaseHandle.Users.SingleOrDefault(u => u.Username == user.Identity.Name).Uuid).ToList();
+        if (user.Identity is null) throw new ArgumentNullException();
+        AnonKey_Backend.Models.User? FetchedUser = databaseHandle.Users.SingleOrDefault(u => u.Username == user.Identity.Name);
+        if (FetchedUser is null) throw new ArgumentNullException();
+        List<AnonKey_Backend.Models.Credential> FetchedCredetials = databaseHandle.Credentials.Where(c => c.UserUuid == FetchedUser.Uuid).ToList();
         AnonKey_Backend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllResponseBody Result = new AnonKey_Backend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllResponseBody();
         Result.Credentials = new List<AnonKey_Backend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllCredential>();
         foreach (AnonKey_Backend.Models.Credential FetchedCredential in FetchedCredetials)
