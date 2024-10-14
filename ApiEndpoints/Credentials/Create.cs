@@ -87,18 +87,18 @@ public static class Create
             });
         }
 
-        Models.Credential NewCredential = CreateNewCredential(requestBody, user, databaseHandle);
+        Models.Credential NewCredential = CreateNewCredential(requestBody, user.Identity.Name, databaseHandle);
 
         databaseHandle.Credentials.Add(NewCredential);
         databaseHandle.SaveChanges();
         return TypedResults.Ok();
     }
 
-    private static Models.Credential CreateNewCredential(ApiDatastructures.Credentials.Create.CredentialsCreateRequestBody requestBody, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
+    private static Models.Credential CreateNewCredential(ApiDatastructures.Credentials.Create.CredentialsCreateRequestBody requestBody, string? Username, Data.DatabaseHandle databaseHandle)
     {
-        if (user.Identity is null || requestBody.Credential is null) throw new ArgumentNullException();
-        AnonKey_Backend.Models.User? FetchedUser = databaseHandle.Users.SingleOrDefault(u => u.Username == user.Identity.Name);
-        if (FetchedUser is null) throw new ArgumentNullException();
+        if (Username is null || requestBody.Credential is null) throw new ArgumentNullException();
+        AnonKey_Backend.Models.User? FetchedUser = databaseHandle.Users.SingleOrDefault(u => u.Username == Username);
+        if (FetchedUser is null) throw new NullReferenceException();
         return new Models.Credential()
         {
             Uuid = requestBody.Credential.Uuid,

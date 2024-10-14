@@ -28,14 +28,14 @@ public static class GetAll
             });
         }
 
-        CredentialsGetAllResponseBody Result = GetAllCredetials(user, databaseHandle);
+        CredentialsGetAllResponseBody Result = GetAllCredetials(user.Identity.Name, databaseHandle);
         return TypedResults.Ok(Result);
     }
 
-    private static CredentialsGetAllResponseBody GetAllCredetials(ClaimsPrincipal user, DatabaseHandle databaseHandle)
+    private static CredentialsGetAllResponseBody GetAllCredetials(string? Username, DatabaseHandle databaseHandle)
     {
-        if (user.Identity is null) throw new ArgumentNullException();
-        AnonKey_Backend.Models.User? FetchedUser = databaseHandle.Users.SingleOrDefault(u => u.Username == user.Identity.Name);
+        if (Username is null) throw new ArgumentNullException();
+        AnonKey_Backend.Models.User? FetchedUser = databaseHandle.Users.SingleOrDefault(u => u.Username == Username);
         if (FetchedUser is null) throw new ArgumentNullException();
         List<AnonKey_Backend.Models.Credential> FetchedCredetials = databaseHandle.Credentials.Where(c => c.UserUuid == FetchedUser.Uuid).ToList();
         AnonKey_Backend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllResponseBody Result = new AnonKey_Backend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllResponseBody();
