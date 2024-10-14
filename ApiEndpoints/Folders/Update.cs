@@ -1,6 +1,4 @@
-using System.Reflection.Metadata.Ecma335;
 using AnonKey_Backend.ApiDatastructures.Folders.Update;
-using AnonKey_Backend.Data;
 using AnonKey_Backend.Models;
 
 namespace AnonKey_Backend.ApiEndpoints.Folders;
@@ -69,6 +67,7 @@ public static class Update
 
     private static void UpdateFolder(FoldersUpdateRequestBody requestBody, Folder folder)
     {
+        if(requestBody.Folder is null) throw new ArgumentNullException();
         folder.DisplayName = requestBody.Folder.Name;
         folder.Icon = requestBody.Folder.Icon;
     }
