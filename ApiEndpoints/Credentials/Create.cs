@@ -87,20 +87,22 @@ public static class Create
             });
         }
 
-        Models.Credential NewCredential = CreateNewCredential(requestBody, user, databaseHandle);
+        Models.Credential NewCredential = CreateNewCredential(requestBody, user.Identity.Name, databaseHandle);
 
         databaseHandle.Credentials.Add(NewCredential);
         databaseHandle.SaveChanges();
         return TypedResults.Ok();
     }
 
-    private static Models.Credential CreateNewCredential(ApiDatastructures.Credentials.Create.CredentialsCreateRequestBody requestBody, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
+    private static Models.Credential CreateNewCredential(ApiDatastructures.Credentials.Create.CredentialsCreateRequestBody requestBody, string? username, Data.DatabaseHandle databaseHandle)
     {
-        if (user.Identity is null) throw new ArgumentNullException();
+        if (username is null || requestBody.Credential is null) throw new ArgumentNullException();
+        AnonKey_Backend.Models.User? FetchedUser = databaseHandle.Users.SingleOrDefault(u => u.Username == username);
+        if (FetchedUser is null) throw new NullReferenceException("There is no user with this username in the database.");
         return new Models.Credential()
         {
             Uuid = requestBody.Credential.Uuid,
-            UserUuid = databaseHandle.Users.SingleOrDefault(u => u.Username == user.Identity.Name).Uuid,
+            UserUuid = FetchedUser.Uuid,
             FolderUuid = requestBody.Credential.FolderUuid,
             Password = requestBody.Credential.Password,
             PasswordSalt = requestBody.Credential.PasswordSalt,

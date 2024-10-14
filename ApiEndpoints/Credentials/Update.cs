@@ -96,7 +96,7 @@ public static class Update
             });
         }
 
-        string UserUuid = FetchedUser.Uuid;
+        string? UserUuid = FetchedUser.Uuid;
 
         if (UserUuid != FetchedCredential.UserUuid)
         {
@@ -137,21 +137,24 @@ public static class Update
         };
     }
 
-    private static void UpdateCredential(CredentialsUpdateRequestBody requestBody, ClaimsPrincipal user, string UserUuid, AnonKey_Backend.Models.Credential FetchedCredential)
+    private static void UpdateCredential(CredentialsUpdateRequestBody requestBody, ClaimsPrincipal user, string? UserUuid, AnonKey_Backend.Models.Credential FetchedCredential)
     {
-        FetchedCredential.Uuid = requestBody.Credential.Uuid;
-        FetchedCredential.UserUuid = UserUuid;
-        FetchedCredential.FolderUuid = requestBody.Credential.FolderUuid;
-        FetchedCredential.Password = requestBody.Credential.Password;
-        FetchedCredential.PasswordSalt = requestBody.Credential.PasswordSalt;
-        FetchedCredential.Username = requestBody.Credential.Username;
-        FetchedCredential.UsernameSalt = requestBody.Credential.UsernameSalt;
-        FetchedCredential.WebsiteUrl = requestBody.Credential.WebsiteUrl;
-        FetchedCredential.WebsiteUrlSalt = requestBody.Credential.WebsiteUrlSalt;
-        FetchedCredential.Note = requestBody.Credential.Note;
-        FetchedCredential.NoteSalt = requestBody.Credential.NoteSalt;
-        FetchedCredential.DisplayName = requestBody.Credential.DisplayName;
-        FetchedCredential.DisplayNameSalt = requestBody.Credential.DisplayNameSalt;
-        FetchedCredential.ChangedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds;
+        if (requestBody.Credential is not null)
+        {
+            FetchedCredential.Uuid = requestBody.Credential.Uuid;
+            FetchedCredential.UserUuid = UserUuid;
+            FetchedCredential.FolderUuid = requestBody.Credential.FolderUuid;
+            FetchedCredential.Password = requestBody.Credential.Password;
+            FetchedCredential.PasswordSalt = requestBody.Credential.PasswordSalt;
+            FetchedCredential.Username = requestBody.Credential.Username;
+            FetchedCredential.UsernameSalt = requestBody.Credential.UsernameSalt;
+            FetchedCredential.WebsiteUrl = requestBody.Credential.WebsiteUrl;
+            FetchedCredential.WebsiteUrlSalt = requestBody.Credential.WebsiteUrlSalt;
+            FetchedCredential.Note = requestBody.Credential.Note;
+            FetchedCredential.NoteSalt = requestBody.Credential.NoteSalt;
+            FetchedCredential.DisplayName = requestBody.Credential.DisplayName;
+            FetchedCredential.DisplayNameSalt = requestBody.Credential.DisplayNameSalt;
+            FetchedCredential.ChangedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds;
+        }
     }
 }
