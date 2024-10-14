@@ -94,11 +94,11 @@ public static class Create
         return TypedResults.Ok();
     }
 
-    private static Models.Credential CreateNewCredential(ApiDatastructures.Credentials.Create.CredentialsCreateRequestBody requestBody, string? Username, Data.DatabaseHandle databaseHandle)
+    private static Models.Credential CreateNewCredential(ApiDatastructures.Credentials.Create.CredentialsCreateRequestBody requestBody, string? username, Data.DatabaseHandle databaseHandle)
     {
-        if (Username is null || requestBody.Credential is null) throw new ArgumentNullException();
-        AnonKey_Backend.Models.User? FetchedUser = databaseHandle.Users.SingleOrDefault(u => u.Username == Username);
-        if (FetchedUser is null) throw new NullReferenceException();
+        if (username is null || requestBody.Credential is null) throw new ArgumentNullException();
+        AnonKey_Backend.Models.User? FetchedUser = databaseHandle.Users.SingleOrDefault(u => u.Username == username);
+        if (FetchedUser is null) throw new NullReferenceException("There is no user with this username in the database.");
         return new Models.Credential()
         {
             Uuid = requestBody.Credential.Uuid,

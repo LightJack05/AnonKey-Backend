@@ -32,11 +32,11 @@ public static class GetAll
         return TypedResults.Ok(Result);
     }
 
-    private static CredentialsGetAllResponseBody GetAllCredetials(string? Username, DatabaseHandle databaseHandle)
+    private static CredentialsGetAllResponseBody GetAllCredetials(string? username, DatabaseHandle databaseHandle)
     {
-        if (Username is null) throw new ArgumentNullException();
-        AnonKey_Backend.Models.User? FetchedUser = databaseHandle.Users.SingleOrDefault(u => u.Username == Username);
-        if (FetchedUser is null) throw new ArgumentNullException();
+        if (username is null) throw new ArgumentNullException();
+        AnonKey_Backend.Models.User? FetchedUser = databaseHandle.Users.SingleOrDefault(u => u.Username == username);
+        if (FetchedUser is null) throw new NullReferenceException("There is no user with this username in the database.");
         List<AnonKey_Backend.Models.Credential> FetchedCredetials = databaseHandle.Credentials.Where(c => c.UserUuid == FetchedUser.Uuid).ToList();
         AnonKey_Backend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllResponseBody Result = new AnonKey_Backend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllResponseBody();
         Result.Credentials = new List<AnonKey_Backend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllCredential>();
