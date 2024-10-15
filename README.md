@@ -1,4 +1,7 @@
 # AnonKey-Backend
 AnonKey is a zero-knowledge password manager, designed for self hosting.
 
-The project is currently Work-In-Progress, please don't expect everything to work as intended immediately.
+Installation instructions, Concepts and migration steps are detailed in the Wiki: 
+https://github.com/LightJack05/AnonKey-Backend/wiki
+
+(The project is currently Work-In-Progress, please don't expect everything to work as intended immediately.)
