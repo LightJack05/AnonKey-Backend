@@ -12,3 +12,11 @@ If you would like to build documentation for code and classes as an HTML website
 ```bash
 make docs
 ```
+
+The Swagger API docs can be accessed by running the AnonKey Backend in debug mode, at the `/swagger` path.
+Run:
+```bash
+make run
+```
+
+then visit http://localhost:5000/swagger in your browser.
