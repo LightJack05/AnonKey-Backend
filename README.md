@@ -5,3 +5,10 @@ Installation instructions, Concepts and migration steps are detailed in the Wiki
 https://github.com/LightJack05/AnonKey-Backend/wiki
 
 (The project is currently Work-In-Progress, please don't expect everything to work as intended immediately.)
+# Documentation
+
+If you would like to build documentation for code and classes as an HTML website, install doxygen and run this in the repo folder:
+
+```bash
+make docs
+```
