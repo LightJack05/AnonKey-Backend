@@ -106,7 +106,20 @@ docs:
 	@echo "[DOCS - INFO] 💬 Attempting to build $(projectName) documentation..."
 	doxygen doxygen.conf
 
+#
+# Push local commits to the remote repository.
+#
+push: preflight-push
+	@echo "[PUSH - INFO] Pushing local commits to the remote..."
+	git push
+
+
 ### The following profiles are project-specific preflight checks used to ensure consistent code.
+
+preflight-push:
+	@echo "[PREFLIGHT-PUSH - INFO] ✅ Running preflight-checks for a push..."
+	@make -s preflight-not-main
+	@echo "[PREFLIGHT-PUSH - PASS] ✅ All preflight-checks for a push have passed!"
 
 preflight-pull:
 	@echo "[PREFLIGHT-PULL - INFO] ✅ Running preflight-checks for a Pull Request..."
@@ -132,6 +145,4 @@ preflight-compilation: clean-silent
 preflight-warnings: clean-silent
 	@echo "[PREFLIGHT-WARNINGS - INFO] 💬 Checking if there are any Warnings during compile-time..."
 	@if dotnet build /WarnAsError | grep -q "Build succeeded."; then echo "[PREFLIGHT-WARNINGS - PASS] ✅ Project does not produce any warnings."; else echo "[PREFLIGHT-WARNINGS - WARN] ❓ The project produces compiler warnings. Please review the warnings using 'make clean' and 'make build' before opening a pull request!"; fi 
-
-
 
