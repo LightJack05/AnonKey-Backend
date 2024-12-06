@@ -1,3 +1,4 @@
+#pragma warning disable CA1707
 using Newtonsoft.Json;
 namespace AnonKey_Backend.Configuration;
 
