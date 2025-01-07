@@ -3,7 +3,7 @@ name: Formatting Check
 on: [pull_request]
 
 jobs:
-  build:
+  format:
     runs-on: ubuntu-latest
 
     steps:

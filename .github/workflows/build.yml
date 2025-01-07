@@ -3,7 +3,7 @@ name: Compilation Check
 on: [pull_request]
 
 jobs:
-  build:
+  compile:
     runs-on: ubuntu-latest
 
     steps:
@@ -12,5 +12,5 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
-    - name: Project Formatting
+    - name: Build 
       run: make preflight-compilation 
