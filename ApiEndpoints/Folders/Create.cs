@@ -50,7 +50,7 @@ public static class Create
     private static string CreateNewFolder(FoldersCreateRequestBody requestBody, ClaimsPrincipal user, DatabaseHandle databaseHandle)
     {
         User userObject = RetrieveUserFromDatabase(user, databaseHandle);
-        if(requestBody.Folder is null) throw new ArgumentNullException();
+        if (requestBody.Folder is null) throw new ArgumentNullException();
 
         Models.Folder folder = new()
         {
@@ -68,7 +68,7 @@ public static class Create
 
     private static User RetrieveUserFromDatabase(ClaimsPrincipal user, DatabaseHandle databaseHandle)
     {
-        if(user.Identity is null) throw new ArgumentNullException();
+        if (user.Identity is null) throw new ArgumentNullException();
         return databaseHandle.Users.First(u => u.Username == user.Identity.Name);
     }
 }
