@@ -1,6 +1,6 @@
-using AnonKey_Backend.Models;
+using AnonKeyBackend.Models;
 
-namespace AnonKey_Backend.ApiEndpoints.Authentication;
+namespace AnonKeyBackend.ApiEndpoints.Authentication;
 
 /// <summary>
 /// Handles the authentication login endpoint.
@@ -15,7 +15,7 @@ public static class Login
         Ok<ApiDatastructures.Authentication.Login.AuthenticationLoginResponseBody>,
         NotFound<ApiDatastructures.Error.ErrorResponseBody>,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
-            PostLogin(ApiDatastructures.Authentication.Login.AuthenticationLoginRequestBody requestBody, AnonKey_Backend.Authentication.TokenService tokenService, Data.DatabaseHandle databaseHandle)
+            PostLogin(ApiDatastructures.Authentication.Login.AuthenticationLoginRequestBody requestBody, AnonKeyBackend.Authentication.TokenService tokenService, Data.DatabaseHandle databaseHandle)
     {
         databaseHandle.Database.EnsureCreated();
 
@@ -54,7 +54,7 @@ public static class Login
         return TypedResults.Ok(new ApiDatastructures.Authentication.Login.AuthenticationLoginResponseBody
         {
             Token = token,
-            ExpiresInSeconds = AnonKey_Backend.Authentication.TokenService.TokenExpiryGraceInSeconds
+            ExpiresInSeconds = AnonKeyBackend.Authentication.TokenService.TokenExpiryGraceInSeconds
         });
     }
 }

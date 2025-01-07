@@ -1,7 +1,7 @@
-using AnonKey_Backend.Data;
-using AnonKey_Backend.Models;
+using AnonKeyBackend.Data;
+using AnonKeyBackend.Models;
 
-namespace AnonKey_Backend.ApiEndpoints.Authentication;
+namespace AnonKeyBackend.ApiEndpoints.Authentication;
 
 /// <summary>
 /// Changes a users password.

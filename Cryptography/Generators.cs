@@ -1,4 +1,4 @@
-namespace AnonKey_Backend.Cryptography;
+namespace AnonKeyBackend.Cryptography;
 using System.Security.Cryptography;
 
 /// <summary>

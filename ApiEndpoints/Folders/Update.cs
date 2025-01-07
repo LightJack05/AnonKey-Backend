@@ -1,7 +1,7 @@
-using AnonKey_Backend.ApiDatastructures.Folders.Update;
-using AnonKey_Backend.Models;
+using AnonKeyBackend.ApiDatastructures.Folders.Update;
+using AnonKeyBackend.Models;
 
-namespace AnonKey_Backend.ApiEndpoints.Folders;
+namespace AnonKeyBackend.ApiEndpoints.Folders;
 
 /// <summary>
 /// Handles the folders update endpoint.

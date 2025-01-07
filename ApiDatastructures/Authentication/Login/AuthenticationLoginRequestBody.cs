@@ -1,4 +1,4 @@
-namespace AnonKey_Backend.ApiDatastructures.Authentication.Login;
+namespace AnonKeyBackend.ApiDatastructures.Authentication.Login;
 
 /// <summary>
 /// The body of a login request.

@@ -1,4 +1,4 @@
-namespace AnonKey_Backend.ApiDatastructures.Folders.Get;
+namespace AnonKeyBackend.ApiDatastructures.Folders.Get;
 
 /// <summary>
 /// Folder in a folder get response.

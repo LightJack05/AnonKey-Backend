@@ -1,4 +1,4 @@
-namespace AnonKey_Backend.ApiDatastructures.Users.Update;
+namespace AnonKeyBackend.ApiDatastructures.Users.Update;
 
 /// <summary>
 /// User update request user.

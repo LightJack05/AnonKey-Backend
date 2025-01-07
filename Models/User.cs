@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-namespace AnonKey_Backend.Models;
+namespace AnonKeyBackend.Models;
 
 /// <summary>
 /// Secret user information only meant for use in the backend.

@@ -1,7 +1,7 @@
-using AnonKey_Backend.ApiDatastructures.Credentials.Update;
-using AnonKey_Backend.Models;
+using AnonKeyBackend.ApiDatastructures.Credentials.Update;
+using AnonKeyBackend.Models;
 
-namespace AnonKey_Backend.ApiEndpoints.Credentials;
+namespace AnonKeyBackend.ApiEndpoints.Credentials;
 
 /// <summary>
 /// Handles the editing of credentials.
@@ -75,8 +75,8 @@ public static class Update
         }
 
 
-        AnonKey_Backend.Models.Credential? FetchedCredential = databaseHandle.Credentials.SingleOrDefault(c => c.Uuid == requestBody.Credential.Uuid);
-        AnonKey_Backend.Models.User? FetchedUser = databaseHandle.Users.SingleOrDefault(u => u.Username == user.Identity.Name);
+        AnonKeyBackend.Models.Credential? FetchedCredential = databaseHandle.Credentials.SingleOrDefault(c => c.Uuid == requestBody.Credential.Uuid);
+        AnonKeyBackend.Models.User? FetchedUser = databaseHandle.Users.SingleOrDefault(u => u.Username == user.Identity.Name);
 
         if (FetchedCredential is null)
         {
@@ -109,15 +109,15 @@ public static class Update
 
         UpdateCredential(requestBody, user, UserUuid, FetchedCredential);
         databaseHandle.SaveChanges();
-        AnonKey_Backend.Models.Credential NewCredential = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid);
+        AnonKeyBackend.Models.Credential NewCredential = databaseHandle.Credentials.Single(c => c.Uuid == requestBody.Credential.Uuid);
         return TypedResults.Ok(CronstructResponse(NewCredential));
     }
 
     private static CredentialsUpdateResponseBody CronstructResponse(Credential NewCredential)
     {
-        return new AnonKey_Backend.ApiDatastructures.Credentials.Update.CredentialsUpdateResponseBody()
+        return new AnonKeyBackend.ApiDatastructures.Credentials.Update.CredentialsUpdateResponseBody()
         {
-            Credential = new AnonKey_Backend.ApiDatastructures.Credentials.Update.CredentialsUpdateCredentialResponse()
+            Credential = new AnonKeyBackend.ApiDatastructures.Credentials.Update.CredentialsUpdateCredentialResponse()
             {
                 Uuid = NewCredential.Uuid,
                 FolderUuid = NewCredential.FolderUuid,
@@ -137,7 +137,7 @@ public static class Update
         };
     }
 
-    private static void UpdateCredential(CredentialsUpdateRequestBody requestBody, ClaimsPrincipal user, string? UserUuid, AnonKey_Backend.Models.Credential FetchedCredential)
+    private static void UpdateCredential(CredentialsUpdateRequestBody requestBody, ClaimsPrincipal user, string? UserUuid, AnonKeyBackend.Models.Credential FetchedCredential)
     {
         if (requestBody.Credential is not null)
         {

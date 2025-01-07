@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-namespace AnonKey_Backend.Models;
+namespace AnonKeyBackend.Models;
 
 /// <summary>
 /// A user model to be saved in a database

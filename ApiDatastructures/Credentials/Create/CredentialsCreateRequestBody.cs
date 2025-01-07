@@ -1,4 +1,4 @@
-namespace AnonKey_Backend.ApiDatastructures.Credentials.Create;
+namespace AnonKeyBackend.ApiDatastructures.Credentials.Create;
 
 /// <summary>
 /// The body of a credential create request.

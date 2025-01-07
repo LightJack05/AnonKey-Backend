@@ -1,4 +1,4 @@
-namespace AnonKey_Backend.ApiEndpoints.Credentials;
+namespace AnonKeyBackend.ApiEndpoints.Credentials;
 
 /// <summary>
 /// Handles the credentials soft-delete endpoint.
@@ -32,7 +32,7 @@ public static class SoftDelete
             });
         }
 
-        AnonKey_Backend.Models.Credential? FetchedCredential = databaseHandle.Credentials.SingleOrDefault(c => c.Uuid == credentialUuid && c.UserUuid == databaseHandle.Users.Single(u => u.Username == user.Identity.Name).Uuid && c.DeletedTimestamp == null);
+        AnonKeyBackend.Models.Credential? FetchedCredential = databaseHandle.Credentials.SingleOrDefault(c => c.Uuid == credentialUuid && c.UserUuid == databaseHandle.Users.Single(u => u.Username == user.Identity.Name).Uuid && c.DeletedTimestamp == null);
 
         if (FetchedCredential is null)
         {

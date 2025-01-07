@@ -1,4 +1,4 @@
-namespace AnonKey_Backend.Development;
+namespace AnonKeyBackend.Development;
 using Microsoft.EntityFrameworkCore;
 
 /// <summary>
@@ -20,7 +20,7 @@ public static class ModelBuilderExtensions
     private static void CreateSampleUser(this ModelBuilder modelBuilder)
     {
         string passwordSalt = Cryptography.Generators.NewRandomString(Configuration.Settings.UserPasswordSaltLength);
-        modelBuilder.Entity<AnonKey_Backend.Models.User>().HasData(new AnonKey_Backend.Models.User
+        modelBuilder.Entity<AnonKeyBackend.Models.User>().HasData(new AnonKeyBackend.Models.User
         {
             Uuid = "7d9d3e99-064d-41bf-a125-ca5951e8a048",
             Username = "anonkey",
@@ -29,7 +29,7 @@ public static class ModelBuilderExtensions
         }
         );
 
-        modelBuilder.Entity<AnonKey_Backend.Models.UserInfo>().HasData(new AnonKey_Backend.Models.UserInfo
+        modelBuilder.Entity<AnonKeyBackend.Models.UserInfo>().HasData(new AnonKeyBackend.Models.UserInfo
         {
             Uuid = Guid.NewGuid().ToString(),
             UserUuid = "7d9d3e99-064d-41bf-a125-ca5951e8a048",
@@ -39,7 +39,7 @@ public static class ModelBuilderExtensions
 
     private static void CreateSampleFolder(this ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<AnonKey_Backend.Models.Folder>().HasData(new AnonKey_Backend.Models.Folder
+        modelBuilder.Entity<AnonKeyBackend.Models.Folder>().HasData(new AnonKeyBackend.Models.Folder
         {
             Uuid = "09f770c5-b1c1-41c6-bfd2-818b7b443da9",
             UserUuid = "7d9d3e99-064d-41bf-a125-ca5951e8a048",
@@ -50,7 +50,7 @@ public static class ModelBuilderExtensions
 
     private static void CreateSampleCredentialWithoutFolder(this ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<AnonKey_Backend.Models.Credential>().HasData(new AnonKey_Backend.Models.Credential
+        modelBuilder.Entity<AnonKeyBackend.Models.Credential>().HasData(new AnonKeyBackend.Models.Credential
         {
             Uuid = "ebd1ef35-cade-4e2a-8117-3ed58bd13143",
             UserUuid = "7d9d3e99-064d-41bf-a125-ca5951e8a048",
@@ -73,7 +73,7 @@ public static class ModelBuilderExtensions
 
     private static void CreateSampleCredentialInSampleFolder(this ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<AnonKey_Backend.Models.Credential>().HasData(new AnonKey_Backend.Models.Credential
+        modelBuilder.Entity<AnonKeyBackend.Models.Credential>().HasData(new AnonKeyBackend.Models.Credential
         {
             Uuid = "d59bd8a5-e24b-4b97-94f5-2e3dfb9a297e",
             UserUuid = "7d9d3e99-064d-41bf-a125-ca5951e8a048",

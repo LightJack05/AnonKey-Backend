@@ -1,9 +1,9 @@
 using System.Text.RegularExpressions;
-using AnonKey_Backend.ApiDatastructures.Users.Create;
-using AnonKey_Backend.Authentication;
-using AnonKey_Backend.Data;
+using AnonKeyBackend.ApiDatastructures.Users.Create;
+using AnonKeyBackend.Authentication;
+using AnonKeyBackend.Data;
 
-namespace AnonKey_Backend.ApiEndpoints.Users;
+namespace AnonKeyBackend.ApiEndpoints.Users;
 
 /// <summary>
 /// Handles the users create endpoint.
@@ -17,7 +17,7 @@ public static class Create
         Ok<ApiDatastructures.Users.Create.UsersCreateResponseBody>,
         Conflict<ApiDatastructures.Error.ErrorResponseBody>,
         BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
-           PostCreate(ApiDatastructures.Users.Create.UsersCreateRequestBody requestBody, AnonKey_Backend.Authentication.TokenService tokenService, Data.DatabaseHandle databaseHandle)
+           PostCreate(ApiDatastructures.Users.Create.UsersCreateRequestBody requestBody, AnonKeyBackend.Authentication.TokenService tokenService, Data.DatabaseHandle databaseHandle)
     {
         databaseHandle.Database.EnsureCreated();
         // if (requestBody.UserDisplayName is null || requestBody.KdfPasswordResult is null || requestBody.UserName is null)
@@ -59,7 +59,7 @@ public static class Create
         return TypedResults.Ok(new ApiDatastructures.Users.Create.UsersCreateResponseBody
         {
             Token = token,
-            ExpiresInSeconds = AnonKey_Backend.Authentication.TokenService.TokenExpiryGraceInSeconds
+            ExpiresInSeconds = AnonKeyBackend.Authentication.TokenService.TokenExpiryGraceInSeconds
         });
 
 

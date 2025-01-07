@@ -1,4 +1,4 @@
-namespace AnonKey_Backend.ApiEndpoints.Uuid;
+namespace AnonKeyBackend.ApiEndpoints.Uuid;
 
 /// <summary>
 /// Handles the new uuid new endpoint.
@@ -11,7 +11,7 @@ public static class NewUuid
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok<string>,
-        BadRequest<AnonKey_Backend.ApiDatastructures.Error.ErrorResponseBody>>
+        BadRequest<AnonKeyBackend.ApiDatastructures.Error.ErrorResponseBody>>
             GetNewUuid(ClaimsPrincipal user)
     {
         Guid newGuid = System.Guid.NewGuid();

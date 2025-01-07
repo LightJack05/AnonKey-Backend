@@ -1,8 +1,8 @@
-using AnonKey_Backend.ApiDatastructures.Folders.GetAll;
-using AnonKey_Backend.Data;
-using AnonKey_Backend.Models;
+using AnonKeyBackend.ApiDatastructures.Folders.GetAll;
+using AnonKeyBackend.Data;
+using AnonKeyBackend.Models;
 
-namespace AnonKey_Backend.ApiEndpoints.Folders;
+namespace AnonKeyBackend.ApiEndpoints.Folders;
 
 /// <summary>
 /// Handles the folders getall endpoint.
@@ -42,12 +42,12 @@ public static class GetAll
 
     private static FoldersGetAllResponseBody GetAllFolders(User userObject, DatabaseHandle databaseHandle)
     {
-        List<AnonKey_Backend.Models.Folder> fetchedFolders = databaseHandle.Folders.Where(f => f.UserUuid == userObject.Uuid).ToList();
-        AnonKey_Backend.ApiDatastructures.Folders.GetAll.FoldersGetAllResponseBody result = new AnonKey_Backend.ApiDatastructures.Folders.GetAll.FoldersGetAllResponseBody();
+        List<AnonKeyBackend.Models.Folder> fetchedFolders = databaseHandle.Folders.Where(f => f.UserUuid == userObject.Uuid).ToList();
+        AnonKeyBackend.ApiDatastructures.Folders.GetAll.FoldersGetAllResponseBody result = new AnonKeyBackend.ApiDatastructures.Folders.GetAll.FoldersGetAllResponseBody();
         result.Folder = new List<FoldersGetAllFolder>();
-        foreach (AnonKey_Backend.Models.Folder fetchedFolder in fetchedFolders)
+        foreach (AnonKeyBackend.Models.Folder fetchedFolder in fetchedFolders)
         {
-            result.Folder.Add(new AnonKey_Backend.ApiDatastructures.Folders.GetAll.FoldersGetAllFolder()
+            result.Folder.Add(new AnonKeyBackend.ApiDatastructures.Folders.GetAll.FoldersGetAllFolder()
             {
                 Uuid = fetchedFolder.Uuid,
                 Name = fetchedFolder.DisplayName,

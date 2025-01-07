@@ -1,4 +1,4 @@
-namespace AnonKey_Backend.ApiEndpoints.Uuid;
+namespace AnonKeyBackend.ApiEndpoints.Uuid;
 
 /// <summary>
 /// Handles mapping the uuid endpoint.

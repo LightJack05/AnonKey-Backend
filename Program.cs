@@ -7,7 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 
-namespace AnonKey_Backend;
+namespace AnonKeyBackend;
 
 #pragma warning disable
 
@@ -53,10 +53,10 @@ public class Program
 
 
         // Entity Framework / Database
-        builder.Services.AddEntityFrameworkSqlite().AddDbContext<AnonKey_Backend.Data.DatabaseHandle>(opt => opt.UseSqlite(builder.Configuration.GetConnectionString("ApiDatabase")));
+        builder.Services.AddEntityFrameworkSqlite().AddDbContext<AnonKeyBackend.Data.DatabaseHandle>(opt => opt.UseSqlite(builder.Configuration.GetConnectionString("ApiDatabase")));
 
         // Authentication
-        builder.Services.AddSingleton<Authentication.TokenService>();
+        builder.Services.AddSingleton<AnonKeyBackend.Authentication.TokenService>();
         builder.Services.AddAuthentication(config =>
                 {
                     config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -92,7 +92,7 @@ public class Program
         app.UseAuthorization();
 
         // Initialize the endpoints with the proper mappings
-        AnonKey_Backend.ApiEndpoints.EndpointSetup.Initialize(app);
+        AnonKeyBackend.ApiEndpoints.EndpointSetup.Initialize(app);
 
         app.Run();
 
