@@ -11,11 +11,11 @@ namespace AnonKeyBackend.Authentication;
 public class TokenService
 {
     /// <summary>
-    /// The time set for token expiry after it has been issued.
+    /// The time set for access token expiry after it has been issued.
     /// </summary>
     public const int AccessTokenExpiryTimeInSeconds = 600;
     /// <summary>
-    /// The time set for token expiry after it has been issued.
+    /// The time set for refresh token expiry after it has been issued.
     /// </summary>
     public const int RefreshTokenExpiryTimeInSeconds = 7884000;
     /// <summary>
@@ -30,6 +30,20 @@ public class TokenService
             throw new ArgumentNullException();
         }
 
+        int tokenExpiryTime = 0;
+        if (tokenType == "AccessToken")
+        {
+            tokenExpiryTime = AccessTokenExpiryTimeInSeconds;
+        }
+        else if (tokenType == "RefreshToken")
+        {
+            tokenExpiryTime = RefreshTokenExpiryTimeInSeconds;
+        }
+        else
+        {
+            throw new ArgumentOutOfRangeException();
+        }
+
 
         JwtSecurityTokenHandler tokenHandler = new();
         byte[] jwtIssuerSigningKey = Configuration.Settings.JwtIssuerSigningKey;
@@ -39,10 +53,10 @@ public class TokenService
                     {
                         new (ClaimTypes.Name, user.Username),
                         new (ClaimTypes.Role, "user"),
-                        new ("TokenType", "AccessToken"),
+                        new ("TokenType", tokenType),
                         new ("TokenUuid", Guid.NewGuid().ToString())
                     }),
-            Expires = DateTime.UtcNow.AddSeconds(AccessTokenExpiryTimeInSeconds),
+            Expires = DateTime.UtcNow.AddSeconds(tokenExpiryTime),
             SigningCredentials = new(
                         new SymmetricSecurityKey(jwtIssuerSigningKey),
                         SecurityAlgorithms.HmacSha256Signature
