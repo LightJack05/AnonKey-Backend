@@ -28,7 +28,8 @@ public static class Update
             });
         }
 
-        if (user.Identity == null){
+        if (user.Identity == null)
+        {
             return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
             {
                 Message = "The user identity is null",
@@ -67,7 +68,7 @@ public static class Update
 
     private static void UpdateFolder(FoldersUpdateRequestBody requestBody, Folder folder)
     {
-        if(requestBody.Folder is null) throw new ArgumentNullException();
+        if (requestBody.Folder is null) throw new ArgumentNullException();
         folder.DisplayName = requestBody.Folder.Name;
         folder.Icon = requestBody.Folder.Icon;
     }
