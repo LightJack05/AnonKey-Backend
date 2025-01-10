@@ -1,7 +1,7 @@
-using AnonKey_Backend.ApiDatastructures.Credentials.GetAll;
-using AnonKey_Backend.Data;
+using AnonKeyBackend.ApiDatastructures.Credentials.GetAll;
+using AnonKeyBackend.Data;
 
-namespace AnonKey_Backend.ApiEndpoints.Credentials;
+namespace AnonKeyBackend.ApiEndpoints.Credentials;
 
 /// <summary>
 /// Handles the credentials get all endpoint.
@@ -35,14 +35,14 @@ public static class GetAll
     private static CredentialsGetAllResponseBody GetAllCredetials(string? username, DatabaseHandle databaseHandle)
     {
         if (username is null) throw new ArgumentNullException();
-        AnonKey_Backend.Models.User? FetchedUser = databaseHandle.Users.SingleOrDefault(u => u.Username == username);
+        AnonKeyBackend.Models.User? FetchedUser = databaseHandle.Users.SingleOrDefault(u => u.Username == username);
         if (FetchedUser is null) throw new NullReferenceException("There is no user with this username in the database.");
-        List<AnonKey_Backend.Models.Credential> FetchedCredetials = databaseHandle.Credentials.Where(c => c.UserUuid == FetchedUser.Uuid).ToList();
-        AnonKey_Backend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllResponseBody Result = new AnonKey_Backend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllResponseBody();
-        Result.Credentials = new List<AnonKey_Backend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllCredential>();
-        foreach (AnonKey_Backend.Models.Credential FetchedCredential in FetchedCredetials)
+        List<AnonKeyBackend.Models.Credential> FetchedCredetials = databaseHandle.Credentials.Where(c => c.UserUuid == FetchedUser.Uuid).ToList();
+        AnonKeyBackend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllResponseBody Result = new AnonKeyBackend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllResponseBody();
+        Result.Credentials = new List<AnonKeyBackend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllCredential>();
+        foreach (AnonKeyBackend.Models.Credential FetchedCredential in FetchedCredetials)
         {
-            Result.Credentials.Add(new AnonKey_Backend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllCredential()
+            Result.Credentials.Add(new AnonKeyBackend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllCredential()
             {
                 Uuid = FetchedCredential.Uuid,
                 Password = FetchedCredential.Password,

@@ -1,4 +1,4 @@
-namespace AnonKey_Backend.ApiDatastructures.Users.Create;
+namespace AnonKeyBackend.ApiDatastructures.Users.Create;
 
 /// <summary>
 /// Body of a response to a user create request.

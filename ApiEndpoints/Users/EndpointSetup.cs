@@ -1,4 +1,4 @@
-namespace AnonKey_Backend.ApiEndpoints.Users;
+namespace AnonKeyBackend.ApiEndpoints.Users;
 
 /// <summary>
 /// Handles mapping the users endpoint.

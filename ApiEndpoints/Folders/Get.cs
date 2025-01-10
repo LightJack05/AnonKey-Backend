@@ -1,6 +1,6 @@
-using AnonKey_Backend.Models;
+using AnonKeyBackend.Models;
 
-namespace AnonKey_Backend.ApiEndpoints.Folders;
+namespace AnonKeyBackend.ApiEndpoints.Folders;
 
 /// <summary>
 /// Handles the folders get endpoint. 

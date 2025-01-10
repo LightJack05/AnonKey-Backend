@@ -1,4 +1,4 @@
-namespace AnonKey_Backend.ApiDatastructures.Folders.Create;
+namespace AnonKeyBackend.ApiDatastructures.Folders.Create;
 
 /// <summary>
 /// Response to a folder create request.

@@ -1,4 +1,4 @@
-namespace AnonKey_Backend.ApiDatastructures.Folders.Update;
+namespace AnonKeyBackend.ApiDatastructures.Folders.Update;
 
 /// <summary>
 /// Body of a response to a folder update request.

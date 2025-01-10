@@ -1,4 +1,4 @@
-namespace AnonKey_Backend.ApiEndpoints.Credentials;
+namespace AnonKeyBackend.ApiEndpoints.Credentials;
 
 /// <summary>
 /// Handles mapping the credentials endpoints.

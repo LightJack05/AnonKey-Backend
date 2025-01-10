@@ -1,7 +1,7 @@
-using AnonKey_Backend.ApiDatastructures.Credentials.Get;
-using AnonKey_Backend.Models;
+using AnonKeyBackend.ApiDatastructures.Credentials.Get;
+using AnonKeyBackend.Models;
 
-namespace AnonKey_Backend.ApiEndpoints.Credentials;
+namespace AnonKeyBackend.ApiEndpoints.Credentials;
 
 /// <summary>
 /// Handles the credentials get endpoint.
@@ -62,7 +62,7 @@ public static class Get
         if (FetchedCredential is null) throw new ArgumentNullException();
         return new ApiDatastructures.Credentials.Get.CredentialsGetResponseBody()
         {
-            Credential = new AnonKey_Backend.ApiDatastructures.Credentials.Get.CredentialsGetCredential()
+            Credential = new AnonKeyBackend.ApiDatastructures.Credentials.Get.CredentialsGetCredential()
             {
                 Uuid = FetchedCredential.Uuid,
                 Password = FetchedCredential.Password,

@@ -1,8 +1,8 @@
-using AnonKey_Backend.Models;
+using AnonKeyBackend.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace AnonKey_Backend.Authentication;
+namespace AnonKeyBackend.Authentication;
 
 /// <summary>
 /// The service provider for token generation.

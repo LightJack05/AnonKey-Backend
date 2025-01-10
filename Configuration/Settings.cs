@@ -1,6 +1,6 @@
 #pragma warning disable CA1707
 using Newtonsoft.Json;
-namespace AnonKey_Backend.Configuration;
+namespace AnonKeyBackend.Configuration;
 
 // NOTE: This class contains public members that are prefixed with a _ and named in camelCase.
 //       While not beautiful, but is required for deserialization.

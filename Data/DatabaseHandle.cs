@@ -1,7 +1,7 @@
-namespace AnonKey_Backend.Data;
+namespace AnonKeyBackend.Data;
 using Models;
 using Microsoft.EntityFrameworkCore;
-using AnonKey_Backend.Development;
+using AnonKeyBackend.Development;
 
 #nullable disable
 

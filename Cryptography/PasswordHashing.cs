@@ -1,6 +1,6 @@
 using Konscious.Security.Cryptography;
 using System.Text;
-namespace AnonKey_Backend.Cryptography;
+namespace AnonKeyBackend.Cryptography;
 
 /// <summary>
 /// Holds methods for hashing passwords, and checking the hashed passwords.

@@ -1,6 +1,6 @@
-using AnonKey_Backend.Models;
+using AnonKeyBackend.Models;
 
-namespace AnonKey_Backend.ApiEndpoints.Users;
+namespace AnonKeyBackend.ApiEndpoints.Users;
 
 /// <summary>
 /// Handles the users get endpoint.

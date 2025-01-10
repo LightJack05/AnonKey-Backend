@@ -1,4 +1,4 @@
-namespace AnonKey_Backend.ApiEndpoints.Credentials;
+namespace AnonKeyBackend.ApiEndpoints.Credentials;
 
 /// <summary>
 /// Handles the credentials creation endpoint.
@@ -97,7 +97,7 @@ public static class Create
     private static Models.Credential CreateNewCredential(ApiDatastructures.Credentials.Create.CredentialsCreateRequestBody requestBody, string? username, Data.DatabaseHandle databaseHandle)
     {
         if (username is null || requestBody.Credential is null) throw new ArgumentNullException();
-        AnonKey_Backend.Models.User? FetchedUser = databaseHandle.Users.SingleOrDefault(u => u.Username == username);
+        AnonKeyBackend.Models.User? FetchedUser = databaseHandle.Users.SingleOrDefault(u => u.Username == username);
         if (FetchedUser is null) throw new NullReferenceException("There is no user with this username in the database.");
         return new Models.Credential()
         {

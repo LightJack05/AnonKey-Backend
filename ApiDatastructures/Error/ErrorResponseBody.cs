@@ -1,4 +1,4 @@
-namespace AnonKey_Backend.ApiDatastructures.Error;
+namespace AnonKeyBackend.ApiDatastructures.Error;
 
 /// <summary>
 /// Structure of an error message.

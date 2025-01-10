@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
-    <RootNamespace>AnonKey_Backend</RootNamespace>
+    <RootNamespace>AnonKeyBackend</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

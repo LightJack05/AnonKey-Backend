@@ -1,4 +1,4 @@
-namespace AnonKey_Backend.ApiDatastructures.Authentication.ChangePassword;
+namespace AnonKeyBackend.ApiDatastructures.Authentication.ChangePassword;
 
 /// <summary>
 /// The body of a password change request.

@@ -1,7 +1,7 @@
-using AnonKey_Backend.Data;
-using AnonKey_Backend.Models;
+using AnonKeyBackend.Data;
+using AnonKeyBackend.Models;
 
-namespace AnonKey_Backend.ApiEndpoints.Folders;
+namespace AnonKeyBackend.ApiEndpoints.Folders;
 
 /// <summary>
 /// Handles the folders delete endpoint.

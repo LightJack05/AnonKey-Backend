@@ -1,4 +1,4 @@
-namespace AnonKey_Backend.ApiEndpoints.Folders;
+namespace AnonKeyBackend.ApiEndpoints.Folders;
 
 /// <summary>
 /// Handles mapping the folders endpoints.

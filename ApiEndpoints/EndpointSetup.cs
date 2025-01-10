@@ -1,4 +1,4 @@
-namespace AnonKey_Backend.ApiEndpoints;
+namespace AnonKeyBackend.ApiEndpoints;
 
 /// <summary>
 /// Handles mapping the API endpoints.

@@ -1,4 +1,4 @@
-namespace AnonKey_Backend.ApiEndpoints.Service;
+namespace AnonKeyBackend.ApiEndpoints.Service;
 /// <summary>
 /// Handles the ping service endpoint.
 /// </summary>

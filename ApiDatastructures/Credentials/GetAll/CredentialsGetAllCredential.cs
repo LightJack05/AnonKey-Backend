@@ -1,4 +1,4 @@
-namespace AnonKey_Backend.ApiDatastructures.Credentials.GetAll;
+namespace AnonKeyBackend.ApiDatastructures.Credentials.GetAll;
 
 /// <summary>
 /// The credentials inside the list returned by a get all credentials request. 

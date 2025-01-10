@@ -1,4 +1,4 @@
-namespace AnonKey_Backend.ApiDatastructures.Credentials.Update;
+namespace AnonKeyBackend.ApiDatastructures.Credentials.Update;
 
 /// <summary>
 /// The response to a credential update operation.

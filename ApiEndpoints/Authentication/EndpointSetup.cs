@@ -1,4 +1,4 @@
-namespace AnonKey_Backend.ApiEndpoints.Authentication;
+namespace AnonKeyBackend.ApiEndpoints.Authentication;
 
 /// <summary>
 /// Maps the endpoint paths to the appropriate methods for the Authentication endpoint  
