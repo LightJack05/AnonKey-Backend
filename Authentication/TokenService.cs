@@ -27,7 +27,7 @@ public class TokenService
     {
         if (user is null || user.Username is null)
         {
-            throw new ArgumentNullException();
+            throw new ArgumentNullException(nameof(user));
         }
 
         int tokenExpiryTime = 0;
@@ -41,7 +41,7 @@ public class TokenService
         }
         else
         {
-            throw new ArgumentOutOfRangeException();
+            throw new ArgumentOutOfRangeException(nameof(tokenType));
         }
 
 
