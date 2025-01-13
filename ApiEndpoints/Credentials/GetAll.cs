@@ -34,9 +34,9 @@ public static class GetAll
 
     private static CredentialsGetAllResponseBody GetAllCredetials(string? username, DatabaseHandle databaseHandle)
     {
-        if (username is null) throw new ArgumentNullException();
+        ArgumentNullException.ThrowIfNull(username);
         AnonKeyBackend.Models.User? FetchedUser = databaseHandle.Users.SingleOrDefault(u => u.Username == username);
-        if (FetchedUser is null) throw new NullReferenceException("There is no user with this username in the database.");
+        ArgumentNullException.ThrowIfNull(FetchedUser);
         List<AnonKeyBackend.Models.Credential> FetchedCredetials = databaseHandle.Credentials.Where(c => c.UserUuid == FetchedUser.Uuid).ToList();
         AnonKeyBackend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllResponseBody Result = new AnonKeyBackend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllResponseBody();
         Result.Credentials = new List<AnonKeyBackend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllCredential>();

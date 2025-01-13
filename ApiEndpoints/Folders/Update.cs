@@ -68,7 +68,7 @@ public static class Update
 
     private static void UpdateFolder(FoldersUpdateRequestBody requestBody, Folder folder)
     {
-        if (requestBody.Folder is null) throw new ArgumentNullException();
+        ArgumentNullException.ThrowIfNull(requestBody.Folder);
         folder.DisplayName = requestBody.Folder.Name;
         folder.Icon = requestBody.Folder.Icon;
     }

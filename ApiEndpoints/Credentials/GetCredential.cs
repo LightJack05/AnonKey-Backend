@@ -59,7 +59,7 @@ public static class GetCredential
 
     private static CredentialsGetResponseBody ConstructResponse(Credential? FetchedCredential)
     {
-        if (FetchedCredential is null) throw new ArgumentNullException();
+        ArgumentNullException.ThrowIfNull(FetchedCredential);
         return new ApiDatastructures.Credentials.GetCredential.CredentialsGetResponseBody()
         {
             Credential = new AnonKeyBackend.ApiDatastructures.Credentials.GetCredential.CredentialsGetCredential()

@@ -67,7 +67,7 @@ public static class Create
 
     private static string CreateNewUser(UsersCreateRequestBody requestBody, TokenService tokenService, DatabaseHandle databaseHandle)
     {
-        if (requestBody.KdfPasswordResult is null) throw new ArgumentNullException();
+        ArgumentNullException.ThrowIfNull(requestBody.KdfPasswordResult);
 
         string passwordSalt = Cryptography.Generators.NewRandomString(Configuration.Settings.UserPasswordSaltLength);
 

@@ -96,9 +96,10 @@ public static class Create
 
     private static Models.Credential CreateNewCredential(ApiDatastructures.Credentials.Create.CredentialsCreateRequestBody requestBody, string? username, Data.DatabaseHandle databaseHandle)
     {
-        if (username is null || requestBody.Credential is null) throw new ArgumentNullException();
+        ArgumentNullException.ThrowIfNull(username);
+        ArgumentNullException.ThrowIfNull(requestBody.Credential);
         AnonKeyBackend.Models.User? FetchedUser = databaseHandle.Users.SingleOrDefault(u => u.Username == username);
-        if (FetchedUser is null) throw new NullReferenceException("There is no user with this username in the database.");
+        ArgumentNullException.ThrowIfNull(FetchedUser);
         return new Models.Credential()
         {
             Uuid = requestBody.Credential.Uuid,
