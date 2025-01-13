@@ -43,7 +43,7 @@ public class DatabaseHandle : DbContext
     /// </summary>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        if (string.Equals(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"), "development", StringComparison.InvariantCultureIgnoreCase))
+        if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
         {
             modelBuilder.Seed();
         }
