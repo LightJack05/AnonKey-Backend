@@ -65,8 +65,8 @@ public static class ModelBuilderExtensions
             NoteSalt = "qVeBg5clsp1auw==",
             DisplayName = "xFW26xJ+GvhxerJPEqfGBw==",
             DisplayNameSalt = "FkC3woj-MPraog==",
-            CreatedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds, //? 1736525
-            ChangedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds, //? null
+            CreatedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds, 
+            ChangedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds, 
             DeletedTimestamp = null,
         });
     }
@@ -88,8 +88,8 @@ public static class ModelBuilderExtensions
             NoteSalt = "Luc5CtTRT3u7fA==",
             DisplayName = "eyICGOrW1LP69Wv9E1FyOA==",
             DisplayNameSalt = "KfM0ksmb-wH2tw==",
-            CreatedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds, //? 1736525
-            ChangedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds, //? null
+            CreatedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds, 
+            ChangedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds, 
             DeletedTimestamp = null,
         });
     }
