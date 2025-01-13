@@ -1,4 +1,4 @@
-namespace AnonKeyBackend.ApiDatastructures.Users.Get;
+namespace AnonKeyBackend.ApiDatastructures.Users.GetUser;
 
 /// <summary>
 /// User requested.

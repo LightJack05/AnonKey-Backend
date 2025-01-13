@@ -11,7 +11,7 @@ public static class GetUser
     /// Gets information for an existing user.
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
-        Ok<ApiDatastructures.Users.Get.UsersGetResponseBody>,
+        Ok<ApiDatastructures.Users.GetUser.UsersGetResponseBody>,
         BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>,
         NotFound<ApiDatastructures.RequestError.ErrorResponseBody>>
             GetGet(ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
@@ -44,7 +44,7 @@ public static class GetUser
             });
         }
 
-        return TypedResults.Ok(new ApiDatastructures.Users.Get.UsersGetResponseBody()
+        return TypedResults.Ok(new ApiDatastructures.Users.GetUser.UsersGetResponseBody()
         {
             User = new()
             {

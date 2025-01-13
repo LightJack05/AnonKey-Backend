@@ -1,4 +1,4 @@
-using AnonKeyBackend.ApiDatastructures.Credentials.Get;
+using AnonKeyBackend.ApiDatastructures.Credentials.GetCredential;
 using AnonKeyBackend.Models;
 
 namespace AnonKeyBackend.ApiEndpoints.Credentials;
@@ -13,7 +13,7 @@ public static class GetCredential
     /// Gets information on a credential object.
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
-        Ok<ApiDatastructures.Credentials.Get.CredentialsGetResponseBody>,
+        Ok<ApiDatastructures.Credentials.GetCredential.CredentialsGetResponseBody>,
         NotFound<ApiDatastructures.RequestError.ErrorResponseBody>,
         BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>>
             GetGet(string credentialUuid, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
@@ -60,9 +60,9 @@ public static class GetCredential
     private static CredentialsGetResponseBody ConstructResponse(Credential? FetchedCredential)
     {
         if (FetchedCredential is null) throw new ArgumentNullException();
-        return new ApiDatastructures.Credentials.Get.CredentialsGetResponseBody()
+        return new ApiDatastructures.Credentials.GetCredential.CredentialsGetResponseBody()
         {
-            Credential = new AnonKeyBackend.ApiDatastructures.Credentials.Get.CredentialsGetCredential()
+            Credential = new AnonKeyBackend.ApiDatastructures.Credentials.GetCredential.CredentialsGetCredential()
             {
                 Uuid = FetchedCredential.Uuid,
                 Password = FetchedCredential.Password,

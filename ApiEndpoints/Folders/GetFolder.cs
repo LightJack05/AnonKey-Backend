@@ -12,7 +12,7 @@ public static class GetFolder
     /// Gets information on an existing folder.
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
-        Ok<ApiDatastructures.Folders.Get.FoldersGetResponseBody>,
+        Ok<ApiDatastructures.Folders.GetFolder.FoldersGetResponseBody>,
         NotFound<ApiDatastructures.RequestError.ErrorResponseBody>,
         BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>>
             GetGet(string folderUuid, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
@@ -47,9 +47,9 @@ public static class GetFolder
             });
         }
 
-        return TypedResults.Ok(new ApiDatastructures.Folders.Get.FoldersGetResponseBody
+        return TypedResults.Ok(new ApiDatastructures.Folders.GetFolder.FoldersGetResponseBody
         {
-            Folder = new ApiDatastructures.Folders.Get.FoldersGetFolder
+            Folder = new ApiDatastructures.Folders.GetFolder.FoldersGetFolder
             {
                 Uuid = folder.Uuid,
                 Name = folder.DisplayName,

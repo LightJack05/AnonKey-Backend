@@ -1,4 +1,4 @@
-namespace AnonKeyBackend.ApiDatastructures.Credentials.Get;
+namespace AnonKeyBackend.ApiDatastructures.Credentials.GetCredential;
 
 /// <summary>
 /// The body of a response to a credential get request.
