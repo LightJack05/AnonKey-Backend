@@ -75,7 +75,7 @@ public static class ModelBuilderExtensions
     {
         modelBuilder.Entity<AnonKeyBackend.Models.Credential>().HasData(new AnonKeyBackend.Models.Credential
         {
-            Uuid = "ebd1ef35-cade-4e2a-8117-3ed58bd13143",
+            Uuid = "d59bd8a5-e24b-4b97-94f5-2e3dfb9a297e",
             UserUuid = "7d9d3e99-064d-41bf-a125-ca5951e8a048",
             FolderUuid = "09f770c5-b1c1-41c6-bfd2-818b7b443da9",
             Password = "ok/4t4ivIWf2OBMDxLVwnQ==",
