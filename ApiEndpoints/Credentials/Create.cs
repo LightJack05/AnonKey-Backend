@@ -11,14 +11,14 @@ public static class Create
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok,
-        Conflict<ApiDatastructures.Error.ErrorResponseBody>,
-        BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
+        Conflict<ApiDatastructures.RequestError.ErrorResponseBody>,
+        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>>
      PostCreate(ApiDatastructures.Credentials.Create.CredentialsCreateRequestBody requestBody, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
         databaseHandle.Database.EnsureCreated();
         if (user.Identity == null)
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "The user identity is null",
                 Detail = "The user identity is null. Did you provide a valid JWT token?"
@@ -26,7 +26,7 @@ public static class Create
         }
         if (requestBody.Credential is null)
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "The credential provided in the requestBody is null",
                 Detail = "The credential provided in the requestBody is null. This is not allowed, please fill in all parameters."
@@ -34,7 +34,7 @@ public static class Create
         }
         if (requestBody.Credential is null || String.IsNullOrEmpty(requestBody.Credential.Uuid) || String.IsNullOrEmpty(requestBody.Credential.DisplayName) || String.IsNullOrEmpty(requestBody.Credential.DisplayNameSalt))
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "A parameter in the request was null or an empty string",
                 Detail = "One of the parameters in the request was null or an empty string. This is not allowed, please fill in all parameters."
@@ -44,7 +44,7 @@ public static class Create
         // If some fields are not null, check for the salt to be there
         if (!String.IsNullOrEmpty(requestBody.Credential.WebsiteUrl) && String.IsNullOrEmpty(requestBody.Credential.WebsiteUrlSalt))
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "WebsiteUrl was provided, but the salt for it was not.",
                 Detail = "WebsiteUrlSalt is null or an empty string, but WebsiteUrl is not null. This is not allowed, please fill in all parameters."
@@ -53,7 +53,7 @@ public static class Create
 
         if (!String.IsNullOrEmpty(requestBody.Credential.Username) && String.IsNullOrEmpty(requestBody.Credential.UsernameSalt))
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "Username was provided, but the salt for it was not.",
                 Detail = "UsernameSalt is null or an empty string, but Username is not null. This is not allowed, please fill in all parameters."
@@ -62,7 +62,7 @@ public static class Create
 
         if (!String.IsNullOrEmpty(requestBody.Credential.Password) && String.IsNullOrEmpty(requestBody.Credential.PasswordSalt))
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "Password was provided, but the salt for it was not.",
                 Detail = "PasswordSalt is null or an empty string, but Password is not null. This is not allowed, please fill in all parameters."
@@ -71,7 +71,7 @@ public static class Create
 
         if (!String.IsNullOrEmpty(requestBody.Credential.Note) && String.IsNullOrEmpty(requestBody.Credential.NoteSalt))
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "Note was provided, but the salt for it was not.",
                 Detail = "NoteSalt is null or an empty string, but Note is not null. This is not allowed, please fill in all parameters."
@@ -80,7 +80,7 @@ public static class Create
 
         if (databaseHandle.Credentials.Any(c => c.Uuid == requestBody.Credential.Uuid))
         {
-            return TypedResults.Conflict(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.Conflict(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "A credential with this uuid already exists.",
                 Detail = "There is already a user object for the given uuid in the database. Please try changing the uuid and resending the request."

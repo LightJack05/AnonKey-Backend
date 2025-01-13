@@ -11,7 +11,7 @@ public static class NewUuid
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok<string>,
-        BadRequest<AnonKeyBackend.ApiDatastructures.Error.ErrorResponseBody>>
+        BadRequest<AnonKeyBackend.ApiDatastructures.RequestError.ErrorResponseBody>>
             GetNewUuid(ClaimsPrincipal user)
     {
         Guid newGuid = System.Guid.NewGuid();

@@ -13,8 +13,8 @@ public static class Login
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok<ApiDatastructures.Authentication.Login.AuthenticationLoginResponseBody>,
-        NotFound<ApiDatastructures.Error.ErrorResponseBody>,
-        BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
+        NotFound<ApiDatastructures.RequestError.ErrorResponseBody>,
+        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>>
             PostLogin(ApiDatastructures.Authentication.Login.AuthenticationLoginRequestBody requestBody, AnonKeyBackend.Authentication.TokenService tokenService, Data.DatabaseHandle databaseHandle)
     {
         databaseHandle.Database.EnsureCreated();
@@ -23,7 +23,7 @@ public static class Login
 
         if (String.IsNullOrEmpty(requestBody.KdfPasswordResult))
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "The KDF result was invalid.",
                 Detail = "The KDF result in the request was null or an empty string."
@@ -33,7 +33,7 @@ public static class Login
         // If no user is found matching the redentials, return 404.
         if (user == null)
         {
-            return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody
+            return TypedResults.NotFound(new ApiDatastructures.RequestError.ErrorResponseBody
             {
                 Message = "Invalid username or password",
                 Detail = "The username and password combination did not match any known combination. Please ensure the password and username are correct."
@@ -42,7 +42,7 @@ public static class Login
 
         if (!Cryptography.PasswordHashing.isPasswordValid(requestBody.KdfPasswordResult, user))
         {
-            return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody
+            return TypedResults.NotFound(new ApiDatastructures.RequestError.ErrorResponseBody
             {
                 Message = "Invalid username or password",
                 Detail = "The username and password combination did not match any known combination. Please ensure the password and username are correct."

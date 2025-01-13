@@ -12,7 +12,7 @@ public static class EndpointSetup
     public static void MapEndpoints(WebApplication app)
     {
         app.MapPost("/folders/create", Create.PostCreate).WithTags("Folders").WithOpenApi().RequireAuthorization("user");
-        app.MapGet("/folders/get", Get.GetGet).WithTags("Folders").WithOpenApi().RequireAuthorization("user");
+        app.MapGet("/folders/get", GetFolder.GetGet).WithTags("Folders").WithOpenApi().RequireAuthorization("user");
         app.MapGet("/folders/getAll", GetAll.GetGetAll).WithTags("Folders").WithOpenApi().RequireAuthorization("user");
         app.MapPut("/folders/update", Update.PutUpdate).WithTags("Folders").WithOpenApi().RequireAuthorization("user");
         app.MapDelete("/folders/delete", Delete.DeleteDelete).WithTags("Folders").WithOpenApi().RequireAuthorization("user");
