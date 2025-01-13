@@ -88,8 +88,8 @@ public static class ModelBuilderExtensions
             NoteSalt = "UC64TB3-BT4EPw==",
             DisplayName = "GelWNxIBjab/goFzs6ZF+w==",
             DisplayNameSalt = "jRjc8NPOsTNReg==",
-            CreatedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds, 
-            ChangedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds, 
+            CreatedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds,
+            ChangedTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds,
             DeletedTimestamp = null,
         });
     }
