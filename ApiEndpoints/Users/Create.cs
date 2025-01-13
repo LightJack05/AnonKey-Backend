@@ -59,7 +59,7 @@ public static class Create
         return TypedResults.Ok(new ApiDatastructures.Users.Create.UsersCreateResponseBody
         {
             Token = token,
-            ExpiresInSeconds = AnonKeyBackend.Authentication.TokenService.TokenExpiryGraceInSeconds
+            ExpiresInSeconds = AnonKeyBackend.Authentication.TokenService.AccessTokenExpiryTimeInSeconds
         });
 
 

@@ -54,7 +54,7 @@ public static class Login
         return TypedResults.Ok(new ApiDatastructures.Authentication.Login.AuthenticationLoginResponseBody
         {
             Token = token,
-            ExpiresInSeconds = AnonKeyBackend.Authentication.TokenService.TokenExpiryGraceInSeconds
+            ExpiresInSeconds = AnonKeyBackend.Authentication.TokenService.AccessTokenExpiryTimeInSeconds
         });
     }
 }
