@@ -31,6 +31,11 @@ public class DatabaseHandle : DbContext
     public DbSet<Folder> Folders { get; set; }
 
     /// <summary>
+    /// A table for revoked tokens
+    /// </summary>
+    public DbSet<Token> RevokedTokens {get; set;}
+
+    /// <summary>
     /// Set the DBPath to the ./database.db
     /// </summary>
     public DatabaseHandle(DbContextOptions<DatabaseHandle> Options) : base(Options)
