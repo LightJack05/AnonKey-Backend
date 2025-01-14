@@ -23,7 +23,7 @@ public class TokenActions
     /// <param name="databaseHandle">Databasehandle to validate the token against</param>
     public static bool IsAccessTokenValid(string TokenType, string parentUuid, Data.DatabaseHandle databaseHandle)
     {
-        if (TokenType != "AccessToken") throw new ArgumentOutOfRangeException(nameof(TokenType), "The token is not an access token.");
+        if (TokenType != "AccessToken") return false;
         Models.Token? parentToken = databaseHandle.RefreshTokens.FirstOrDefault(t => t.Uuid == parentUuid);
         ArgumentNullException.ThrowIfNull(parentToken);
 
@@ -40,7 +40,7 @@ public class TokenActions
     /// <param name="databaseHandle">Databasehandle to validate the token against</param>
     public static bool IsRefreshTokenValid(string TokenType, string uuid, Data.DatabaseHandle databaseHandle)
     {
-        if (TokenType != "RefreshToken") throw new ArgumentOutOfRangeException(nameof(TokenType), "The token is not a refresh token.");
+        if (TokenType != "RefreshToken") return false;
         Models.Token? tokenInDb = databaseHandle.RefreshTokens.FirstOrDefault(t => t.Uuid == uuid);
         ArgumentNullException.ThrowIfNull(tokenInDb);
 
@@ -58,7 +58,7 @@ public class TokenActions
     public static bool ValidateClaimsOnRequest(ClaimsPrincipal user, Data.DatabaseHandle databaseHandle, bool isRefreshRequest = false)
     {
         if(!isRefreshRequest){
-            return IsAccessTokenValid(user.Claims.First(c => c.Type == "TokenType").Value, user.Claims.First(c => c.Type == "TokenUuid").Value, databaseHandle);
+            return IsAccessTokenValid(user.Claims.First(c => c.Type == "TokenType").Value, user.Claims.First(c => c.Type == "TokenParent").Value, databaseHandle);
         }
         else {
             return IsRefreshTokenValid(user.Claims.First(c => c.Type == "TokenType").Value, user.Claims.First(c => c.Type == "TokenUuid").Value, databaseHandle);
