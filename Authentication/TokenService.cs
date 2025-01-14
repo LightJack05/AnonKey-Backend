@@ -23,7 +23,7 @@ public class TokenService
     /// </summary>
     /// <param name="user">The user to generate the token for.</param>
     /// <param name="tokenType">The type of token to generate.</param>
-    public string GenerateNewToken(User user, string tokenType = "AccessToken", string tokenParent = "")
+    public Models.Token GenerateNewToken(User user, string tokenType = "AccessToken", string tokenParent = "")
     {
         if (user is null || user.Username is null)
         {
@@ -47,6 +47,8 @@ public class TokenService
 
         JwtSecurityTokenHandler tokenHandler = new();
         byte[] jwtIssuerSigningKey = Configuration.Settings.JwtIssuerSigningKey;
+        long tokenExpiryTimestamp = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds + tokenExpiryTime;
+        string tokenUuid = Guid.NewGuid().ToString();
         SecurityTokenDescriptor tokenDescriptor = new()
         {
             Subject = new ClaimsIdentity(new Claim[]
@@ -54,9 +56,9 @@ public class TokenService
                         new (ClaimTypes.Name, user.Username),
                         new (ClaimTypes.Role, "user"),
                         new ("TokenType", tokenType),
-                        new ("TokenUuid", Guid.NewGuid().ToString()),
+                        new ("TokenUuid", tokenUuid),
                         new ("TokenParent", tokenParent),
-                        new (ClaimTypes.Expiration, System.Convert.ToString((long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds + tokenExpiryTime))
+                        new (ClaimTypes.Expiration, System.Convert.ToString(tokenExpiryTimestamp))
                     }),
             Expires = DateTime.UtcNow.AddSeconds(tokenExpiryTime),
             SigningCredentials = new(
@@ -66,7 +68,14 @@ public class TokenService
         };
         SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
 
-        return tokenHandler.WriteToken(token);
+        string tokenString = tokenHandler.WriteToken(token);
+        return new Models.Token()
+        {
+            TokenString = tokenString,
+            ExpiresOn = tokenExpiryTimestamp,
+            ParentUuid = tokenParent,
+            Uuid = tokenUuid
+        };
 
     }
 

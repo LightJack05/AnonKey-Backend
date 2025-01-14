@@ -15,4 +15,16 @@ public class Token
     /// The time the Token expires on
     /// </summary>
     public long ExpiresOn { get; set; } = 0;
+    /// <summary>
+    /// The UUID of the parent refresh token
+    /// </summary>
+    public string ParentUuid { get; set; } = "";
+    /// <summary>
+    /// The string data of the token
+    /// </summary>
+    public string TokenString { get; set; } = "";
+    /// <summary>
+    /// The type of the token, either RefreshToken or AccessToken
+    /// </summary>
+    public string TokenType { get; set; } = "";
 }
