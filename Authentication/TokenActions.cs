@@ -18,15 +18,16 @@ public class TokenActions
     /// <summary>
     /// Validates if an access token is valid (and not revoked)
     /// </summary>
-    /// <param name="token">The token to validate</param>
+    /// <param name="TokenType">The type of the token</param>
+    /// <param name="uuid">The UUID of the token</param>
     /// <param name="databaseHandle">Databasehandle to validate the token against</param>
-    public static bool IsAccessTokenValid(Models.Token token, Data.DatabaseHandle databaseHandle)
+    public static bool IsAccessTokenValid(string TokenType, string parentUuid, Data.DatabaseHandle databaseHandle)
     {
-        if(token.TokenType != "AccessToken") throw new ArgumentOutOfRangeException(nameof(token),"The token is not an access token.");
-        Models.Token? parentToken = databaseHandle.RefreshTokens.FirstOrDefault(t => t.Uuid == token.ParentUuid);
+        if (TokenType != "AccessToken") throw new ArgumentOutOfRangeException(nameof(TokenType), "The token is not an access token.");
+        Models.Token? parentToken = databaseHandle.RefreshTokens.FirstOrDefault(t => t.Uuid == parentUuid);
         ArgumentNullException.ThrowIfNull(parentToken);
 
-        if(parentToken.Revoked) return false;
+        if (parentToken.Revoked) return false;
 
         return true;
     }
@@ -34,15 +35,33 @@ public class TokenActions
     /// <summary>
     /// Validates if a refresh token is valid (and not revoked)
     /// </summary>
-    /// <param name="token">The token to validate</param>
+    /// <param name="TokenType">The type of the token</param>
+    /// <param name="uuid">The UUID of the token</param>
     /// <param name="databaseHandle">Databasehandle to validate the token against</param>
-    public static bool IsRefreshTokenValid(Models.Token token, Data.DatabaseHandle databaseHandle){
-        if(token.TokenType != "RefreshToken") throw new ArgumentOutOfRangeException(nameof(token),"The token is not a refresh token.");
-        Models.Token? tokenInDb = databaseHandle.RefreshTokens.FirstOrDefault(t => t.Uuid == token.Uuid);
+    public static bool IsRefreshTokenValid(string TokenType, string uuid, Data.DatabaseHandle databaseHandle)
+    {
+        if (TokenType != "RefreshToken") throw new ArgumentOutOfRangeException(nameof(TokenType), "The token is not a refresh token.");
+        Models.Token? tokenInDb = databaseHandle.RefreshTokens.FirstOrDefault(t => t.Uuid == uuid);
         ArgumentNullException.ThrowIfNull(tokenInDb);
 
-        if(tokenInDb.Revoked) return false;
+        if (tokenInDb.Revoked) return false;
 
         return true;
+    }
+
+    /// <summary>
+    /// Validate if a token is valid based on a ClaimsPrincipal object.
+    /// </summary>
+    /// <param name="user">The ClaimsPrinciple to validate the token on</param>
+    /// <param name="databaseHandle">The database to use for validation</param>
+    /// <param name="isRefreshRequest">Whether the request is for a token refresh operation</param>
+    public static bool ValidateClaimsOnRequest(ClaimsPrincipal user, Data.DatabaseHandle databaseHandle, bool isRefreshRequest = false)
+    {
+        if(!isRefreshRequest){
+            return IsAccessTokenValid(user.Claims.First(c => c.Type == "TokenType").Value, user.Claims.First(c => c.Type == "TokenUuid").Value, databaseHandle);
+        }
+        else {
+            return IsRefreshTokenValid(user.Claims.First(c => c.Type == "TokenType").Value, user.Claims.First(c => c.Type == "TokenUuid").Value, databaseHandle);
+        }
     }
 }
