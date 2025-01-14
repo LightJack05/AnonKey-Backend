@@ -13,13 +13,13 @@ public static class ChangePassword
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok,
-        BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
+        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>>
             PutChangePassword(ApiDatastructures.Authentication.ChangePassword.AuthenticationChangePasswordRequestBody requestBody, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
         databaseHandle.Database.EnsureCreated();
         if (user.Identity == null)
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "The user identity is null",
                 Detail = "The user identity is null. Did you provide a valid JWT token?"
@@ -27,7 +27,7 @@ public static class ChangePassword
         }
         if (String.IsNullOrEmpty(requestBody.KdfResultNewPassword) || String.IsNullOrEmpty(requestBody.KdfResultOldPassword))
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "One of the KDF result values was invalid.",
                 Detail = "One of the KDF results in the request was null or an empty string."
@@ -39,7 +39,7 @@ public static class ChangePassword
         // If no user is found matching the redentials, return 404.
         if (userFromDatabase == null)
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "User not found.",
                 Detail = "The lookup for the username in the request did not yeild any results. Please make sure there is a user with the specified name."
@@ -48,7 +48,7 @@ public static class ChangePassword
 
         if (!Cryptography.PasswordHashing.isPasswordValid(requestBody.KdfResultOldPassword, userFromDatabase))
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody
             {
                 Message = "Invalid password",
                 Detail = "The password did not match the password used before. Please ensure the password is correct."

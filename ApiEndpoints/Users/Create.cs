@@ -15,8 +15,8 @@ public static class Create
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok<ApiDatastructures.Users.Create.UsersCreateResponseBody>,
-        Conflict<ApiDatastructures.Error.ErrorResponseBody>,
-        BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
+        Conflict<ApiDatastructures.RequestError.ErrorResponseBody>,
+        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>>
            PostCreate(ApiDatastructures.Users.Create.UsersCreateRequestBody requestBody, AnonKeyBackend.Authentication.TokenService tokenService, Data.DatabaseHandle databaseHandle)
     {
         databaseHandle.Database.EnsureCreated();
@@ -25,7 +25,7 @@ public static class Create
                 String.IsNullOrEmpty(requestBody.UserName) ||
                 String.IsNullOrEmpty(requestBody.KdfPasswordResult))
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "The a parameter in the request was null",
                 Detail = "One of the parameters in the request was null. This is not allowed, please fill in all parameters."
@@ -34,7 +34,7 @@ public static class Create
 
         if (databaseHandle.Users.Any(u => u.Username == requestBody.UserName))
         {
-            return TypedResults.Conflict(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.Conflict(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "A user with this username already exists.",
                 Detail = "There is already a user object for the given username in the database. Please try changing the name and resending the request."
@@ -43,7 +43,7 @@ public static class Create
 
         if (!isUsernameValidWithRestrictions(requestBody.UserName))
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "The username supplied does not comply with the restrictions.",
                 Detail = """
@@ -67,7 +67,7 @@ public static class Create
 
     private static string CreateNewUser(UsersCreateRequestBody requestBody, TokenService tokenService, DatabaseHandle databaseHandle)
     {
-        if (requestBody.KdfPasswordResult is null) throw new ArgumentNullException();
+        ArgumentNullException.ThrowIfNull(requestBody.KdfPasswordResult);
 
         string passwordSalt = Cryptography.Generators.NewRandomString(Configuration.Settings.UserPasswordSaltLength);
 

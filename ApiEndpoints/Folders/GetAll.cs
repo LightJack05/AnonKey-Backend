@@ -14,13 +14,13 @@ public static class GetAll
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok<ApiDatastructures.Folders.GetAll.FoldersGetAllResponseBody>,
-        NotFound<ApiDatastructures.Error.ErrorResponseBody>,
-        BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
+        NotFound<ApiDatastructures.RequestError.ErrorResponseBody>,
+        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>>
             GetGetAll(ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
         if (user.Identity == null)
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "The user identity is null",
                 Detail = "The user identity is null, therefore no data extraction is possible"
@@ -30,7 +30,7 @@ public static class GetAll
         User? userObject = databaseHandle.Users.FirstOrDefault(u => u.Username == user.Identity.Name);
         if (userObject == null)
         {
-            return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.NotFound(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "The user does not exist",
                 Detail = "The user does not exist in the database."

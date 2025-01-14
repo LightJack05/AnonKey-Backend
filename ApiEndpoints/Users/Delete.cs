@@ -13,15 +13,15 @@ public static class Delete
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok,
-        NotFound<ApiDatastructures.Error.ErrorResponseBody>,
-        BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
+        NotFound<ApiDatastructures.RequestError.ErrorResponseBody>,
+        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>>
             DeleteDelete(ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
         //NOTE: Maybe change this to a soft delete in the future.
 
         if (user.Identity == null)
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "The user identity is null",
                 Detail = "The user identity is null. Did you provide a valid JWT token?"
@@ -31,7 +31,7 @@ public static class Delete
 
         if (userToDelete == null)
         {
-            return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.NotFound(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "A user with that name does not exist.",
                 Detail = "The user matching the name in the JWT claims could not be found in the database. Is it already deleted?"

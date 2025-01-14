@@ -14,14 +14,14 @@ public static class Update
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok<ApiDatastructures.Credentials.Update.CredentialsUpdateResponseBody>,
-        NotFound<ApiDatastructures.Error.ErrorResponseBody>,
-        BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
+        NotFound<ApiDatastructures.RequestError.ErrorResponseBody>,
+        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>>
             PutUpdate(ApiDatastructures.Credentials.Update.CredentialsUpdateRequestBody requestBody, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
         databaseHandle.Database.EnsureCreated();
         if (user.Identity == null)
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "The user identity is null",
                 Detail = "The user identity is null. Did you provide a valid JWT token?"
@@ -30,7 +30,7 @@ public static class Update
 
         if (requestBody.Credential is null || String.IsNullOrEmpty(requestBody.Credential.Uuid) || String.IsNullOrEmpty(requestBody.Credential.DisplayName) || String.IsNullOrEmpty(requestBody.Credential.DisplayNameSalt))
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "A parameter in the request was null or an empty string",
                 Detail = "One of the parameters in the request was null or an empty string. This is not allowed, please fill in all parameters."
@@ -40,7 +40,7 @@ public static class Update
         // If some fields are not null, check for the salt to be there
         if (!String.IsNullOrEmpty(requestBody.Credential.WebsiteUrl) && String.IsNullOrEmpty(requestBody.Credential.WebsiteUrlSalt))
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "WebsiteUrl was provided, but the salt for it was not.",
                 Detail = "WebsiteUrlSalt is null or an empty string, but WebsiteUrl is not null. This is not allowed, please fill in all parameters."
@@ -49,7 +49,7 @@ public static class Update
 
         if (!String.IsNullOrEmpty(requestBody.Credential.Username) && String.IsNullOrEmpty(requestBody.Credential.UsernameSalt))
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "Username was provided, but the salt for it was not.",
                 Detail = "UsernameSalt is null or an empty string, but Username is not null. This is not allowed, please fill in all parameters."
@@ -58,7 +58,7 @@ public static class Update
 
         if (!String.IsNullOrEmpty(requestBody.Credential.Password) && String.IsNullOrEmpty(requestBody.Credential.PasswordSalt))
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "Password was provided, but the salt for it was not.",
                 Detail = "PasswordSalt is null or an empty string, but Password is not null. This is not allowed, please fill in all parameters."
@@ -67,7 +67,7 @@ public static class Update
 
         if (!String.IsNullOrEmpty(requestBody.Credential.Note) && String.IsNullOrEmpty(requestBody.Credential.NoteSalt))
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "Note was provided, but the salt for it was not.",
                 Detail = "NoteSalt is null or an empty string, but Note is not null. This is not allowed, please fill in all parameters."
@@ -80,7 +80,7 @@ public static class Update
 
         if (FetchedCredential is null)
         {
-            return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.NotFound(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "No credetial with this Uuid was not found in the database",
                 Detail = "No credetial with the provided credentialUuid was not found. Please make sure the correct credentialUuid is provided."
@@ -89,7 +89,7 @@ public static class Update
 
         if (FetchedUser is null)
         {
-            return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.NotFound(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "No user with this Uuid was not found in the database",
                 Detail = "No user with the provided credentialUuid was not found. Please make sure the correct UserUuid is provided."
@@ -100,7 +100,7 @@ public static class Update
 
         if (UserUuid != FetchedCredential.UserUuid)
         {
-            return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.NotFound(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "This user does not have access to this credential",
                 Detail = "The credential with the provided uuid does not belong to this user. This is not allowed, please make sure to provide a valid input."

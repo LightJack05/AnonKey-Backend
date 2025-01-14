@@ -14,13 +14,13 @@ public static class Delete
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok,
-        NotFound<ApiDatastructures.Error.ErrorResponseBody>,
-        BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
+        NotFound<ApiDatastructures.RequestError.ErrorResponseBody>,
+        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>>
             DeleteDelete(string folderUuid, bool recursive, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
         if (user.Identity == null)
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "The user identity is null",
                 Detail = "The user identity is null. Did you provide a valid JWT token?"
@@ -29,7 +29,7 @@ public static class Delete
         databaseHandle.Database.EnsureCreated();
         if (String.IsNullOrEmpty(folderUuid))
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "The a parameter in the request was null",
                 Detail = "One of the parameters in the request was null. This is not allowed, please fill in all parameters."
@@ -41,7 +41,7 @@ public static class Delete
 
         if (folder == null || userObject == null || folder.UserUuid != userObject.Uuid)
         {
-            return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.NotFound(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "The folder does not exist",
                 Detail = "The folder does not exist. Please check the folder uuid."

@@ -14,14 +14,14 @@ public static class GetAll
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok<ApiDatastructures.Credentials.GetAll.CredentialsGetAllResponseBody>,
-        NotFound<ApiDatastructures.Error.ErrorResponseBody>,
-        BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
+        NotFound<ApiDatastructures.RequestError.ErrorResponseBody>,
+        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>>
             GetGetAll(ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
         databaseHandle.Database.EnsureCreated();
         if (user.Identity == null)
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "The user identity is null",
                 Detail = "The user identity is null. Did you provide a valid JWT token?"
@@ -34,9 +34,9 @@ public static class GetAll
 
     private static CredentialsGetAllResponseBody GetAllCredetials(string? username, DatabaseHandle databaseHandle)
     {
-        if (username is null) throw new ArgumentNullException();
+        ArgumentNullException.ThrowIfNull(username);
         AnonKeyBackend.Models.User? FetchedUser = databaseHandle.Users.SingleOrDefault(u => u.Username == username);
-        if (FetchedUser is null) throw new NullReferenceException("There is no user with this username in the database.");
+        ArgumentNullException.ThrowIfNull(FetchedUser);
         List<AnonKeyBackend.Models.Credential> FetchedCredetials = databaseHandle.Credentials.Where(c => c.UserUuid == FetchedUser.Uuid).ToList();
         AnonKeyBackend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllResponseBody Result = new AnonKeyBackend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllResponseBody();
         Result.Credentials = new List<AnonKeyBackend.ApiDatastructures.Credentials.GetAll.CredentialsGetAllCredential>();

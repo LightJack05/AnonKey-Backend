@@ -12,7 +12,7 @@ public static class EndpointSetup
     public static void MapEndpoints(WebApplication app)
     {
         app.MapPost("/credentials/create", Create.PostCreate).WithTags("Credentials").WithOpenApi().RequireAuthorization("user");
-        app.MapGet("/credentials/get", Get.GetGet).WithTags("Credentials").WithOpenApi().RequireAuthorization("user");
+        app.MapGet("/credentials/get", GetCredential.GetGet).WithTags("Credentials").WithOpenApi().RequireAuthorization("user");
         app.MapGet("/credentials/getAll", GetAll.GetGetAll).WithTags("Credentials").WithOpenApi().RequireAuthorization("user");
         app.MapPut("/credentials/update", Update.PutUpdate).WithTags("Credentials").WithOpenApi().RequireAuthorization("user");
         app.MapPut("/credentials/soft-delete", SoftDelete.PutSoftDelete).WithTags("Credentials").WithOpenApi().RequireAuthorization("user");

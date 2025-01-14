@@ -13,15 +13,15 @@ public static class Update
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok<ApiDatastructures.Folders.Update.FoldersUpdateResponseBody>,
-        NotFound<ApiDatastructures.Error.ErrorResponseBody>,
-        BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
+        NotFound<ApiDatastructures.RequestError.ErrorResponseBody>,
+        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>>
             PutUpdate(ApiDatastructures.Folders.Update.FoldersUpdateRequestBody requestBody, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
         databaseHandle.Database.EnsureCreated();
 
         if (requestBody.Folder == null || String.IsNullOrEmpty(requestBody.Folder.Uuid) || String.IsNullOrEmpty(requestBody.Folder.Name))
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "A parameter in the request was null or an empty string",
                 Detail = "One of the parameters in the request was null or an empty string. This is not allowed, please fill in all parameters."
@@ -30,7 +30,7 @@ public static class Update
 
         if (user.Identity == null)
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "The user identity is null",
                 Detail = "The user identity is null. Did you provide a valid JWT token?"
@@ -40,7 +40,7 @@ public static class Update
         User? userObject = databaseHandle.Users.FirstOrDefault(u => u.Username == user.Identity.Name);
         if (userObject == null)
         {
-            return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody
+            return TypedResults.NotFound(new ApiDatastructures.RequestError.ErrorResponseBody
             {
                 Message = "The user does not exist",
                 Detail = "The user does not exist in the database, he might have been deleted."
@@ -50,7 +50,7 @@ public static class Update
         Folder? folder = databaseHandle.Folders.FirstOrDefault(f => f.Uuid == requestBody.Folder.Uuid);
         if (folder == null || folder.UserUuid != userObject.Uuid)
         {
-            return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.NotFound(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "The folder does not exist",
                 Detail = "The folder with the given UUID does not exist, or does not belong to the user."
@@ -68,7 +68,7 @@ public static class Update
 
     private static void UpdateFolder(FoldersUpdateRequestBody requestBody, Folder folder)
     {
-        if (requestBody.Folder is null) throw new ArgumentNullException();
+        ArgumentNullException.ThrowIfNull(requestBody.Folder);
         folder.DisplayName = requestBody.Folder.Name;
         folder.Icon = requestBody.Folder.Icon;
     }

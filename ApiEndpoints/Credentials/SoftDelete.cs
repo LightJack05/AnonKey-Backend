@@ -10,13 +10,13 @@ public static class SoftDelete
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok,
-        NotFound<ApiDatastructures.Error.ErrorResponseBody>,
-        BadRequest<ApiDatastructures.Error.ErrorResponseBody>>
+        NotFound<ApiDatastructures.RequestError.ErrorResponseBody>,
+        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>>
             PutSoftDelete(string credentialUuid, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
         if (user.Identity == null)
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "The user identity is null",
                 Detail = "The user identity is null. Did you provide a valid JWT token?"
@@ -25,7 +25,7 @@ public static class SoftDelete
         databaseHandle.Database.EnsureCreated();
         if (String.IsNullOrEmpty(credentialUuid))
         {
-            return TypedResults.BadRequest(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "A credentialUuid in the request was null or an empty string",
                 Detail = "credentialUuid parameter in the request was null or an empty string. This is not allowed, please fill in all parameters."
@@ -36,7 +36,7 @@ public static class SoftDelete
 
         if (FetchedCredential is null)
         {
-            return TypedResults.NotFound(new ApiDatastructures.Error.ErrorResponseBody()
+            return TypedResults.NotFound(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
                 Message = "No credential with this Uuid was found in the database or the credetial with this Uuid is already soft-deleted.",
                 Detail = "No credential with the provided credentialUuid was not found or the credetial with this Uuid is already soft-deleted. Please make sure the correct credentialUuid is provided."
