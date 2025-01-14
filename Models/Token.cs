@@ -14,7 +14,7 @@ public class Token
     /// <summary>
     /// The time the Token expires on
     /// </summary>
-    public long ExpiresOn { get; set; } = 0;
+    public long ExpiresOn { get; set; } 
     /// <summary>
     /// The UUID of the parent refresh token
     /// </summary>
@@ -30,5 +30,5 @@ public class Token
     /// <summary>
     /// Whether the token has been revoked.
     /// </summary>
-    public bool Revoked {get; set;} = false;
+    public bool Revoked {get; set;}
 }

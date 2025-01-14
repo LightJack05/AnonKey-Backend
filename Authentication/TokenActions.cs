@@ -19,7 +19,7 @@ public class TokenActions
     /// Validates if an access token is valid (and not revoked)
     /// </summary>
     /// <param name="TokenType">The type of the token</param>
-    /// <param name="uuid">The UUID of the token</param>
+    /// <param name="parentUuid">The UUID of the parent token</param>
     /// <param name="databaseHandle">Databasehandle to validate the token against</param>
     public static bool IsAccessTokenValid(string TokenType, string parentUuid, Data.DatabaseHandle databaseHandle)
     {

@@ -1,5 +1,6 @@
 using AnonKeyBackend.Models;
 using Microsoft.IdentityModel.Tokens;
+using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace AnonKeyBackend.Authentication;
@@ -23,6 +24,7 @@ public class TokenService
     /// </summary>
     /// <param name="user">The user to generate the token for.</param>
     /// <param name="tokenType">The type of token to generate.</param>
+    /// <param name="tokenParent">The UUID of the parent of the parent token</param>
     public Models.Token GenerateNewToken(User user, string tokenType = "AccessToken", string tokenParent = "")
     {
         if (user is null || user.Username is null)
@@ -58,7 +60,7 @@ public class TokenService
                         new ("TokenType", tokenType),
                         new ("TokenUuid", tokenUuid),
                         new ("TokenParent", tokenParent),
-                        new (ClaimTypes.Expiration, System.Convert.ToString(tokenExpiryTimestamp))
+                        new (ClaimTypes.Expiration, System.Convert.ToString(tokenExpiryTimestamp, CultureInfo.InvariantCulture))
                     }),
             Expires = DateTime.UtcNow.AddSeconds(tokenExpiryTime),
             SigningCredentials = new(
