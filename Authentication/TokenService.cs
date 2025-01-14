@@ -23,7 +23,7 @@ public class TokenService
     /// </summary>
     /// <param name="user">The user to generate the token for.</param>
     /// <param name="tokenType">The type of token to generate.</param>
-    public string GenerateNewToken(User user, string tokenType = "AccessToken")
+    public string GenerateNewToken(User user, string tokenType = "AccessToken", string tokenParent = "")
     {
         if (user is null || user.Username is null)
         {
@@ -54,7 +54,9 @@ public class TokenService
                         new (ClaimTypes.Name, user.Username),
                         new (ClaimTypes.Role, "user"),
                         new ("TokenType", tokenType),
-                        new ("TokenUuid", Guid.NewGuid().ToString())
+                        new ("TokenUuid", Guid.NewGuid().ToString()),
+                        new ("TokenParent", tokenParent),
+                        new (ClaimTypes.Expiration, System.Convert.ToString((long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds + tokenExpiryTime))
                     }),
             Expires = DateTime.UtcNow.AddSeconds(tokenExpiryTime),
             SigningCredentials = new(
