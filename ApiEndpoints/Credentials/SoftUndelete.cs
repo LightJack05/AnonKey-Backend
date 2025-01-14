@@ -11,9 +11,15 @@ public static class SoftUndelete
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok,
         NotFound<ApiDatastructures.RequestError.ErrorResponseBody>,
-        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>>
+        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>,
+        UnauthorizedHttpResult>
             PutSoftUndelete(string credentialUuid, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
+        databaseHandle.Database.EnsureCreated();
+        if (!AnonKeyBackend.Authentication.TokenActions.ValidateClaimsOnRequest(user, databaseHandle))
+        {
+            return TypedResults.Unauthorized();
+        }
         if (user.Identity == null)
         {
             return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
@@ -22,7 +28,6 @@ public static class SoftUndelete
                 Detail = "The user identity is null. Did you provide a valid JWT token?"
             });
         }
-        databaseHandle.Database.EnsureCreated();
         if (String.IsNullOrEmpty(credentialUuid))
         {
             return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()

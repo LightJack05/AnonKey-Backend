@@ -11,9 +11,14 @@ public static class NewUuid
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok<string>,
-        BadRequest<AnonKeyBackend.ApiDatastructures.RequestError.ErrorResponseBody>>
-            GetNewUuid(ClaimsPrincipal user)
+        BadRequest<AnonKeyBackend.ApiDatastructures.RequestError.ErrorResponseBody>,
+        UnauthorizedHttpResult>
+            GetNewUuid(ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
+        if (!AnonKeyBackend.Authentication.TokenActions.ValidateClaimsOnRequest(user, databaseHandle))
+        {
+            return TypedResults.Unauthorized();
+        }
         Guid newGuid = System.Guid.NewGuid();
         return TypedResults.Ok(newGuid.ToString());
     }

@@ -14,10 +14,15 @@ public static class Update
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok<ApiDatastructures.Folders.Update.FoldersUpdateResponseBody>,
         NotFound<ApiDatastructures.RequestError.ErrorResponseBody>,
-        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>>
+        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>,
+        UnauthorizedHttpResult>
             PutUpdate(ApiDatastructures.Folders.Update.FoldersUpdateRequestBody requestBody, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
         databaseHandle.Database.EnsureCreated();
+        if (!AnonKeyBackend.Authentication.TokenActions.ValidateClaimsOnRequest(user, databaseHandle))
+        {
+            return TypedResults.Unauthorized();
+        }
 
         if (requestBody.Folder == null || String.IsNullOrEmpty(requestBody.Folder.Uuid) || String.IsNullOrEmpty(requestBody.Folder.Name))
         {

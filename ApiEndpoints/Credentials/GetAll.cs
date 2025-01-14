@@ -15,10 +15,17 @@ public static class GetAll
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok<ApiDatastructures.Credentials.GetAll.CredentialsGetAllResponseBody>,
         NotFound<ApiDatastructures.RequestError.ErrorResponseBody>,
-        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>>
+        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>,
+        UnauthorizedHttpResult>
             GetGetAll(ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
         databaseHandle.Database.EnsureCreated();
+        if (!AnonKeyBackend.Authentication.TokenActions.ValidateClaimsOnRequest(user, databaseHandle))
+        {
+            return TypedResults.Unauthorized();
+        }
+
+
         if (user.Identity == null)
         {
             return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()

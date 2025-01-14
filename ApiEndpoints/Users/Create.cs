@@ -16,7 +16,8 @@ public static class Create
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok<ApiDatastructures.Users.Create.UsersCreateResponseBody>,
         Conflict<ApiDatastructures.RequestError.ErrorResponseBody>,
-        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>>
+        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>,
+        UnauthorizedHttpResult>
            PostCreate(ApiDatastructures.Users.Create.UsersCreateRequestBody requestBody, AnonKeyBackend.Authentication.TokenService tokenService, Data.DatabaseHandle databaseHandle)
     {
         databaseHandle.Database.EnsureCreated();
