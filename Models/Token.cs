@@ -27,4 +27,8 @@ public class Token
     /// The type of the token, either RefreshToken or AccessToken
     /// </summary>
     public string TokenType { get; set; } = "";
+    /// <summary>
+    /// Whether the token has been revoked.
+    /// </summary>
+    public bool Revoked {get; set;} = false;
 }
