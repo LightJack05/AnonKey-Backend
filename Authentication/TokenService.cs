@@ -77,7 +77,8 @@ public class TokenService
             ExpiresOn = tokenExpiryTimestamp,
             ParentUuid = tokenParent,
             Uuid = tokenUuid,
-            TokenType = tokenType
+            TokenType = tokenType,
+            UserUuid = user.Uuid
         };
 
     }

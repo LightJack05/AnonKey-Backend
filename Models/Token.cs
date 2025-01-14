@@ -14,7 +14,11 @@ public class Token
     /// <summary>
     /// The time the Token expires on
     /// </summary>
-    public long ExpiresOn { get; set; } 
+    public long ExpiresOn { get; set; }
+    /// <summary>
+    /// The UUID of the user the token belongs to
+    /// </summary>
+    public string UserUuid { get; set; } = "";
     /// <summary>
     /// The UUID of the parent refresh token
     /// </summary>
@@ -30,5 +34,5 @@ public class Token
     /// <summary>
     /// Whether the token has been revoked.
     /// </summary>
-    public bool Revoked {get; set;}
+    public bool Revoked { get; set; }
 }
