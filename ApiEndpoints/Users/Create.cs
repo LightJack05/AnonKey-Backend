@@ -58,6 +58,8 @@ public static class Create
         // Generate a new token and return it to the user.
         Models.Token refreshToken = tokenService.GenerateNewToken(user, "RefreshToken");
         Models.Token accessToken = tokenService.GenerateNewToken(user, "AccessToken", refreshToken.Uuid);
+        AnonKeyBackend.Authentication.TokenActions.StoreRefreshTokenInDb(refreshToken, databaseHandle);
+        databaseHandle.SaveChanges();
         return TypedResults.Ok(new ApiDatastructures.Users.Create.UsersCreateResponseBody
         {
             AccessToken = new()
