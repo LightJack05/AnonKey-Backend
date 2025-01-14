@@ -8,9 +8,9 @@ public class UsersCreateResponseBody
     /// <summary>
     /// The token for accessing API endpoints
     /// </summary>
-    public Create.UsersCreateResponseToken? AccessToken {get; set;}
+    public Create.UsersCreateResponseToken? AccessToken { get; set; }
     /// <summary>
     /// The token for refreshing the access token or the refresh token itself
     /// </summary>
-    public Create.UsersCreateResponseToken? RefreshToken {get; set;}
+    public Create.UsersCreateResponseToken? RefreshToken { get; set; }
 }

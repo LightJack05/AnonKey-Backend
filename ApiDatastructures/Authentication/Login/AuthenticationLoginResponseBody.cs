@@ -9,10 +9,10 @@ public class AuthenticationLoginResponseBody
     /// <summary>
     /// The token for accessing API endpoints
     /// </summary>
-    public Login.AuthenticationLoginToken? AccessToken {get; set;}
+    public Login.AuthenticationLoginToken? AccessToken { get; set; }
     /// <summary>
     /// The token for refreshing the access token or the refresh token itself
     /// </summary>
-    public Login.AuthenticationLoginToken? RefreshToken {get; set;}
+    public Login.AuthenticationLoginToken? RefreshToken { get; set; }
 }
 

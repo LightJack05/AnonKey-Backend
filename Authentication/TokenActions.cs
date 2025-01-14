@@ -57,10 +57,12 @@ public class TokenActions
     /// <param name="isRefreshRequest">Whether the request is for a token refresh operation</param>
     public static bool ValidateClaimsOnRequest(ClaimsPrincipal user, Data.DatabaseHandle databaseHandle, bool isRefreshRequest = false)
     {
-        if(!isRefreshRequest){
+        if (!isRefreshRequest)
+        {
             return IsAccessTokenValid(user.Claims.First(c => c.Type == "TokenType").Value, user.Claims.First(c => c.Type == "TokenParent").Value, databaseHandle);
         }
-        else {
+        else
+        {
             return IsRefreshTokenValid(user.Claims.First(c => c.Type == "TokenType").Value, user.Claims.First(c => c.Type == "TokenUuid").Value, databaseHandle);
         }
     }
