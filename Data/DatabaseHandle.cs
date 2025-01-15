@@ -33,7 +33,7 @@ public class DatabaseHandle : DbContext
     /// <summary>
     /// A table for revoked tokens
     /// </summary>
-    public DbSet<Token> RevokedTokens { get; set; }
+    public DbSet<Token> RefreshTokens { get; set; }
 
     /// <summary>
     /// Set the DBPath to the ./database.db

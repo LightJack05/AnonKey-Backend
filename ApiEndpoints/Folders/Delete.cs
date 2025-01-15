@@ -15,9 +15,15 @@ public static class Delete
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok,
         NotFound<ApiDatastructures.RequestError.ErrorResponseBody>,
-        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>>
+        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>,
+        UnauthorizedHttpResult>
             DeleteDelete(string folderUuid, bool recursive, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
+        databaseHandle.Database.EnsureCreated();
+        if (!AnonKeyBackend.Authentication.TokenActions.ValidateClaimsOnRequest(user, databaseHandle))
+        {
+            return TypedResults.Unauthorized();
+        }
         if (user.Identity == null)
         {
             return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
@@ -26,7 +32,6 @@ public static class Delete
                 Detail = "The user identity is null. Did you provide a valid JWT token?"
             });
         }
-        databaseHandle.Database.EnsureCreated();
         if (String.IsNullOrEmpty(folderUuid))
         {
             return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()

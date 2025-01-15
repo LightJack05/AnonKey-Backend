@@ -14,5 +14,25 @@ public class Token
     /// <summary>
     /// The time the Token expires on
     /// </summary>
-    public long ExpiresOn { get; set; } = 0;
+    public long ExpiresOn { get; set; }
+    /// <summary>
+    /// The UUID of the user the token belongs to
+    /// </summary>
+    public string UserUuid { get; set; } = "";
+    /// <summary>
+    /// The UUID of the parent refresh token
+    /// </summary>
+    public string ParentUuid { get; set; } = "";
+    /// <summary>
+    /// The string data of the token
+    /// </summary>
+    public string TokenString { get; set; } = "";
+    /// <summary>
+    /// The type of the token, either RefreshToken or AccessToken
+    /// </summary>
+    public string TokenType { get; set; } = "";
+    /// <summary>
+    /// Whether the token has been revoked.
+    /// </summary>
+    public bool Revoked { get; set; }
 }

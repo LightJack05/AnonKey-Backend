@@ -7,13 +7,12 @@ namespace AnonKeyBackend.ApiDatastructures.Authentication.Login;
 public class AuthenticationLoginResponseBody
 {
     /// <summary>
-    /// The token that can be used for authentication.
+    /// The token for accessing API endpoints
     /// </summary>
-    public string? Token { get; set; }
+    public Login.AuthenticationLoginToken? AccessToken { get; set; }
     /// <summary>
-    /// The time in seconds the token expires in.
+    /// The token for refreshing the access token or the refresh token itself
     /// </summary>
-    /// <example>60 Seconds means the token expires in one minute after the request.</example>
-    public int ExpiresInSeconds { get; set; }
+    public Login.AuthenticationLoginToken? RefreshToken { get; set; }
 }
 

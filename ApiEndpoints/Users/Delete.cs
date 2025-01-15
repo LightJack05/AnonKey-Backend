@@ -14,10 +14,16 @@ public static class Delete
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok,
         NotFound<ApiDatastructures.RequestError.ErrorResponseBody>,
-        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>>
+        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>,
+        UnauthorizedHttpResult>
             DeleteDelete(ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
         //NOTE: Maybe change this to a soft delete in the future.
+        databaseHandle.Database.EnsureCreated();
+        if (!AnonKeyBackend.Authentication.TokenActions.ValidateClaimsOnRequest(user, databaseHandle))
+        {
+            return TypedResults.Unauthorized();
+        }
 
         if (user.Identity == null)
         {
