@@ -22,10 +22,6 @@ public static class ChangePassword
         {
             return TypedResults.Unauthorized();
         }
-        if (!AnonKeyBackend.Authentication.TokenActions.ValidateClaimsOnRequest(user, databaseHandle))
-        {
-            return TypedResults.Unauthorized();
-        }
         if (user.Identity == null)
         {
             return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
