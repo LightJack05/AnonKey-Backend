@@ -16,7 +16,8 @@ public static class Create
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok<ApiDatastructures.Users.Create.UsersCreateResponseBody>,
         Conflict<ApiDatastructures.RequestError.ErrorResponseBody>,
-        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>>
+        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>,
+        UnauthorizedHttpResult>
            PostCreate(ApiDatastructures.Users.Create.UsersCreateRequestBody requestBody, AnonKeyBackend.Authentication.TokenService tokenService, Data.DatabaseHandle databaseHandle)
     {
         databaseHandle.Database.EnsureCreated();
@@ -54,18 +55,32 @@ public static class Create
             });
         }
 
-        string token = CreateNewUser(requestBody, tokenService, databaseHandle);
-
+        Models.User user = CreateNewUser(requestBody, databaseHandle);
+        // Generate a new token and return it to the user.
+        Models.Token refreshToken = tokenService.GenerateNewToken(user, "RefreshToken");
+        Models.Token accessToken = tokenService.GenerateNewToken(user, "AccessToken", refreshToken.Uuid);
+        AnonKeyBackend.Authentication.TokenActions.StoreRefreshTokenInDb(refreshToken, databaseHandle);
+        databaseHandle.SaveChanges();
         return TypedResults.Ok(new ApiDatastructures.Users.Create.UsersCreateResponseBody
         {
-            Token = token,
-            ExpiresInSeconds = AnonKeyBackend.Authentication.TokenService.AccessTokenExpiryTimeInSeconds
+            AccessToken = new()
+            {
+                Token = accessToken.TokenString,
+                TokenType = accessToken.TokenType,
+                ExpiryTimestamp = accessToken.ExpiresOn
+            },
+            RefreshToken = new()
+            {
+                Token = refreshToken.TokenString,
+                TokenType = refreshToken.TokenType,
+                ExpiryTimestamp = refreshToken.ExpiresOn
+            }
         });
 
 
     }
 
-    private static string CreateNewUser(UsersCreateRequestBody requestBody, TokenService tokenService, DatabaseHandle databaseHandle)
+    private static Models.User CreateNewUser(UsersCreateRequestBody requestBody, DatabaseHandle databaseHandle)
     {
         ArgumentNullException.ThrowIfNull(requestBody.KdfPasswordResult);
 
@@ -88,8 +103,7 @@ public static class Create
         });
         databaseHandle.SaveChanges();
 
-        string token = tokenService.GenerateNewToken(user);
-        return token;
+        return user;
     }
 
     static bool isUsernameValidWithRestrictions(string username)

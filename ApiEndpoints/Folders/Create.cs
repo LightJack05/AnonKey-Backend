@@ -17,10 +17,15 @@ public static class Create
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok<ApiDatastructures.Folders.Create.FoldersCreateResponseBody>,
         Conflict<ApiDatastructures.RequestError.ErrorResponseBody>,
-        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>>
+        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>,
+        UnauthorizedHttpResult>
             PostCreate(ApiDatastructures.Folders.Create.FoldersCreateRequestBody requestBody, ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
         databaseHandle.Database.EnsureCreated();
+        if (!AnonKeyBackend.Authentication.TokenActions.ValidateClaimsOnRequest(user, databaseHandle))
+        {
+            return TypedResults.Unauthorized();
+        }
         if (requestBody.Folder is null || String.IsNullOrEmpty(requestBody.Folder.Name))
         {
             return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()

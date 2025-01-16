@@ -50,11 +50,24 @@ public static class Login
         }
 
         // Generate a new token and return it to the user.
-        var token = tokenService.GenerateNewToken(user);
+        Models.Token refreshToken = tokenService.GenerateNewToken(user, "RefreshToken");
+        Models.Token accessToken = tokenService.GenerateNewToken(user, "AccessToken", refreshToken.Uuid);
+        AnonKeyBackend.Authentication.TokenActions.StoreRefreshTokenInDb(refreshToken, databaseHandle);
+        databaseHandle.SaveChanges();
         return TypedResults.Ok(new ApiDatastructures.Authentication.Login.AuthenticationLoginResponseBody
         {
-            Token = token,
-            ExpiresInSeconds = AnonKeyBackend.Authentication.TokenService.AccessTokenExpiryTimeInSeconds
+            AccessToken = new()
+            {
+                Token = accessToken.TokenString,
+                TokenType = accessToken.TokenType,
+                ExpiryTimestamp = accessToken.ExpiresOn
+            },
+            RefreshToken = new()
+            {
+                Token = refreshToken.TokenString,
+                TokenType = refreshToken.TokenType,
+                ExpiryTimestamp = refreshToken.ExpiresOn
+            }
         });
     }
 }
