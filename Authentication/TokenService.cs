@@ -27,10 +27,9 @@ public class TokenService
     /// <param name="tokenParent">The UUID of the parent of the parent token</param>
     public Models.Token GenerateNewToken(User user, string tokenType = "AccessToken", string tokenParent = "")
     {
-        if (user is null || user.Username is null)
-        {
-            throw new ArgumentNullException(nameof(user));
-        }
+        ArgumentNullException.ThrowIfNull(user.Uuid);
+        ArgumentNullException.ThrowIfNull(user);
+        ArgumentNullException.ThrowIfNull(user.Username);
 
         int tokenExpiryTime = 0;
         if (tokenType == "AccessToken")
