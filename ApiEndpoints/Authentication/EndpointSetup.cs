@@ -13,5 +13,6 @@ public static class EndpointSetup
     {
         app.MapPost("/authentication/login", Login.PostLogin).WithTags("Authentication").WithOpenApi();
         app.MapPut("/authentication/changePassword", ChangePassword.PutChangePassword).WithTags("Authentication").WithOpenApi().RequireAuthorization("user");
+        app.MapPut("/authentication/logout", Logout.PutLogout).WithTags("Authentication").WithOpenApi().RequireAuthorization("user");
     }
 }
