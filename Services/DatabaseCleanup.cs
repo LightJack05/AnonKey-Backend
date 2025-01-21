@@ -1,7 +1,9 @@
+#pragma warning disable CA1848 
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
+namespace AnonKeyBackend.Services;
 /// <summary>
 /// Service responsible for cleaning up old entries in the database.
 /// </summary>
@@ -25,27 +27,27 @@ public class DatabaseCleanup : BackgroundService
     /// <summary>
     /// Executes the service.
     /// </summary>
-    protected override async Task ExecuteAsync(CancellationToken cancellationToken)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        while (!cancellationToken.IsCancellationRequested)
+        while (!stoppingToken.IsCancellationRequested)
         {
             try
             {
-                await ScrubOldEntriesAsync(cancellationToken);
+                await ScrubOldEntriesAsync(stoppingToken);
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"Error while setting up scrubbing: {ex}");
+                _logger.LogInformation("Error while setting up scrubbing: {Ex}", ex);
             }
 
-            await Task.Delay(_interval, cancellationToken);
+            await Task.Delay(_interval, stoppingToken);
         }
     }
 
     /// <summary>
     /// Scrubs old RefreshToken entries from the database.
     /// </summary>
-    private async Task ScrubOldEntriesAsync(CancellationToken cancellationToken)
+    private async Task ScrubOldEntriesAsync(CancellationToken stoppingToken)
     {
         using (IServiceScope scope = _serviceProvider.CreateScope())
         {
@@ -56,7 +58,7 @@ public class DatabaseCleanup : BackgroundService
             databaseHandle.RefreshTokens.RemoveRange(tokensToDelete);
             _logger.LogInformation("Ran DB cleanup");
 
-            await databaseHandle.SaveChangesAsync(cancellationToken);
+            await databaseHandle.SaveChangesAsync(stoppingToken);
         }
 
     }
