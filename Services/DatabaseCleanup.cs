@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 public class DatabaseCleanup : BackgroundService
 {
     private readonly IServiceProvider _serviceProvider;
-    private readonly TimeSpan _interval = TimeSpan.FromSeconds(10); // Set the interval
+    private readonly TimeSpan _interval = TimeSpan.FromHours(2); // Set the interval
     private readonly ILogger<DatabaseCleanup> _logger;
 
 
