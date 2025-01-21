@@ -3,13 +3,13 @@ using AnonKeyBackend.Models;
 namespace AnonKeyBackend.ApiEndpoints.Authentication;
 
 /// <summary>
-/// Handles the authentication logout endpoint.
+/// Handles the logout endpoint.
 /// </summary>
 public static class Logout
 {
 
     /// <summary>
-    /// Authenticates the user and returns an access token. 
+    /// Logs out the authenticated user.
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok,
