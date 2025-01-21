@@ -57,6 +57,7 @@ public class Program
 
         // Authentication
         builder.Services.AddSingleton<AnonKeyBackend.Authentication.TokenService>();
+        builder.Services.AddHostedService<DatabaseCleanup>();
         builder.Services.AddAuthentication(config =>
                 {
                     config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
