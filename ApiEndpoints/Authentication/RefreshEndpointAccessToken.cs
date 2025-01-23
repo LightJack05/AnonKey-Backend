@@ -12,7 +12,7 @@ public static class RefreshEndpointAccessToken
     /// Creates a new access token based on a refresh token.
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
-        Ok<ApiDatastructures.Authentication.RefreshTokens.AuthenticationRefreshTokensResponseBody>,
+        Ok<ApiDatastructures.Authentication.RefreshAccessToken.AuthenticationRefreshAccessTokenResponseBody>,
         UnauthorizedHttpResult>
      PostRefreshAccessToken(ClaimsPrincipal user, AnonKeyBackend.Authentication.TokenService tokenService, Data.DatabaseHandle databaseHandle)
     {
@@ -23,18 +23,23 @@ public static class RefreshEndpointAccessToken
             return TypedResults.Unauthorized();
         }
 
-        User? userName = databaseHandle.Users.Where(u => u.Username == user.Identity.Name).FirstOrDefault();
-
-        if (userName == null)
+        if (user.Identity == null)
         {
             return TypedResults.Unauthorized();
         }
 
-        string tokenUuid = user.Claims.First(c => c.Type == "TokenParent").Value;
+        User? currentUser = databaseHandle.Users.Where(u => u.Username == user.Identity.Name).FirstOrDefault();
+
+        if (currentUser == null)
+        {
+            return TypedResults.Unauthorized();
+        }
+
+        string tokenUuid = user.Claims.First(c => c.Type == "TokenUuid").Value;
 
         // Generate a new access token and return it to the user.
-        Token accessToken = tokenService.GenerateNewToken(userName, "AccessToken", tokenUuid);
-        return TypedResults.Ok(new ApiDatastructures.Authentication.RefreshTokens.AuthenticationRefreshTokensResponseBody
+        Token accessToken = tokenService.GenerateNewToken(currentUser, "AccessToken", tokenUuid);
+        return TypedResults.Ok(new ApiDatastructures.Authentication.RefreshAccessToken.AuthenticationRefreshAccessTokenResponseBody
         {
             AccessToken = new()
             {

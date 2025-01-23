@@ -1,9 +1,9 @@
-namespace AnonKeyBackend.ApiDatastructures.Authentication.RefreshTokens;
+namespace AnonKeyBackend.ApiDatastructures.Authentication.RefreshAccessToken;
 
 /// <summary>
-/// Represents a token object in the response to a Refresh request.
+/// Represents a token object in the response to a Refresh access token request.
 /// </summary>
-public class AuthenticationRefreshTokens
+public class AuthenticationRefreshAccessToken
 {
     /// <summary>
     /// The token that can be used for authentication.
