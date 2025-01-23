@@ -52,6 +52,7 @@ public class DatabaseCleanup : BackgroundService
         using (IServiceScope scope = _serviceProvider.CreateScope())
         {
             AnonKeyBackend.Data.DatabaseHandle databaseHandle = scope.ServiceProvider.GetRequiredService<AnonKeyBackend.Data.DatabaseHandle>();
+            databaseHandle.Database.EnsureCreated();
 
             long now = (long)DateTime.UtcNow.Subtract(DateTime.UnixEpoch).TotalSeconds;
             IQueryable<AnonKeyBackend.Models.Token> tokensToDelete = databaseHandle.RefreshTokens.Where(t => t.ExpiresOn <= now - 200);
