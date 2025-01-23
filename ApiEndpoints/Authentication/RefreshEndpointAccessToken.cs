@@ -9,39 +9,32 @@ public static class RefreshEndpointAccessToken
 {
 
     /// <summary>
-    /// Creates a new access token.
+    /// Creates a new access token based on a refresh token.
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
-        Ok<ApiDatastructures.Authentication.Login.AuthenticationLoginResponseBody>,
-        NotFound<ApiDatastructures.RequestError.ErrorResponseBody>,
+        Ok<ApiDatastructures.Authentication.RefreshTokens.AuthenticationRefreshTokensResponseBody>,
         UnauthorizedHttpResult>
-     PostRefreshAccessToken(ClaimsPrincipal userClaimsPrincipal, ApiDatastructures.Authentication.Login.AuthenticationLoginRequestBody requestBody, AnonKeyBackend.Authentication.TokenService tokenService, Data.DatabaseHandle databaseHandle)
+     PostRefreshAccessToken(ClaimsPrincipal user, AnonKeyBackend.Authentication.TokenService tokenService, Data.DatabaseHandle databaseHandle)
     {
         databaseHandle.Database.EnsureCreated();
 
-        if (!AnonKeyBackend.Authentication.TokenActions.ValidateClaimsOnRequest(userClaimsPrincipal, databaseHandle))
+        if (!AnonKeyBackend.Authentication.TokenActions.ValidateClaimsOnRequest(user, databaseHandle, true))
         {
             return TypedResults.Unauthorized();
         }
 
-        User? user = databaseHandle.Users.Where(u => u.Username == requestBody.UserName).FirstOrDefault();
+        User? userName = databaseHandle.Users.Where(u => u.Username == user.Identity.Name).FirstOrDefault();
 
-        // If no user is found matching the redentials, return 404.
-        if (user == null)
+        if (userName == null)
         {
-            return TypedResults.NotFound(new ApiDatastructures.RequestError.ErrorResponseBody
-            {
-                Message = "Invalid username or password",
-                Detail = "The username and password combination did not match any known combination. Please ensure the password and username are correct."
-            });
+            return TypedResults.Unauthorized();
         }
 
-        // Generate a new token and return it to the user.
-        Token refreshToken = tokenService.GenerateNewToken(user, "RefreshToken");
-        Token accessToken = tokenService.GenerateNewToken(user, "AccessToken");
-        AnonKeyBackend.Authentication.TokenActions.StoreRefreshTokenInDb(refreshToken, databaseHandle);
-        databaseHandle.SaveChanges();
-        return TypedResults.Ok(new ApiDatastructures.Authentication.Login.AuthenticationLoginResponseBody
+        string tokenUuid = user.Claims.First(c => c.Type == "TokenParent").Value;
+
+        // Generate a new access token and return it to the user.
+        Token accessToken = tokenService.GenerateNewToken(userName, "AccessToken", tokenUuid);
+        return TypedResults.Ok(new ApiDatastructures.Authentication.RefreshTokens.AuthenticationRefreshTokensResponseBody
         {
             AccessToken = new()
             {
