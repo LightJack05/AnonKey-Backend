@@ -39,10 +39,8 @@ public static class LogoutAll
         {
             return TypedResults.Unauthorized();
         }
-
-        var userTokens = databaseHandle.RefreshTokens.Where(t => t.UserUuid == currentUser.Uuid).ToList();
         
-        userTokens.ForEach(token => token.Revoked = true);
+        databaseHandle.RefreshTokens.Where(t => t.UserUuid == currentUser.Uuid).ToList().ForEach(token => token.Revoked = true);
 
         databaseHandle.SaveChanges();
 
