@@ -13,26 +13,36 @@ public static class LogoutAll
     /// </summary>
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok,
-        NotFound<ApiDatastructures.RequestError.ErrorResponseBody>>
-            PutLogoutAll(Data.DatabaseHandle databaseHandle)
+        BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>,
+        UnauthorizedHttpResult>
+            PutLogoutAll(ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
         databaseHandle.Database.EnsureCreated();
 
-        var allTokens = databaseHandle.RefreshTokens.ToList();
-
-        if (allTokens.Count == 0)
+        if (!AnonKeyBackend.Authentication.TokenActions.ValidateClaimsOnRequest(user, databaseHandle))
         {
-            return TypedResults.NotFound(new ApiDatastructures.RequestError.ErrorResponseBody()
+            return TypedResults.Unauthorized();
+        }
+
+        if (user.Identity == null)
+        {
+            return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
             {
-                Message = "No active tokens found",
-                Detail = "There are no tokens to revoke."
+                Message = "The user identity is null",
+                Detail = "The user identity is null. Did you provide a valid JWT token?"
             });
         }
 
-        foreach (var token in allTokens)
+        User? currentUser = databaseHandle.Users.Where(u => u.Username == user.Identity.Name).FirstOrDefault();
+
+        if (currentUser == null)
         {
-            token.Revoked = true;
+            return TypedResults.Unauthorized();
         }
+
+        var userTokens = databaseHandle.RefreshTokens.Where(t => t.UserUuid == currentUser.Uuid).ToList();
+        
+        userTokens.ForEach(token => token.Revoked = true);
 
         databaseHandle.SaveChanges();
 
