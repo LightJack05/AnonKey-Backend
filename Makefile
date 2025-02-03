@@ -40,6 +40,7 @@ clean-silent:
 wipe: clean
 	@echo "[WIPE - INFO] 💬 Deleting database.db."
 	if [[ -f database.db ]]; then rm database.db; fi
+	rm -f *.sln
 
 #
 # Run the dotnet application on port 5000, and build it if necessary.
