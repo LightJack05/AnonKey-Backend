@@ -36,21 +36,28 @@ public static class RefreshEndpointRefreshToken
         }
 
         // Revoke the old refresh token.
-        string parentUuid = user.Claims.First(c => c.Type == "TokenParent").Value;
-        Token? parentToken = databaseHandle.RefreshTokens.FirstOrDefault(t => t.Uuid == parentUuid);
-        if (parentToken == null)
+        string tokenUuid = user.Claims.First(c => c.Type == "TokenUuid").Value;
+        Token? token = databaseHandle.RefreshTokens.FirstOrDefault(t => t.Uuid == tokenUuid);
+        if (token == null)
         {
             return TypedResults.Unauthorized();
         }
-        parentToken.Revoked = true;
+        token.Revoked = true;
 
-        // Generate a new refresh token and return it to the user.
+        // Generate a new token and return it to the user.
         Token refreshToken = tokenService.GenerateNewToken(currentUser, "RefreshToken");
+        Token accessToken = tokenService.GenerateNewToken(currentUser, "AccessToken", refreshToken.Uuid);
 
         databaseHandle.SaveChanges();
 
         return TypedResults.Ok(new ApiDatastructures.Authentication.RefreshRefreshToken.AuthenticationRefreshRefreshTokenResponseBody
         {
+            AccessToken = new()
+            {
+                Token = accessToken.TokenString,
+                TokenType = accessToken.TokenType,
+                ExpiryTimestamp = accessToken.ExpiresOn
+            },
             RefreshToken = new()
             {
                 Token = refreshToken.TokenString,

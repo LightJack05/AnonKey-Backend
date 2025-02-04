@@ -6,7 +6,11 @@ namespace AnonKeyBackend.ApiDatastructures.Authentication.RefreshRefreshToken;
 public class AuthenticationRefreshRefreshTokenResponseBody
 {
     /// <summary>
+    /// The token for accessing API endpoints
+    /// </summary>
+    public AuthenticationRefreshRefreshToken? AccessToken { get; set; }
+    /// <summary>
     /// The token for refreshing the access token or the refresh token itself
     /// </summary>
-    public Login.AuthenticationLoginToken? RefreshToken { get; set; }
+    public AuthenticationRefreshRefreshToken? RefreshToken { get; set; }
 }
