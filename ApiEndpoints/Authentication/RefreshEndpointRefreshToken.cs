@@ -47,7 +47,7 @@ public static class RefreshEndpointRefreshToken
         // Generate a new token and return it to the user.
         Token refreshToken = tokenService.GenerateNewToken(currentUser, "RefreshToken");
         Token accessToken = tokenService.GenerateNewToken(currentUser, "AccessToken", refreshToken.Uuid);
-
+        AnonKeyBackend.Authentication.TokenActions.StoreRefreshTokenInDb(refreshToken, databaseHandle);
         databaseHandle.SaveChanges();
 
         return TypedResults.Ok(new ApiDatastructures.Authentication.RefreshRefreshToken.AuthenticationRefreshRefreshTokenResponseBody
