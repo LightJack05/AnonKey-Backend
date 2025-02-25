@@ -11,7 +11,7 @@ public static class EndpointSetup
     /// <param name="app">The web app instance to initialize with the mapping</param>
     public static void MapEndpoints(WebApplication app)
     {
-        app.MapGet("/service/ping", Ping.GetPing).WithTags("Service").WithOpenApi().RequireAuthorization("user");
+        app.MapGet("/service/ping", Ping.GetPing).WithTags("Service").WithOpenApi();
     }
 
 }
