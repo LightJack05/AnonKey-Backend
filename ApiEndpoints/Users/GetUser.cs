@@ -13,9 +13,15 @@ public static class GetUser
     public static Microsoft.AspNetCore.Http.HttpResults.Results<
         Ok<ApiDatastructures.Users.GetUser.UsersGetResponseBody>,
         BadRequest<ApiDatastructures.RequestError.ErrorResponseBody>,
-        NotFound<ApiDatastructures.RequestError.ErrorResponseBody>>
+        NotFound<ApiDatastructures.RequestError.ErrorResponseBody>,
+        UnauthorizedHttpResult>
             GetGet(ClaimsPrincipal user, Data.DatabaseHandle databaseHandle)
     {
+        databaseHandle.Database.EnsureCreated();
+        if (!AnonKeyBackend.Authentication.TokenActions.ValidateClaimsOnRequest(user, databaseHandle))
+        {
+            return TypedResults.Unauthorized();
+        }
         if (user.Identity == null)
         {
             return TypedResults.BadRequest(new ApiDatastructures.RequestError.ErrorResponseBody()
